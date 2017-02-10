@@ -7,7 +7,7 @@ During mmap operation all performance issues addressed operation system, so it's
 Just like [native](http://man7.org/linux/man-pages/man2/mmap.2.html) version of the routine BufferFromFile accept ( protection ), ( flags ), ( offset ), ( size ) and even ( advise ) parameters each of which has default value so no need to pass the implicitly.
 
 BufferFromFIle works on Windows, OSX, Linux and other Unix-like systems.
-The module doesn't depend of module nan and deprecated versions of Nodejs.
+The module doesn't depend of module nan and does not support deprecated versions of Nodejs.
 The module can convert file to standard ArrayBuffer or any kind of TypedBuffer or even deprecated Nodejs Buffer.
 
 ### Usage:
