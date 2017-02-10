@@ -34,11 +34,12 @@
   "keywords": [
     "wTools",
     "ArrayBuffer",
-    "ArrayBufferFile",
     "Buffer from file",
     "ArrayBuffer from file",
     "TypedBuffer from file",
+    "Nodejs buffer from file",
     "mmap",
-    "mmap file"
+    "mmap file",
+    "zero copy"
   ]
 }

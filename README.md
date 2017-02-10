@@ -8,7 +8,7 @@ Just like [native](http://man7.org/linux/man-pages/man2/mmap.2.html) version of 
 
 BufferFromFIle works on Windows, OSX, Linux and other Unix-like systems.
 The module doesn't depend of module nan and does not support deprecated versions of Nodejs.
-The module can convert file to standard ArrayBuffer or any kind of TypedBuffer or even deprecated Nodejs Buffer.
+The module can convert a file to standard ArrayBuffer or any kind of TypedBuffer or even deprecated Nodejs Buffer.
 
 ### Usage:
 
