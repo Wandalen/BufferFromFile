@@ -1,0 +1,13 @@
+
+.*
+-*
+*.log
+*.db
+*.sh
+*.bat
+tmp
+build
+builder
+proto
+node_modules
+html.build.coffee
