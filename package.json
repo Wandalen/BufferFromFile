@@ -1,0 +1,44 @@
+{
+  "name": "bufferfromfile",
+  "version": "0.4.2",
+  "license": "MIT",
+  "description": "Module in JavaScript providing convenient means for using files as standard ArrayBuffer making mmap behind the scene.",
+  "author": "Kostiantyn Wandalen <wtory.net@domainsbyproxy.com>",
+  "contributors": [
+    {
+      "name": "Kostiantyn Wandalen",
+      "email": "wtory.net@domainsbyproxy.com>"
+    }
+  ],
+  "main": "js/Main.ss",
+  "scripts": {
+    "install": "node-gyp configure && node-gyp rebuild",
+    "test": "node ./test.js",
+    "make_doc": "./doc.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wandalen/BufferFromFile.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wandalen/BufferFromFile/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "wTools": "",
+    "wTesting": ""
+  },
+  "engines": {
+    "node": ">=5.0.0"
+  },
+  "keywords": [
+    "wTools",
+    "ArrayBuffer",
+    "ArrayBufferFile",
+    "Buffer from file",
+    "ArrayBuffer from file",
+    "TypedBuffer from file",
+    "mmap",
+    "mmap file"
+  ]
+}

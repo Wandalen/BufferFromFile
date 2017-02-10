@@ -1,0 +1,1 @@
+1 - is a random digit set from JS though mapped into memory file with help of BufferFromFile open source package.

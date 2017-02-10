@@ -1,0 +1,57 @@
+
+{
+
+  "tags":
+  {
+    "allowUnknownTags": true,
+    "dictionaries": [ "jsdoc","closure" ]
+  },
+
+  "templates":
+  {
+
+    "applicationName": "",
+    "disqus": "",
+    "googleAnalytics": "",
+
+    "openGraph":
+    {
+      "title": "",
+      "type": "website",
+      "image": "",
+      "site_name": "",
+      "url": ""
+    },
+
+    "meta":
+    {
+      "title": "",
+      "description": "",
+      "keyword": ""
+    },
+
+    "linenums": true
+
+  },
+
+  "opts":
+  {
+    "encoding": "utf8",
+    "destination": "./doc/reference",
+    "recurse": true
+  },
+
+  "source":
+  {
+
+    "includePattern": ".+\.(js|ss|s)(doc)?$",
+    "excludePattern": "(^|\/)(\\.|-|node_modules|shared|3rd|old|external)",
+
+    "include":
+    [
+      "./staging"
+    ]
+
+  }
+
+}
