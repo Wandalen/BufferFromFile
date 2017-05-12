@@ -43,11 +43,11 @@ function buffersFromRaw( test )
 
   var buffers = Object.keys( bufferMap );
 
-  for ( var i = 0; i < buffers.length; i++)
+  for( var i = 0; i < buffers.length; i++)
   {
     var data = testData;
     var type = buffers[ i ];
-    var mod = _.strCutOffLeft( type, [ 8, 16, 32, 64 ] )[ 1 ];
+    var mod = _.strCutOffLeft( type, [ 8, 16, 32, 64 ] )[ 1 ] / 8;
 
     if( mod > 1 )
     while( data.length % mod !== 0 )
