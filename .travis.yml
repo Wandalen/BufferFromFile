@@ -1,21 +1,15 @@
 sudo: false
 language: node_js
 os:
-  - linux
   - osx
+  - linux
 node_js:
-  - '4'
-env:
-- CXX=g++-4.8
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - gcc-4.8
-      - g++-4.8
+  - '7'
+compiler:
+  - gcc
+  - clang
 script:
-  - npm test
+  - make all
 
 #cache:
 #  directories:
