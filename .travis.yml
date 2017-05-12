@@ -4,14 +4,15 @@ os:
   - linux
   - osx
 node_js:
-  - '7'
+  - '4'
 env:
-- CXX=clang++
+- CXX=g++-4.8
 addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
     packages:
+      - gcc-4.8
       - g++-4.8
 script:
   - npm test
