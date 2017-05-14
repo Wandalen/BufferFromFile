@@ -1,6 +1,6 @@
 
 # BufferFromFile
-Module in JavaScript providing convenient means for using files as standard ArrayBuffer making mmap behind the scene.
+Native module for Nodejs providing convenient means for using files as standard ArrayBuffer making mmap behind the scene.
 BufferFromFile uses mmap to map file from hard drive to memory returning ArrayBuffer or TypedBuffer which can be manipulated just like ordinary buffer.
 mmap() creates a new mapping in the virtual address space of the calling process.
 During mmap operation all performance issues addressed operation system, so it's nearly fastest way to get data from / store on hard drive in Java Script. This method of data access do zero copy, unlike others.
@@ -79,4 +79,3 @@ buffer[ 0 ] = 48 + Math.round( Math.random()*9 );
 BufferFromFile.unmap( buffer );
 
 ```
-
