@@ -79,6 +79,91 @@ function buffersFromRaw( test )
   }
 }
 
+//
+
+function bufferFromFile( test )
+{
+  test.description = 'create raw buffer from file';
+  _.fileProvider.fileWrite( filePath, testData );
+
+  var buffer = BufferFromFile( filePath );
+  test.shouldBe( _.objectIs( buffer ) );
+  test.shouldBe( _.bufferRawIs( buffer._buffer ) );
+  var nodeBuffer = buffer.NodeBuffer();
+  test.shouldBe( _.bufferNodeIs( nodeBuffer ) );
+  test.identical( nodeBuffer.toString(), testData );
+
+  test.description = 'create raw buffer from file with options';
+  _.fileProvider.fileWrite( filePath, testData );
+
+  /* by setting number of bytes to get from beginning of the file */
+
+  var buffer = BufferFromFile({ filePath : filePath, size : 10 });
+  test.shouldBe( _.bufferRawIs( buffer._buffer ) );
+  test.identical( buffer._buffer.byteLength, 10 );
+  test.identical( buffer.NodeBuffer().toString(), testData.slice( 0, 10 ) );
+
+  /* setting size and offset */
+
+  _.fileProvider.fileWrite( filePath, testData );
+  var blockSize = _.fileProvider.fileStat( filePath ).blksize;
+
+  var size = blockSize * 2;
+  var data = '';
+  for( var i = 0; i < size; i++ )
+  {
+    if( i < size / 2 )
+    data += '0'
+    else
+    data += '1';
+  }
+
+  _.fileProvider.fileWrite( filePath, data );
+  var buffer = BufferFromFile({ filePath : filePath, size : 5, offset : blockSize });
+  test.shouldBe( _.bufferRawIs( buffer._buffer ) );
+  test.identical( buffer._buffer.byteLength, 5 );
+  test.identical( buffer.NodeBuffer().toString(), '11111' );
+
+  /* setting size and offset */
+
+  if( Config.debug )
+  {
+    test.description = 'no arguments provided';
+    test.shouldThrowError( function()
+    {
+      BufferFromFile();
+    })
+
+    test.description = 'incorrect argument type';
+    test.shouldThrowError( function()
+    {
+      BufferFromFile( 1 );
+    })
+
+    test.description = 'try to read not existing file';
+    _.fileProvider.fileDelete( filePath );
+    test.shouldThrowError( function()
+    {
+      BufferFromFile( filePath );
+    })
+
+    test.description = 'incorrect offset';
+    _.fileProvider.fileWrite( filePath, testData );
+    test.shouldThrowError( function()
+    {
+      BufferFromFile({ filePath : filePath, offset : 100 });
+    })
+
+    test.description = 'out of file bounds';
+    _.fileProvider.fileWrite( filePath, testData );
+    test.shouldThrowError( function()
+    {
+      var size = _.fileProvider.fileStat( filePath ).size;
+      BufferFromFile({ filePath : filePath, size : size * 2 });
+    })
+  }
+}
+
 // --
 // proto
 // --
@@ -93,6 +178,7 @@ var Self =
   tests :
   {
     buffersFromRaw : buffersFromRaw,
+    bufferFromFile : bufferFromFile,
   },
 
 }
