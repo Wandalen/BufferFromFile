@@ -1,3 +1,5 @@
+#ifndef _Main_cpp_ //
+#define _Main_cpp_
 
 #include "Details.cpp"
 
@@ -400,3 +402,5 @@ NODE_MODULE( ArrayBufferFile, Init )
 //
 
 #include "Body.end.cpp"
+
+#endif // _Main_cpp_ //

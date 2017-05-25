@@ -5,7 +5,6 @@ namespace wTools //
 {
 
   using namespace v8;
-  using namespace std;
 
 }
 

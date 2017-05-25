@@ -1,6 +1,8 @@
 #ifndef _wTools_abase_Tuple_hpp_ //
 #define _wTools_abase_Tuple_hpp_
 
+#include <type_traits>
+
 namespace wTools //
 {
 
@@ -47,7 +49,7 @@ namespace wTools //
 //
 
 template< size_t index_A = 0, typename Arg1_A, typename... Args_A >
-inline
+// inline
 typename std::enable_if< index_A == sizeof...( Args_A )+1, Arg1_A& >::type
 tupleElementGet( Tuple< Arg1_A,Args_A... >&, int )
 {
@@ -55,7 +57,7 @@ tupleElementGet( Tuple< Arg1_A,Args_A... >&, int )
 }
 
 template< size_t index_A = 0, typename Arg1_A, typename... Args_A >
-inline
+// inline
 typename std::enable_if< index_A < sizeof...( Args_A )+1, Arg1_A& >::type
 tupleElementGet( Tuple< Arg1_A,Args_A... >& tuple, int index )
 {

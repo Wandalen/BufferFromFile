@@ -4,8 +4,8 @@
 // make v8 variable
 
 #define _newStr_M( arg_A )               ( ::v8::String::NewFromUtf8( ::v8::Isolate::GetCurrent(), arg_A,::v8::NewStringType::kNormal ).ToLocalChecked() )
-// #define newStr_M( ... )               ( ::v8::String::NewFromUtf8( ::v8::Isolate::GetCurrent(), wTools::str( __VA_ARGS__ ) ).ToLocalChecked() )
-// #define newStr_M( ... )               Nan::New< ::v8::String > ( __VA_ARGS__ ).ToLocalChecked()
+// #define vstr( ... )               ( ::v8::String::NewFromUtf8( ::v8::Isolate::GetCurrent(), wTools::str( __VA_ARGS__ ) ).ToLocalChecked() )
+// #define vstr( ... )               Nan::New< ::v8::String > ( __VA_ARGS__ ).ToLocalChecked()
 
 #define newInt_M( val )               Nan::New< ::v8::Integer > ( val )
 #define newInt8_M( val )              V8_Int8( val, info )
