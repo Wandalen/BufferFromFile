@@ -148,11 +148,12 @@ function bufferFromFile( test )
   test.description = 'protection read';
 
   _.fileProvider.fileWrite( filePath, testData );
-  var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.Protection.read }).ArrayBuffer();
+  var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.Protection.read }).NodeBuffer();
   test.mustNotThrowError( function()
   {
     buffer[ 0 ];
   })
+
   test.shouldThrowError( function()
   {
     buffer[ 0 ] = 99;
@@ -164,7 +165,7 @@ function bufferFromFile( test )
   test.description = 'protection readWrite'
 
   _.fileProvider.fileWrite( filePath, testData );
-  var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.Protection.readWrite }).ArrayBuffer();
+  var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.Protection.readWrite }).NodeBuffer();
   test.mustNotThrowError( function()
   {
     buffer[ 0 ];
@@ -179,7 +180,7 @@ function bufferFromFile( test )
 
   test.description = 'protection none'
 
-  var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.Protection.none }).ArrayBuffer();
+  var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.Protection.none }).NodeBuffer();
   test.shouldThrowError( function()
   {
     buffer[ 0 ];
@@ -197,7 +198,7 @@ function bufferFromFile( test )
   /* flags MAP_PRIVATE */
 
   _.fileProvider.fileWrite( filePath, testData );
-  var buffer = BufferFromFile({ filePath : filePath, flag : BufferFromFile.Flag.private }).ArrayBuffer();
+  var buffer = BufferFromFile({ filePath : filePath, flag : BufferFromFile.Flag.private }).NodeBuffer();
   buffer[ 0 ] = 55;
   BufferFromFile.flush( buffer );
   var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer' });
@@ -207,13 +208,12 @@ function bufferFromFile( test )
   /* flags MAP_SHARED */
 
   _.fileProvider.fileWrite( filePath, testData );
-  var descriptor = BufferFromFile({ filePath : filePath, flag : BufferFromFile.Flag.shared });
-  var nodeBuffer = descriptor.NodeBuffer();
-  nodeBuffer[ 0 ] = 55;
-  BufferFromFile.flush( nodeBuffer );
+  var buffer = BufferFromFile({ filePath : filePath, flag : BufferFromFile.Flag.shared }).NodeBuffer();
+  buffer[ 0 ] = 55;
+  BufferFromFile.flush( buffer );
   var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer' });
-  test.identical( nodeBuffer, expected );
-  BufferFromFile.unmap( nodeBuffer );
+  test.identical( buffer, expected );
+  BufferFromFile.unmap( buffer );
 
   /**/
 
