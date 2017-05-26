@@ -76,6 +76,24 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
     return errThrow( "Failed open file, ",filePath );
   }
 
+  if( size < 0 || offset < 0 )
+  {
+    errThrow( "Routine expects positive value of size/offset property." );
+    return;
+  }
+
+  if( size + ( uint64_t ) offset > memory.file.statbuf.st_size || ( uint64_t ) offset > memory.file.statbuf.st_size )
+  {
+    errThrow( "Requested bytes range goes beyond the end of a file, please provide lower size/offset values." );
+    return;
+  }
+
+  if( ( uint64_t ) offset % pageSizeGet() != 0 )
+  {
+    errThrow( "Offset: ", offset, " must be a multiple of the page size: ", pageSizeGet() );
+    return;
+  }
+
   memory.buffer = fileMap( offset, size, memory.file.result, protection, flag );
 
   if( memory.buffer.size() != ( size_t )size )
