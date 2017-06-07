@@ -18,8 +18,8 @@ if( typeof module !== 'undefined' )
 var _ = wTools;
 var Parent = wTools.Testing;
 var sourceFilePath = _.diagnosticLocation().full; // typeof module !== 'undefined' ? __filename : document.scripts[ document.scripts.length-1 ].src;
-var testDir = _.pathResolve( __dirname + '../../../tmp.tmp' )
-var filePath = _.pathJoin( testDir, 'testFile.txt' );
+var testDir =  _.fileProvider.pathNativize( _.pathResolve( __dirname + '../../../tmp.tmp' ) );
+var filePath = _.fileProvider.pathNativize( _.pathJoin( testDir, 'testFile.txt' ) );
 var testData = '1 - is a random digit set from JS though mapped into memory file with help of BufferFromFile open source package.'
 
 // --
@@ -111,6 +111,7 @@ function bufferFromFile( test )
   var nodeBuffer = descriptor.NodeBuffer();
   test.shouldBe( _.bufferNodeIs( nodeBuffer ) );
   test.identical( nodeBuffer.toString(), testData );
+  BufferFromFile.unmap( nodeBuffer );
 
   test.description = 'create raw buffer from file with options';
   _.fileProvider.fileWrite( filePath, testData );
@@ -119,13 +120,15 @@ function bufferFromFile( test )
 
   var descriptor = BufferFromFile({ filePath : filePath, size : 10 });
   test.shouldBe( _.bufferRawIs( descriptor.ArrayBuffer() ) );
-  test.identical( descriptor.ArrayBuffer().byteLength, 10 );
-  test.identical( descriptor.NodeBuffer().toString(), testData.slice( 0, 10 ) );
+  var buffer = descriptor.NodeBuffer();
+  test.identical( buffer.byteLength, 10 );
+  test.identical( buffer.toString(), testData.slice( 0, 10 ) );
+  BufferFromFile.unmap( buffer );
 
   /* setting size and offset */
 
   _.fileProvider.fileWrite( filePath, testData );
-  var blockSize = _.fileProvider.fileStat( filePath ).blksize;
+  var blockSize = _.fileProvider.fileStat( filePath ).blksize || 4096;
 
   var size = blockSize * 2;
   var data = '';
@@ -142,54 +145,75 @@ function bufferFromFile( test )
   test.shouldBe( _.bufferRawIs( descriptor.ArrayBuffer() ) );
   test.identical( descriptor.ArrayBuffer().byteLength, 5 );
   test.identical( descriptor.NodeBuffer().toString(), '11111' );
+  BufferFromFile.unmap( descriptor.Buffer() );
 
   //
 
-  test.description = 'protection read';
-
-  _.fileProvider.fileWrite( filePath, testData );
-  var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.Protection.read }).NodeBuffer();
-  test.mustNotThrowError( function()
+  var size = 100;
+  var data = '';
+  for( var i = 0; i < size; i++ )
   {
-    buffer[ 0 ];
-  })
+    data += i;
+  }
 
-  test.shouldThrowError( function()
+  _.fileProvider.fileWrite( filePath, data );
+  var fileSize = _.fileProvider.fileStat( filePath ).size;
+  for( var i = 0; i < fileSize; i+= 10  )
   {
-    buffer[ 0 ] = 99;
-  })
-  BufferFromFile.unmap( buffer );
+    var offset = _.numberRandomInt( [ 0, i ] );
+    var size = _.numberRandomInt( [ 0, fileSize - offset ] );
+    test.description = 'create buffer with offset: ' + offset + ' and size: ' + size + ' ,fileSize: ' + fileSize;
+    var buffer = BufferFromFile({ filePath : filePath, offset : offset, size : size }).NodeBuffer();
+    test.identical( buffer.length, size );
+    test.identical( buffer.toString(), data.slice( offset, offset + size ) );
+    BufferFromFile.unmap( buffer );
+  }
 
+  // test.description = 'protection read';
   //
-
-  test.description = 'protection readWrite'
-
-  _.fileProvider.fileWrite( filePath, testData );
-  var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.Protection.readWrite }).NodeBuffer();
-  test.mustNotThrowError( function()
-  {
-    buffer[ 0 ];
-  })
-  test.mustNotThrowError( function()
-  {
-    buffer[ 0 ] = 99;
-  })
-  BufferFromFile.unmap( buffer );
-
+  // _.fileProvider.fileWrite( filePath, testData );
+  // var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.Protection.read }).NodeBuffer();
+  // test.mustNotThrowError( function()
+  // {
+  //   buffer[ 0 ];
+  // })
   //
-
-  test.description = 'protection none'
-
-  var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.Protection.none }).NodeBuffer();
-  test.shouldThrowError( function()
-  {
-    buffer[ 0 ];
-  })
-  test.shouldThrowError( function()
-  {
-    buffer[ 0 ] = 99;
-  })
-  BufferFromFile.unmap( buffer );
+  // test.shouldThrowError( function()
+  // {
+  //   buffer[ 0 ] = 99;
+  // })
+  // BufferFromFile.unmap( buffer );
+  //
+  // //
+  //
+  // test.description = 'protection readWrite'
+  //
+  // _.fileProvider.fileWrite( filePath, testData );
+  // var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.Protection.readWrite }).NodeBuffer();
+  // test.mustNotThrowError( function()
+  // {
+  //   buffer[ 0 ];
+  // })
+  // test.mustNotThrowError( function()
+  // {
+  //   buffer[ 0 ] = 99;
+  // })
+  // BufferFromFile.unmap( buffer );
+  //
+  // //
+  //
+  // test.description = 'protection none'
+  //
+  // var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.Protection.none }).NodeBuffer();
+  // test.shouldThrowError( function()
+  // {
+  //   buffer[ 0 ];
+  // })
+  // test.shouldThrowError( function()
+  // {
+  //   buffer[ 0 ] = 99;
+  // })
+  // BufferFromFile.unmap( buffer );
 
   //
 
@@ -240,9 +264,25 @@ function bufferFromFile( test )
 
     test.description = 'incorrect offset';
     _.fileProvider.fileWrite( filePath, testData );
+
     test.shouldThrowError( function()
     {
-      BufferFromFile({ filePath : filePath, offset : 100 });
+      BufferFromFile({ filePath : filePath, offset : -1 });
+    })
+
+    _.fileProvider.fileWrite( filePath, testData );
+    var size = _.fileProvider.fileStat( filePath ).size;
+    test.shouldThrowError( function()
+    {
+      BufferFromFile({ filePath : filePath, offset : size + 1 });
+    })
+
+    test.description = 'incorrect size';
+    _.fileProvider.fileWrite( filePath, testData );
+
+    test.shouldThrowError( function()
+    {
+      BufferFromFile({ filePath : filePath, size : -2 });
     })
 
     test.description = 'out of file bounds';
@@ -251,6 +291,14 @@ function bufferFromFile( test )
     {
       var size = _.fileProvider.fileStat( filePath ).size;
       BufferFromFile({ filePath : filePath, size : size * 2 });
+
+    })
+
+    test.description = 'out of file bounds, requested size of buffer is bigger than can be returned';
+    test.shouldThrowError( function()
+    {
+      var size = _.fileProvider.fileStat( filePath ).size;
+      BufferFromFile({ filePath : filePath, offset : Math.floor( size / 2 ), size : size });
     })
   }
 }
