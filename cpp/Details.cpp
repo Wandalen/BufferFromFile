@@ -66,14 +66,18 @@ size_t pageSizeGet()
 
 //
 
-wTypedBuffer<> fileMap( off_t offset, size_t size, int fd, int protection, int flag )
+wTypedBuffer<> fileMap( off_t offset, size_t size, uint64_t fileSize, uv_os_fd_t fd, int protection, int flag )
 {
   wTypedBuffer<> result;
 
-  void* r = mmap( NULL, size, protection, flag, fd, offset );
+  void* r = mmap( NULL, fileSize, protection, flag, fd, 0 );
 
-  if( r != MAP_FAILED )
-  result.use( r,size );
+  if (r != MAP_FAILED)
+  {
+	if ( offset > 0 )
+	r = ( char* )r + offset;
+	result.use( r, size );
+  }
 
   // char* data = static_cast< char* >( mmap( NULL, size, protection, flag, memory.file.result, offset ) );
 
@@ -97,6 +101,8 @@ void fileUnmap( Memory& memory )
 
   if( memory.buffer.data() != NULL )
   munmap( memory.buffer.data(), memory.buffer.size() );
+
+  CloseHandle( memory.file.data );
   uv_fs_req_cleanup( &memory.file );
   delete &memory;
 }
@@ -129,23 +135,64 @@ uv_fs_t& _fileOpen( uv_fs_t& req, const string& path, int protection = O_RDWR )
   else
   result = &req;
 
-  int fd = uv_fs_open( uv_default_loop(), result, path.c_str(), protection, 0, NULL );
+  #ifdef _WIN32
+
+  int fd = uv_fs_open(uv_default_loop(), result, path.c_str(), O_RDWR, 0, NULL);
+
+  assert_M(fd == result->result);
+
+  uv_fs_fstat(uv_default_loop(), result, fd, NULL);
+
+  uv_fs_close( uv_default_loop(), result, fd, NULL );
+
+  DWORD dwDesiredAccess = 0;
+
+  if ( protection & PROT_READ )
+  dwDesiredAccess |= GENERIC_READ;
+
+  if (protection & PROT_WRITE)
+  {
+	dwDesiredAccess |= GENERIC_READ;
+	dwDesiredAccess |= GENERIC_WRITE;
+  }
+
+  if (protection & PROT_EXEC)
+  {  
+	 dwDesiredAccess |= GENERIC_READ;
+	 dwDesiredAccess |= GENERIC_EXECUTE;
+  }
+
+  HANDLE fh = CreateFileA( path.c_str(), dwDesiredAccess, FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0 );
+  if( fh == INVALID_HANDLE_VALUE  )
+  {
+    result->result = -1;
+  }
+  else
+  {
+    result->data = fh;
+    result->result = 1;
+  }
+
+  #else
+  int fd = uv_fs_open(uv_default_loop(), result, path.c_str(), protection, 0, NULL);
+
+  assert_M(fd == result->result);
+
+  uv_fs_fstat(uv_default_loop(), result, fd, NULL);
 
   // cout << "fd : " << fd << endl;
   // cout << "result->result : " << result->result << endl;
 
-  assert_M( fd == result->result );
-
-  uv_fs_fstat( uv_default_loop(), result, fd, NULL );
-
-  uv_run( uv_default_loop(),UV_RUN_DEFAULT );
+  uv_run(uv_default_loop(), UV_RUN_DEFAULT);
 
   result->result = fd;
 
   // cout << "fd : " << fd << endl;
   // cout << "result->result : " << result->result << endl;
 
-  assert_M( fd == result->result );
+  assert_M(fd == result->result);
+
+  #endif
 
   return ( *result );
 }
@@ -169,6 +216,33 @@ memoryOf( Local< Value > src )
   return (Memory*)NULL;
 
   Memory& memory = *(Memory*)buffer->GetAlignedPointerFromInternalField( 0 );
+
+  // cout << "memoryOf : " << &memory << endl;
+
+  return &memory;
+}
+
+inline
+Memory*
+memoryOf( Local< Object > src, LocalString name )
+{
+  // return (Memory*)NULL;
+
+  auto srcBuf = src->Get( name );
+
+  if( srcBuf->IsTypedArray() )
+  srcBuf = Local< TypedArray >::Cast( srcBuf )->Buffer();
+
+  Local< ArrayBuffer > buffer;
+  if( !toNative( srcBuf,buffer ) )
+  return (Memory*)NULL;
+
+  if( buffer->InternalFieldCount() < 1 )
+  return (Memory*)NULL;
+
+  Memory& memory = *(Memory*)buffer->GetAlignedPointerFromInternalField( 0 );
+
+  src->Set( name, srcBuf );
 
   // cout << "memoryOf : " << &memory << endl;
 
