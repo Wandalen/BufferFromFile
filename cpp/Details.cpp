@@ -3,6 +3,7 @@
 #include <errno.h>
 #include <string>
 #include <future>
+#include "IncludeNode.hpp"
 
 #ifdef _WIN32
   #include <windows.h>
@@ -14,7 +15,6 @@
 
 #include <iostream>
 
-#include "IncludeNode.hpp"
 #include "Tools.hpp"
 #include "wTools/OptionalTuple.hpp"
 #include "wTools/OptionalTuple.test.hpp"

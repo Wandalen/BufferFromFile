@@ -15,7 +15,7 @@
 Template
 inline
 typename Self::Class&
-Self::use( Self::Element* data, Self::SizeType length )
+Self::use( typename Self::Element* data, typename Self::SizeType length )
 {
   auto& result = Parent::use( data,length );
   return self;
@@ -26,7 +26,7 @@ Self::use( Self::Element* data, Self::SizeType length )
 Template
 inline
 typename Self::Class&
-Self::use( void* data, Self::SizeType size )
+Self::use( void* data, typename Self::SizeType size )
 {
   assert_M( size % sizeof( Self::Element ) == 0 );
 
@@ -42,7 +42,7 @@ Self::use( void* data, Self::SizeType size )
 Template
 inline
 typename Self::Class&
-Self::use( const Self::Class& src )
+Self::use( typename const Self::Class& src )
 {
   auto& result = Parent::use( src );
   return self;
@@ -64,7 +64,7 @@ Self::clone()
 Template
 inline
 typename Self::Class&
-Self::operator=( const Self::Class& src )
+Self::operator=( typename const Self::Class& src )
 {
   self.use( src );
   return self;
