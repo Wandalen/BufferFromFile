@@ -102,7 +102,9 @@ void fileUnmap( Memory& memory )
   if( memory.buffer.data() != NULL )
   munmap( memory.buffer.data(), memory.buffer.size() );
 
+ #ifdef _WIN32
   CloseHandle( memory.file.data );
+ #endif
   uv_fs_req_cleanup( &memory.file );
   delete &memory;
 }
