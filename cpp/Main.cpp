@@ -65,7 +65,11 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
 
   Memory& memory = *new Memory();
 
+  #ifdef _WIN32
   _fileOpen( memory.file, filePath, protection );
+  #else
+  _fileOpen( memory.file, filePath );
+  #endif
 
   if (memory.file.result <= 0)
   {
