@@ -6,6 +6,11 @@
 #define Self wTypedBufferStd< Element_A >
 #define Template template< typename Element_A >
 
+#ifdef _WIN32
+#define Typename typename
+#else
+#define Typename
+#endif
 
 
 // --
@@ -15,7 +20,7 @@
 Template
 inline
 typename Self::Class&
-Self::use( typename Self::Element* data, typename Self::SizeType length )
+Self::use( Typename Self::Element* data, Typename Self::SizeType length )
 {
   auto& result = Parent::use( data,length );
   return self;
@@ -26,7 +31,7 @@ Self::use( typename Self::Element* data, typename Self::SizeType length )
 Template
 inline
 typename Self::Class&
-Self::use( void* data, typename Self::SizeType size )
+Self::use( void* data, Typename Self::SizeType size )
 {
   assert_M( size % sizeof( Self::Element ) == 0 );
 
@@ -42,7 +47,7 @@ Self::use( void* data, typename Self::SizeType size )
 Template
 inline
 typename Self::Class&
-Self::use( typename const Self::Class& src )
+Self::use( Typename const Self::Class& src )
 {
   auto& result = Parent::use( src );
   return self;
@@ -64,7 +69,7 @@ Self::clone()
 Template
 inline
 typename Self::Class&
-Self::operator=( typename const Self::Class& src )
+Self::operator=( Typename const Self::Class& src )
 {
   self.use( src );
   return self;

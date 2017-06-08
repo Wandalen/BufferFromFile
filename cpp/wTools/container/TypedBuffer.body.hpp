@@ -5,6 +5,11 @@
 
 #define Self wTypedBuffer< Element_A >
 #define Template template< typename Element_A >
+#ifdef _WIN32
+#define Typename typename
+#else
+#define Typename
+#endif
 
 // --
 // constructor
@@ -29,7 +34,7 @@ inline Self::wTypedBuffer( typename Self::Element* data, typename Self::SizeType
 //
 
 Template
-inline Self::wTypedBuffer( typename const Self::Class& src )
+inline Self::wTypedBuffer( Typename const Self::Class& src )
 {
   self.use( src );
 }
@@ -68,7 +73,7 @@ Self::use( typename Self::Element* data, typename Self::SizeType length )
 Template
 inline
 typename Self::Class&
-Self::use( typename const Self::Class& src )
+Self::use( Typename const Self::Class& src )
 {
   self._begin = src._begin;
   self._end = src._end;
@@ -92,7 +97,7 @@ Self::clone()
 Template
 inline
 typename Self::Class&
-Self::operator=( typename const Self::Class& src )
+Self::operator=( Typename const Self::Class& src )
 {
   self.use( src );
   return self;
