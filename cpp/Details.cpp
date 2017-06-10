@@ -70,13 +70,13 @@ wTypedBuffer<> fileMap( off_t offset, size_t size, uint64_t fileSize, uv_os_fd_t
 {
   wTypedBuffer<> result;
 
-  void* r = mmap( NULL, fileSize, protection, flag, fd, 0 );
+  void* r = mmap( NULL, (size_t)fileSize, protection, flag, fd, 0 );
 
   if (r != MAP_FAILED)
   {
-	if ( offset > 0 )
-	r = ( char* )r + offset;
-	result.use( r, size );
+  	if ( offset > 0 )
+  	r = ( char* )r + offset;
+  	result.use( r, size );
   }
 
   // char* data = static_cast< char* >( mmap( NULL, size, protection, flag, memory.file.result, offset ) );
@@ -159,7 +159,7 @@ uv_fs_t& _fileOpen( uv_fs_t& req, const string& path, int protection = O_RDWR )
   }
 
   if (protection & PROT_EXEC)
-  {  
+  {
 	 dwDesiredAccess |= GENERIC_READ;
 	 dwDesiredAccess |= GENERIC_EXECUTE;
   }
@@ -176,6 +176,12 @@ uv_fs_t& _fileOpen( uv_fs_t& req, const string& path, int protection = O_RDWR )
   }
 
   #else
+
+  if( protection & PROT_WRITE )
+  protection = O_RDWR;
+  else
+  protection = O_RDONLY;
+
   int fd = uv_fs_open(uv_default_loop(), result, path.c_str(), protection, 0, NULL);
 
   assert_M(fd == result->result);

@@ -274,6 +274,8 @@ inline Self::fill( const Element& value, const Iterator& begin, const Iterator& 
 
 //
 
+#undef Typename
+
 #include <Body.end.cpp>
 
 #endif // _wTypedBuffer_body_hpp_

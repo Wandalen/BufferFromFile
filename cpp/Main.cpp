@@ -65,11 +65,7 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
 
   Memory& memory = *new Memory();
 
-  #ifdef _WIN32
   _fileOpen( memory.file, filePath, protection );
-  #else
-  _fileOpen( memory.file, filePath );
-  #endif
 
   if (memory.file.result <= 0)
   {
@@ -95,8 +91,8 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
     return;
   }
 
- 
-  if( fileSize - (uint64_t)offset < size || ( uint64_t ) offset > fileSize )
+
+  if( fileSize - offset < (uint64_t) size || ( uint64_t ) offset > fileSize )
   {
     errThrow( "Requested bytes range goes beyond the end of a file, please provide lower size/offset values." );
     return;
@@ -251,7 +247,7 @@ void advise_js( const FunctionCallbackInfo< Value >& info )
   /* */
 
   madvise( memory.buffer.data(), memory.buffer.size(), advise );
-
+  
   memory.advise = advise;
 
 }

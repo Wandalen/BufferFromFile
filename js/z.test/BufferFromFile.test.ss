@@ -169,39 +169,61 @@ function bufferFromFile( test )
     BufferFromFile.unmap( buffer );
   }
 
-  // test.description = 'protection read';
+  test.description = 'protection read';
+
+  _.fileProvider.fileWrite( filePath, testData );
+  var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.Protection.read }).NodeBuffer();
+  test.mustNotThrowError( function()
+  {
+    var got = buffer[ 0 ];
+  })
+  BufferFromFile.unmap( buffer );
+
+  test.description = 'protection exec';
+
+  _.fileProvider.fileWrite( filePath, testData );
+  var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.Protection.exec }).NodeBuffer();
+  test.mustNotThrowError( function()
+  {
+    var got = buffer[ 0 ];
+  })
+  BufferFromFile.unmap( buffer );
+
   //
-  // _.fileProvider.fileWrite( filePath, testData );
-  // var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.Protection.read }).NodeBuffer();
-  // test.mustNotThrowError( function()
-  // {
-  //   buffer[ 0 ];
-  // })
+
+  test.description = 'protection readWrite'
+
+  _.fileProvider.fileWrite( filePath, testData );
+  var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.Protection.readWrite }).NodeBuffer();
+  test.mustNotThrowError( function()
+  {
+    buffer[ 0 ];
+  })
+  test.mustNotThrowError( function()
+  {
+    buffer[ 0 ] = 99;
+  })
+  BufferFromFile.unmap( buffer );
+
   //
-  // test.shouldThrowError( function()
-  // {
-  //   buffer[ 0 ] = 99;
-  // })
-  // BufferFromFile.unmap( buffer );
+
+  test.description = 'protection readWrite'
+
+  _.fileProvider.fileWrite( filePath, testData );
+  var prot = BufferFromFile.Protection;
+  var buffer = BufferFromFile({ filePath : filePath, protection : prot.read | prot.write  }).NodeBuffer();
+  test.mustNotThrowError( function()
+  {
+    buffer[ 0 ];
+  })
+  test.mustNotThrowError( function()
+  {
+    buffer[ 0 ] = 99;
+  })
+  BufferFromFile.unmap( buffer );
+
   //
-  // //
-  //
-  // test.description = 'protection readWrite'
-  //
-  // _.fileProvider.fileWrite( filePath, testData );
-  // var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.Protection.readWrite }).NodeBuffer();
-  // test.mustNotThrowError( function()
-  // {
-  //   buffer[ 0 ];
-  // })
-  // test.mustNotThrowError( function()
-  // {
-  //   buffer[ 0 ] = 99;
-  // })
-  // BufferFromFile.unmap( buffer );
-  //
-  // //
-  //
+
   // test.description = 'protection none'
   //
   // var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.Protection.none }).NodeBuffer();
@@ -436,6 +458,14 @@ function flush( test )
   {
     BufferFromFile.flush({ sync : BufferFromFile.Sync.sync });
   });
+
+  //
+
+  test.description = 'random buffer';
+  test.shouldThrowError( function ()
+  {
+    BufferFromFile.flush( new ArrayBuffer( 5 ) );
+  });
 }
 
 //
@@ -456,6 +486,18 @@ function advise( test )
     test.identical( status.advise, advise );
   }
 
+  BufferFromFile.unmap( buffer );
+
+  //
+
+  test.description = 'invalid advise';
+  var buffer = BufferFromFile( filePath ).ArrayBuffer();
+  var expected = 0;
+  BufferFromFile.advise( buffer, -1 );
+  var got = BufferFromFile.status( buffer ).advise;
+  test.identical( got, expected );
+  BufferFromFile.unmap( buffer );
+
   //
 
   test.description = 'advise with no arguments';
@@ -464,25 +506,128 @@ function advise( test )
     BufferFromFile.advise();
   });
 
+  //
+
   test.description = 'first argument is no a buffer';
   test.shouldThrowError( function ()
   {
     BufferFromFile.advise( 1, 1 );
   })
 
-  test.description = 'second argument is no a integer';
-  test.shouldThrowError( function ()
-  {
-    BufferFromFile.advise( buffer, '1' );
-  })
+  //
+}
 
-  test.description = 'invalid advise';
-  test.shouldThrowError( function ()
-  {
-    BufferFromFile.advise( buffer, 99 );
-  })
+//
 
+function status( test )
+{
+  _.fileProvider.fileWrite( filePath, testData );
+  var stats = _.fileProvider.fileStat( filePath );
+
+  //
+
+  test.description = 'get status';
+  var buffer = BufferFromFile( filePath ).ArrayBuffer();
+  var status = BufferFromFile.status( buffer );
+  test.identical( status.filePath, filePath );
+  test.identical( status.offset, 0 );
+  test.identical( status.size, stats.size );
+  test.identical( status.protection, BufferFromFile.Protection.readWrite );
+  test.identical( status.flag, BufferFromFile.Flag.shared );
+  test.identical( status.advise, BufferFromFile.Advise.normal );
   BufferFromFile.unmap( buffer );
+
+  //
+
+  test.description = 'get status, buffer with options';
+  var buffer = BufferFromFile
+  ({
+    filePath : filePath,
+    size : 10,
+    offset : 10,
+    protection : BufferFromFile.Protection.read,
+    flag : BufferFromFile.Flag.private,
+    advise : BufferFromFile.Advise.random
+  }).ArrayBuffer();
+
+  var status = BufferFromFile.status( buffer );
+  test.identical( status.filePath, filePath );
+  test.identical( status.offset, 10 );
+  test.identical( status.size, 10 );
+  test.identical( status.protection, BufferFromFile.Protection.read );
+  test.identical( status.flag, BufferFromFile.Flag.private );
+  test.identical( status.advise, BufferFromFile.Advise.random );
+  BufferFromFile.unmap( buffer );
+
+  //
+
+  test.description = 'some random buffer passed';
+  var got = BufferFromFile.status( new ArrayBuffer(5) );
+  var expected = undefined;
+  test.identical( got, expected );
+
+  //
+
+  test.description = 'some random value passed';
+  var got = BufferFromFile.status( 2 );
+  var expected = undefined;
+  test.identical( got, expected );
+
+  //
+
+  test.description = 'status, no args'
+  test.shouldThrowError( function ()
+  {
+    BufferFromFile.status();
+  })
+
+  //
+
+  test.description = 'too many args'
+  test.shouldThrowError( function ()
+  {
+    var buffer = BufferFromFile( filePath ).NodeBuffer();
+    BufferFromFile.status( buffer, 1, 2 );
+  })
+}
+
+//
+
+function unmap( test )
+{
+  test.description = 'after unmap buffer is empty, changes do not affect the file'
+  var buffer = BufferFromFile( filePath ).NodeBuffer();
+  var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer' });
+  BufferFromFile.unmap( buffer );
+  test.identical( buffer.length, 0 );
+  buffer[ 0 ] = 101;
+  var got = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer' });
+  test.identical( got, expected );
+
+  //
+
+  test.description = 'unmap, no args'
+  test.shouldThrowError( function ()
+  {
+    BufferFromFile.unmap();
+  })
+
+  //
+
+  test.description = 'some random buffer passed';
+  test.shouldThrowError( function ()
+  {
+    BufferFromFile.unmap( new ArrayBuffer(5) );
+  })
+
+  //
+
+  test.description = 'too many args'
+  test.shouldThrowError( function ()
+  {
+    var buffer = BufferFromFile( filePath ).NodeBuffer();
+    BufferFromFile.unmap( buffer, 1, 2 );
+  })
 }
 
 // --
@@ -502,6 +647,8 @@ var Self =
     bufferFromFile : bufferFromFile,
     flush : flush,
     advise : advise,
+    status : status,
+    unmap : unmap
   },
 
 }

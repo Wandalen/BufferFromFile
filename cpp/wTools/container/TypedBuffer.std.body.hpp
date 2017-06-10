@@ -120,6 +120,8 @@ inline Self::size() const
 
 //
 
+#undef Typename
+
 #include "Body.end.cpp"
 
 #endif // _wTypedBuffer_std_body_hpp_

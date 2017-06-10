@@ -10,7 +10,8 @@
     ],
     "cflags_cc":
     [
-      '-std=c++1y','-stdlib=libc++','-O3','-Wno-tautological-undefined-compare','-Wno-null-dereference','-Fno-delete-null-pointer-checks','-fno-delete-null-pointer-checks'
+      '-std=c++1y','-O3','-Wno-tautological-undefined-compare','-Wno-null-dereference','-Fno-delete-null-pointer-checks','-fno-delete-null-pointer-checks'
+    #   '-std=c++1y','-stdlib=libc++','-O3','-Wno-tautological-undefined-compare','-Wno-null-dereference','-Fno-delete-null-pointer-checks','-fno-delete-null-pointer-checks'
     ],
     "conditions":
     [
