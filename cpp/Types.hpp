@@ -4,7 +4,7 @@
 #include <cassert>
 #include <tuple>
 
-typedef std::string string;
+// typedef std::string string;
 
 template< typename ... Types_A >
 using SharedPtr = std::shared_ptr< Types_A ... >;

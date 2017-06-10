@@ -20,9 +20,9 @@ inline isTypeOf( const LocalValue src, const Target_A target )
 
 #ifdef _wTypedBuffer_std_hpp_
 
-template< typename Element_A, wTypedBuffer< Element_A > >
+template< typename Element_A, wTypedBuffer< Element_A >& >
 bool
-inline isTypeOf( const LocalValue src, const wTypedBuffer< Element_A > target )
+inline isTypeOf( const LocalValue src, const wTypedBuffer< Element_A >& target )
 {
   return src->IsObject();
 };

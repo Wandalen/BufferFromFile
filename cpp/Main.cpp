@@ -65,15 +65,24 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
 
   Memory& memory = *new Memory();
 
-  _fileOpen( memory.file, filePath );
+  _fileOpen( memory.file, filePath, protection );
 
-  if( size == -1 )
-  size = memory.file.statbuf.st_size;
-
-  if( memory.file.result <= 0 )
+  if (memory.file.result <= 0)
   {
-    fileUnmap( memory );
-    return errThrow( "Failed open file, ",filePath );
+	  fileUnmap(memory);
+	  return errThrow("Failed open file, ", filePath);
+  }
+
+  uint64_t fileSize = memory.file.statbuf.st_size;
+
+  if (size == -1)
+  {
+	 size = fileSize - (uint64_t)offset;
+	 if (size < 0 )
+	 {
+		errThrow("Incorrect offset value.");
+		return;
+	 }
   }
 
   if( size < 0 || offset < 0 )
@@ -82,19 +91,26 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
     return;
   }
 
-  if( size + ( uint64_t ) offset > memory.file.statbuf.st_size || ( uint64_t ) offset > memory.file.statbuf.st_size )
+
+  if( fileSize - offset < (uint64_t) size || ( uint64_t ) offset > fileSize )
   {
     errThrow( "Requested bytes range goes beyond the end of a file, please provide lower size/offset values." );
     return;
   }
 
-  if( ( uint64_t ) offset % pageSizeGet() != 0 )
-  {
-    errThrow( "Offset: ", offset, " must be a multiple of the page size: ", pageSizeGet() );
-    return;
-  }
+  // if( ( uint64_t ) offset % pageSizeGet() != 0 )
+  // {
+  //   errThrow( "Offset: ", offset, " must be a multiple of the page size: ", pageSizeGet() );
+  //   return;
+  // }
 
-  memory.buffer = fileMap( offset, size, memory.file.result, protection, flag );
+  #ifdef _WIN32
+  uv_os_fd_t fd = memory.file.data;
+  #else
+  uv_os_fd_t fd = memory.file.result;
+  #endif
+
+  memory.buffer = fileMap( offset, size, fileSize, fd, protection, flag );
 
   if( memory.buffer.size() != ( size_t )size )
   {
@@ -231,7 +247,7 @@ void advise_js( const FunctionCallbackInfo< Value >& info )
   /* */
 
   madvise( memory.buffer.data(), memory.buffer.size(), advise );
-
+  
   memory.advise = advise;
 
 }
@@ -287,7 +303,8 @@ void flush_js( const FunctionCallbackInfo< Value >& info )
 
   // return;
 
-  Memory& memory = *memoryOf( o->Get( vstr( "buffer" ) ) );
+  Memory& memory = *memoryOf( o, vstr( "buffer" ) );
+
   if( &memory == NULL )
   return errThrow( "Routine ",routineName," expects mandatory argument ( buffer ) made by ArrayFromFile" );
 
@@ -295,6 +312,9 @@ void flush_js( const FunctionCallbackInfo< Value >& info )
 
   vOptionOptional_M( Int8, offset, 0 );
   vOptionOptional_M( Int8, size, -1 );
+
+  if( size == -1 )
+  size = memory.buffer.size();
 
   vOptionOptional_M( bool, sync, true );
   vOptionOptional_M( bool, invalidate, false );

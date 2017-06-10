@@ -32,12 +32,12 @@
 
 //
 
-inline void* mmap( void* addr, size_t length, int protection, int flags, int fd, off_t offset )
+inline void* mmap( void* addr, size_t length, int protection, int flags, HANDLE fh, off_t offset )
 {
 
   /* anonymous mmap */
 
-  if( fd < 0 )
+  if(fh < 0 )
   {
     if( !( flags & MAP_ANONYMOUS ) || offset )
     return MAP_FAILED;
@@ -66,7 +66,7 @@ inline void* mmap( void* addr, size_t length, int protection, int flags, int fd,
     if( protection & PROT_READ )
     wProtection = PAGE_EXECUTE_READ;
     else
-    wProtection = PAGE_EXECUTE;
+    wProtection = PAGE_EXECUTE_READ;
   }
   else
   {
@@ -81,15 +81,18 @@ inline void* mmap( void* addr, size_t length, int protection, int flags, int fd,
   const DWORD dwOffsetLow = ( sizeof( off_t ) > sizeof( DWORD ) ) ? DWORD( offset & 0xFFFFFFFFL ) : DWORD( offset );
   const DWORD dwOffsetHigh = ( sizeof( off_t ) > sizeof( DWORD ) ) ? DWORD( offset & 0xFFFFFFFFL ) : DWORD( 0 );
 
-  HANDLE h = ( fd < 0 ) ? HANDLE( _get_osfhandle( fd ) ) : INVALID_HANDLE_VALUE;
+  // HANDLE h = ( fd > 0 ) ? HANDLE( _get_osfhandle( fd ) ) : INVALID_HANDLE_VALUE;
 
-  HANDLE fm = CreateFileMapping( h, NULL, wProtection, dwEndHigh, dwEndLow, NULL );
-  if( fm == NULL )
-  return MAP_FAILED;
+  HANDLE fm = CreateFileMapping( fh, NULL, wProtection, 0, 0, NULL );
+  if (fm == NULL)
+  {
+	  DWORD dw = GetLastError();
+	  return MAP_FAILED;
+  }
 
   /* desired access */
 
-  DWORD dwDesiredAccess;
+  DWORD dwDesiredAccess = 0;
   if( protection & PROT_WRITE )
   dwDesiredAccess = FILE_MAP_WRITE;
   else
@@ -101,12 +104,12 @@ inline void* mmap( void* addr, size_t length, int protection, int flags, int fd,
 
   /* map */
 
-  void* map = MapViewOfFile( fm, dwDesiredAccess, dwOffsetHigh, dwOffsetLow, length );
+  void* map = MapViewOfFile( fm, dwDesiredAccess, 0, 0, 0 );
 
   /* */
 
   CloseHandle( fm );
-
+  
   return ( map != nullptr ) ? map : MAP_FAILED;
 }
 
@@ -125,7 +128,8 @@ inline int munmap( void* addr, size_t length )
 
 inline int msync(  void* addr, size_t length, int flags )
 {
-  if( FlushViewOfFile( addr, length ) )
+  int result = FlushViewOfFile( addr, length );
+  if( result )
   return 0;
 
   errno = GetLastError(  );
