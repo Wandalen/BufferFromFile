@@ -1,14 +1,19 @@
 {
   "name": "bufferfromfile",
   "version": "0.4.6",
-  "engine": "node >= 5.0.0",
+  "engine": "node >= 6.0.0",
   "license": "MIT",
   "description": "Module in JavaScript providing convenient means for using files as standard ArrayBuffer making mmap behind the scene.",
   "author": "Kostiantyn Wandalen <wtory.net@domainsbyproxy.com>",
-  "contributors": [
+  "contributors":
+  [
     {
       "name": "Kostiantyn Wandalen",
       "email": "wtory.net@domainsbyproxy.com>"
+    },
+    {
+      "name": "Volodymyr M.",
+      "email": "volodymyr.migdal@gmail.com"
     }
   ],
   "main": "js/Main.ss",
