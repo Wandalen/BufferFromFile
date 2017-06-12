@@ -57,7 +57,7 @@ size_t pageSizeGet()
 #ifdef _WIN32
   SYSTEM_INFO sysinfo;
   GetSystemInfo( &sysinfo );
-  return sysinfo.dwPageSize;
+  return sysinfo.dwAllocationGranularity;
 #else
   return sysconf( _SC_PAGESIZE );
 #endif
@@ -66,16 +66,41 @@ size_t pageSizeGet()
 
 //
 
-wTypedBuffer<> fileMap( off_t offset, size_t size, uint64_t fileSize, uv_os_fd_t fd, int protection, int flag )
+wTypedBuffer<> fileMap( off_t offset, size_t size, uv_os_fd_t fd, int protection, int flag )
 {
   wTypedBuffer<> result;
 
-  void* r = mmap( NULL, (size_t)fileSize, protection, flag, fd, 0 );
+  size_t pageSize = pageSizeGet();
+  size_t _size = size;
+  off_t _offset = offset;
+  off_t diff = 0;
+
+  if( offset < pageSize )
+  {
+    _offset = 0;
+    diff = offset;
+    _size = diff + size;
+  }
+
+  if( offset > pageSize )
+  if( offset % pageSize != 0 )
+  {
+    _offset = ( offset / pageSize ) * pageSize;
+    diff = offset - _offset;
+    _size = diff + size;
+  }
+
+  // std::cout << "diff: " << diff
+  //  << "size: " << _size
+  //  << "offset: " << _offset
+  //  << std::endl;
+
+  void* r = mmap( NULL, _size, protection, flag, fd, _offset );
 
   if (r != MAP_FAILED)
   {
-  	if ( offset > 0 )
-  	r = ( char* )r + offset;
+  	if ( diff > 0 )
+  	r = ( char* )r + diff;
   	result.use( r, size );
   }
 
