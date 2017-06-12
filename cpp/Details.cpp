@@ -71,26 +71,26 @@ wTypedBuffer<> fileMap( off_t offset, size_t size, uv_os_fd_t fd, int protection
   wTypedBuffer<> result;
 
   size_t pageSize = pageSizeGet();
-  size_t _size = size;
+  size_t _size = 0;
   off_t _offset = offset;
-  off_t diff = 0;
+  off_t offsetDiff = 0;
 
-  if( offset < pageSize )
+  if( ( size_t ) offset < pageSize )
   {
     _offset = 0;
-    diff = offset;
-    _size = diff + size;
+    offsetDiff = offset;
   }
 
-  if( offset > pageSize )
+  if( ( size_t )offset > pageSize )
   if( offset % pageSize != 0 )
   {
     _offset = ( offset / pageSize ) * pageSize;
-    diff = offset - _offset;
-    _size = diff + size;
+    offsetDiff = offset - _offset;
   }
 
-  // std::cout << "diff: " << diff
+  _size = offsetDiff + size;
+
+  // std::cout << "offsetDiff: " << offsetDiff
   //  << "size: " << _size
   //  << "offset: " << _offset
   //  << std::endl;
@@ -99,8 +99,8 @@ wTypedBuffer<> fileMap( off_t offset, size_t size, uv_os_fd_t fd, int protection
 
   if (r != MAP_FAILED)
   {
-  	if ( diff > 0 )
-  	r = ( char* )r + diff;
+  	if ( offsetDiff > 0 )
+  	r = ( char* )r + offsetDiff;
   	result.use( r, size );
   }
 
