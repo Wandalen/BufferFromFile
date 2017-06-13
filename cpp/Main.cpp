@@ -246,8 +246,11 @@ void advise_js( const FunctionCallbackInfo< Value >& info )
 
   /* */
 
-  madvise( memory.buffer.data(), memory.buffer.size(), advise );
-
+  int result = madvise( memory.buffer.data(), memory.buffer.size(), advise );
+  
+  if( result < 0 )
+  memory.advise = -1;
+  else
   memory.advise = advise;
 
 }
