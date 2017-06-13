@@ -164,14 +164,6 @@ uv_fs_t& _fileOpen( uv_fs_t& req, const string& path, int protection = O_RDWR )
 
   #ifdef _WIN32
 
-  int fd = uv_fs_open(uv_default_loop(), result, path.c_str(), O_RDWR, 0, NULL);
-
-  assert_M(fd == result->result);
-
-  uv_fs_fstat(uv_default_loop(), result, fd, NULL);
-
-  uv_fs_close( uv_default_loop(), result, fd, NULL );
-
   DWORD dwDesiredAccess = 0;
 
   if ( protection & PROT_READ )
@@ -196,6 +188,7 @@ uv_fs_t& _fileOpen( uv_fs_t& req, const string& path, int protection = O_RDWR )
   }
   else
   {
+    uv_fs_stat( uv_default_loop(), result, path.c_str(), NULL);
     result->data = fh;
     result->result = 1;
   }
