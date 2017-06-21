@@ -110,7 +110,7 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
   uv_os_fd_t fd = memory.file.result;
   #endif
 
-  memory.buffer = fileMap( offset, size, fileSize, fd, protection, flag );
+  memory.buffer = fileMap( offset, size, fd, protection, flag );
 
   if( memory.buffer.size() != ( size_t )size )
   {
@@ -246,8 +246,11 @@ void advise_js( const FunctionCallbackInfo< Value >& info )
 
   /* */
 
-  madvise( memory.buffer.data(), memory.buffer.size(), advise );
+  int result = madvise( memory.buffer.data(), memory.buffer.size(), advise );
   
+  if( result < 0 )
+  memory.advise = -1;
+  else
   memory.advise = advise;
 
 }

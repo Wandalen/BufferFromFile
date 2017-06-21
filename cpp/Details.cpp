@@ -57,7 +57,7 @@ size_t pageSizeGet()
 #ifdef _WIN32
   SYSTEM_INFO sysinfo;
   GetSystemInfo( &sysinfo );
-  return sysinfo.dwPageSize;
+  return sysinfo.dwAllocationGranularity;
 #else
   return sysconf( _SC_PAGESIZE );
 #endif
@@ -66,16 +66,41 @@ size_t pageSizeGet()
 
 //
 
-wTypedBuffer<> fileMap( off_t offset, size_t size, uint64_t fileSize, uv_os_fd_t fd, int protection, int flag )
+wTypedBuffer<> fileMap( off_t offset, size_t size, uv_os_fd_t fd, int protection, int flag )
 {
   wTypedBuffer<> result;
 
-  void* r = mmap( NULL, (size_t)fileSize, protection, flag, fd, 0 );
+  size_t pageSize = pageSizeGet();
+  size_t _size = 0;
+  off_t _offset = offset;
+  off_t offsetDiff = 0;
+
+  if( ( size_t ) offset < pageSize )
+  {
+    _offset = 0;
+    offsetDiff = offset;
+  }
+
+  if( ( size_t )offset > pageSize )
+  if( offset % pageSize != 0 )
+  {
+    _offset = ( offset / pageSize ) * pageSize;
+    offsetDiff = offset - _offset;
+  }
+
+  _size = offsetDiff + size;
+
+  // std::cout << "offsetDiff: " << offsetDiff
+  //  << "size: " << _size
+  //  << "offset: " << _offset
+  //  << std::endl;
+
+  void* r = mmap( NULL, _size, protection, flag, fd, _offset );
 
   if (r != MAP_FAILED)
   {
-  	if ( offset > 0 )
-  	r = ( char* )r + offset;
+  	if ( offsetDiff > 0 )
+  	r = ( char* )r + offsetDiff;
   	result.use( r, size );
   }
 
@@ -139,14 +164,6 @@ uv_fs_t& _fileOpen( uv_fs_t& req, const string& path, int protection = O_RDWR )
 
   #ifdef _WIN32
 
-  int fd = uv_fs_open(uv_default_loop(), result, path.c_str(), O_RDWR, 0, NULL);
-
-  assert_M(fd == result->result);
-
-  uv_fs_fstat(uv_default_loop(), result, fd, NULL);
-
-  uv_fs_close( uv_default_loop(), result, fd, NULL );
-
   DWORD dwDesiredAccess = 0;
 
   if ( protection & PROT_READ )
@@ -171,6 +188,7 @@ uv_fs_t& _fileOpen( uv_fs_t& req, const string& path, int protection = O_RDWR )
   }
   else
   {
+    uv_fs_stat( uv_default_loop(), result, path.c_str(), NULL);
     result->data = fh;
     result->result = 1;
   }
