@@ -18,9 +18,31 @@ if( typeof module !== 'undefined' )
 var _ = wTools;
 var Parent = wTools.Testing;
 var sourceFilePath = _.diagnosticLocation().full; // typeof module !== 'undefined' ? __filename : document.scripts[ document.scripts.length-1 ].src;
-var testDir =  _.fileProvider.pathNativize( _.pathResolve( __dirname + '../../../tmp.tmp' ) );
-var filePath = _.fileProvider.pathNativize( _.pathJoin( testDir, 'testFile.txt' ) );
+var testDir;
+var filePath;
 var testData = '1 - is a random digit set from JS though mapped into memory file with help of BufferFromFile open source package.'
+
+function makeTestDir()
+{
+  testDir = _.dirTempFor
+  ({
+    packageName : Self.name,
+    packagePath : _.pathResolve( _.pathRealMainDir(), '../../tmp.tmp' )
+  });
+
+  testDir = _.fileProvider.pathNativize( testDir );
+  filePath = _.fileProvider.pathNativize( _.pathJoin( testDir, 'testFile.txt' ) );
+
+  if( _.fileProvider.fileStat( testDir ) )
+  _.fileProvider.fileDelete( testDir );
+
+  _.fileProvider.directoryMake( testDir );
+}
+
+function cleanTestDir()
+{
+  _.fileProvider.fileDelete( testDir );
+}
 
 // --
 // routines
@@ -641,6 +663,9 @@ var Self =
   sourceFilePath : sourceFilePath,
   verbosity : 1,
 
+  onSuiteBegin : makeTestDir,
+  onSuiteEnd : cleanTestDir,
+
   tests :
   {
     buffersFromRaw : buffersFromRaw,
@@ -656,6 +681,6 @@ var Self =
 
 Self = wTestSuite( Self )
 if( typeof module !== 'undefined' && !module.parent )
-_.Testing.test( Self.name );
+_.Tester.test( Self.name );
 
 } )( );
