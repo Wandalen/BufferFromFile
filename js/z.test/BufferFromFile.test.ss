@@ -27,7 +27,7 @@ function makeTestDir()
   testDir = _.dirTempFor
   ({
     packageName : Self.name,
-    packagePath : _.pathResolve( _.pathRealMainDir(), '../../tmp.tmp' )
+    packagePath : _.pathResolve( _.pathRealMainDir(), '../tmp.tmp' )
   });
 
   testDir = _.fileProvider.pathNativize( testDir );
