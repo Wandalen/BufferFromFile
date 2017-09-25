@@ -18,26 +18,11 @@ if( typeof module !== 'undefined' )
 var _ = wTools;
 var Parent = wTools.Testing;
 var sourceFilePath = _.diagnosticLocation().full; // typeof module !== 'undefined' ? __filename : document.scripts[ document.scripts.length-1 ].src;
-var testDir;
-var filePath;
 var testData = '1 - is a random digit set from JS though mapped into memory file with help of BufferFromFile open source package.'
+var testDir = _.dirTempMake( _.pathDir( __dirname ) );
+var filePath = _.fileProvider.pathNativize( _.pathJoin( testDir, 'testFile.txt' ) );
 
-function makeTestDir()
-{
-  testDir = _.dirTempFor
-  ({
-    packageName : Self.name,
-    packagePath : _.pathResolve( _.pathRealMainDir(), '../tmp.tmp' )
-  });
-
-  testDir = _.fileProvider.pathNativize( testDir );
-  filePath = _.fileProvider.pathNativize( _.pathJoin( testDir, 'testFile.txt' ) );
-
-  if( _.fileProvider.fileStat( testDir ) )
-  _.fileProvider.fileDelete( testDir );
-
-  _.fileProvider.directoryMake( testDir );
-}
+//
 
 function cleanTestDir()
 {
@@ -663,7 +648,6 @@ var Self =
   sourceFilePath : sourceFilePath,
   verbosity : 1,
 
-  onSuiteBegin : makeTestDir,
   onSuiteEnd : cleanTestDir,
 
   tests :
