@@ -16,6 +16,13 @@
       "email": "volodymyr.migdal@gmail.com"
     }
   ],
+  "files":
+  [
+    "cpp",
+    "js/Main.ss",
+    "binding.gyp",
+    "Makefile"
+  ],
   "main": "js/Main.ss",
   "scripts": {
     "install": "node-gyp configure && node-gyp rebuild --msvs_version=auto",
@@ -34,7 +41,8 @@
   "devDependencies":
   {
     "wTools": "",
-    "wTesting": ""
+    "wTesting": "",
+    "bufferfromfile": "."
   },
   "gypfile": true,
   "keywords": [

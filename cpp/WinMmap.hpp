@@ -83,10 +83,11 @@ inline void* mmap( void* addr, size_t length, int protection, int flags, HANDLE 
 
   // HANDLE h = ( fd > 0 ) ? HANDLE( _get_osfhandle( fd ) ) : INVALID_HANDLE_VALUE;
 
-  HANDLE fm = CreateFileMapping( fh, NULL, wProtection, 0, 0, NULL );
+  HANDLE fm = CreateFileMapping( fh, NULL, wProtection, dwEndHigh, dwEndLow, NULL );
+
   if (fm == NULL)
   {
-	  DWORD dw = GetLastError();
+	  // DWORD dw = GetLastError();
 	  return MAP_FAILED;
   }
 
@@ -104,12 +105,12 @@ inline void* mmap( void* addr, size_t length, int protection, int flags, HANDLE 
 
   /* map */
 
-  void* map = MapViewOfFile( fm, dwDesiredAccess, 0, 0, 0 );
+  void* map = MapViewOfFile( fm, dwDesiredAccess, dwOffsetHigh, dwOffsetLow, length );
 
   /* */
 
   CloseHandle( fm );
-  
+
   return ( map != nullptr ) ? map : MAP_FAILED;
 }
 
