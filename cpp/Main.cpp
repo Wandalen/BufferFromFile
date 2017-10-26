@@ -247,7 +247,7 @@ void advise_js( const FunctionCallbackInfo< Value >& info )
   /* */
 
   int result = madvise( memory.buffer.data(), memory.buffer.size(), advise );
-  
+
   if( result < 0 )
   memory.advise = -1;
   else
@@ -344,7 +344,6 @@ void flush_js( const FunctionCallbackInfo< Value >& info )
 
 void Init( Handle< Object > exports, Handle< Object > module )
 {
-
   Isolate* isolate = Isolate::GetCurrent();
   // Local< Context > context = isolate->GetCurrentContext();
 

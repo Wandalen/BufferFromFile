@@ -55,7 +55,7 @@ var bufferMap =
 for( var b in bufferMap ) (function()
 {
   var TypedBuffer = bufferMap[ b ];
-  Self.prototype[ b ] = function make() 
+  Self.prototype[ b ] = function make()
   {
     return new TypedBuffer( this._buffer );
   }

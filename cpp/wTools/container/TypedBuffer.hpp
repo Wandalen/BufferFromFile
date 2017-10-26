@@ -49,18 +49,19 @@ public : // types of elements
   typedef std::reverse_iterator< IteratorConst > IteratorReverseConst;
 
   typedef ptrdiff_t PointerDifference;
-  typedef size_t SizeType;
-
+  typedef ptrdiff_t SizeType;
 
 
 public : // constructor
 
   inline wTypedBuffer();
   inline wTypedBuffer( Element* data, SizeType length );
+  inline wTypedBuffer( Element* begin, Element* end );
   inline wTypedBuffer( const Class& src );
 
-  inline Class& use( void* data, SizeType size );
+  inline Class& useDataOfSize( void* data, SizeType size );
   inline Class& use( Element* data, SizeType length );
+  inline Class& use( Element* begin, Element* end );
   inline Class& use( const Class& src );
   inline Class& clone();
   inline Class& operator=( const Class& src );
@@ -94,7 +95,7 @@ public : // accessor
   inline ElementReference back() const;
 
   inline SizeType length() const;
-  inline SizeType size() const;
+  inline SizeType sizeOfData() const;
 
   inline bool operator==( const Class& other ) const;
   inline bool operator!=( const Class& other ) const;

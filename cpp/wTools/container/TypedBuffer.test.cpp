@@ -194,4 +194,30 @@ BOOST_AUTO_TEST_CASE( case13 )
 
 }
 
+//
+
+BOOST_AUTO_TEST_CASE( case14 )
+{
+  //fill all buffer
+  wTypedBufferStd<int> buf( new Int32[ 3 ], 3 );
+  buf.fill( 1 );
+  std::vector<int> expected = { 1, 1, 1 };
+  BOOST_CHECK( std::equal( buf.begin(), buf.end(), expected.begin(), expected.end() ) );
+
+  //fill part of a buffer
+  buf.fill( 2, buf.begin() + 1, buf.end() );
+  expected = { 1, 2, 2 };
+  BOOST_CHECK( std::equal( buf.begin(), buf.end(), expected.begin(), expected.end() ) );
+
+  //end position is not specified
+  buf.fill( 3, buf.begin() + 1 );
+  expected = { 3, 3, 3 };
+  BOOST_CHECK( std::equal( buf.begin(), buf.end(), expected.begin(), expected.end() ) );
+
+  //begin position is not specified
+  buf.fill( 4, NULL, buf.end() );
+  expected = { 4, 4, 4 };
+  BOOST_CHECK( std::equal( buf.begin(), buf.end(), expected.begin(), expected.end() ) );
+}
+
 BOOST_AUTO_TEST_SUITE_END()

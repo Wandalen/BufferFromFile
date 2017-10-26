@@ -5,6 +5,9 @@
 
 namespace wTools { //
 
+typedef float Float4;
+typedef double Float8;
+
 typedef char Chr;
 typedef unsigned char Wrd1;
 typedef signed char Int1;

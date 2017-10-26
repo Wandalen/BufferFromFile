@@ -3,105 +3,15 @@
 
 #include <Body.begin.cpp>
 
-#define Self wTypedBuffer< Element_A >
+#define SelfConstructor wTypedBuffer
+#define Self SelfConstructor< Element_A >
 #define Template template< typename Element_A >
-#ifdef _WIN32
-#define Typename typename
-#else
-#define Typename
-#endif
 
 // --
 // constructor
 // --
 
-Template
-inline Self::wTypedBuffer()
-{
-  self._begin = NULL;
-  self._end = NULL;
-  self._length = 0;
-}
-
-//
-
-Template
-inline Self::wTypedBuffer( typename Self::Element* data, typename Self::SizeType length )
-{
-  self.use( data,length );
-}
-
-//
-
-Template
-inline Self::wTypedBuffer( Typename const Self::Class& src )
-{
-  self.use( src );
-}
-
-//
-
-Template
-inline
-typename Self::Class&
-Self::use( void* data, typename Self::SizeType size )
-{
-  assert_M( size % sizeof( Self::Element ) == 0 );
-
-  size_t length = size / sizeof( Self::Element );
-  self._begin = (Self::Element*)data;
-  self._end = (Self::Element*)( ((char*)data) + length );
-  self._length = length;
-  return self;
-}
-
-//
-
-Template
-inline
-typename Self::Class&
-Self::use( typename Self::Element* data, typename Self::SizeType length )
-{
-  self._begin = data;
-  self._end = data + length;
-  self._length = length;
-  return self;
-}
-
-//
-
-Template
-inline
-typename Self::Class&
-Self::use( Typename const Self::Class& src )
-{
-  self._begin = src._begin;
-  self._end = src._end;
-  self._length = src._length;
-  return self;
-}
-
-//
-
-Template
-inline
-typename Self::Class&
-Self::clone()
-{
-  auto& result = new Self( self );
-  return result;
-}
-
-//
-
-Template
-inline
-typename Self::Class&
-Self::operator=( Typename const Self::Class& src )
-{
-  self.use( src );
-  return self;
-}
+#include "TypedBufferConstructor.body.hpp"
 
 // --
 // caster
@@ -162,6 +72,7 @@ Template
 typename Self::ElementReferenceConst
 inline Self::at( typename Self::SizeType i ) const
 {
+  // cout << "at " << i << endl;
   return self._begin[ i ];
 }
 
@@ -216,7 +127,7 @@ inline Self::length() const
 
 Template
 typename Self::SizeType
-inline Self::size() const
+inline Self::sizeOfData() const
 {
   return self._length * sizeof( Element );
 }
@@ -274,7 +185,7 @@ inline Self::fill( const Element& value, const Iterator& begin, const Iterator& 
 
 //
 
-#undef Typename
+#undef SelfConstructor
 
 #include <Body.end.cpp>
 

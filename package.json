@@ -19,7 +19,7 @@
   "files":
   [
     "cpp",
-    "js/Main.ss",
+    "js",
     "binding.gyp",
     "Makefile"
   ],

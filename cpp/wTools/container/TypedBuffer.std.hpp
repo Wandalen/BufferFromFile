@@ -50,8 +50,8 @@ public : // types of classes
   typedef std::reverse_iterator< Iterator > IteratorReverse;
   typedef std::reverse_iterator< IteratorConst > IteratorReverseConst;
 
-  typedef ptrdiff_t PointerDifference;
-  typedef size_t SizeType;
+  typedef typename Parent::PointerDifference PointerDifference;
+  typedef typename Parent::SizeType SizeType;
 
 
 public : // types of std aliases
@@ -71,16 +71,27 @@ public : // types of std aliases
 
 public : // constructor
 
-  inline wTypedBufferStd() : Parent::wTypedBuffer(){};
-  inline wTypedBufferStd( Element* data, SizeType length ) : Parent::wTypedBuffer( data,length ){};
-  inline wTypedBufferStd( const Class& src ) : Parent::wTypedBuffer( src ){};
+  inline wTypedBufferStd();
+  inline wTypedBufferStd( Element* data, SizeType length );
+  inline wTypedBufferStd( Element* begin, Element* end );
+  inline wTypedBufferStd( const Class& src );
 
-  inline Class& use( void* data, SizeType size );
+  inline Class& useDataOfSize( void* data, SizeType size );
   inline Class& use( Element* data, SizeType length );
+  inline Class& use( Element* begin, Element* end );
   inline Class& use( const Class& src );
   inline Class& clone();
   inline Class& operator=( const Class& src );
 
+  // inline wTypedBufferStd() : Parent::wTypedBuffer(){};
+  // inline wTypedBufferStd( Element* data, SizeType length ) : Parent::wTypedBuffer( data,length ){};
+  // inline wTypedBufferStd( const Class& src ) : Parent::wTypedBuffer( src ){};
+  //
+  // inline Class& use( void* data, SizeType size );
+  // inline Class& use( Element* data, SizeType length );
+  // inline Class& use( const Class& src );
+  // inline Class& clone();
+  // inline Class& operator=( const Class& src );
 
 public : // caster
 
