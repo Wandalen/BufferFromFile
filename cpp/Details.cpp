@@ -101,7 +101,7 @@ wTypedBuffer<> fileMap( off_t offset, size_t size, uv_os_fd_t fd, int protection
   {
   	if ( offsetDiff > 0 )
   	r = ( char* )r + offsetDiff;
-  	result.use( r, size );
+  	result.use( ( char* )r, size );
   }
 
   // char* data = static_cast< char* >( mmap( NULL, size, protection, flag, memory.file.result, offset ) );
@@ -125,7 +125,7 @@ void fileUnmap( Memory& memory )
   }
 
   if( memory.buffer.data() != NULL )
-  munmap( memory.buffer.data(), memory.buffer.size() );
+  munmap( memory.buffer.data(), memory.buffer.length() );
 
  #ifdef _WIN32
   CloseHandle( memory.file.data );
