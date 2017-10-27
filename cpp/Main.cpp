@@ -112,7 +112,7 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
 
   memory.buffer = fileMap( offset, size, fd, protection, flag );
 
-  if( memory.buffer.length() != ( long )size )
+  if( memory.buffer.size() != ( size_t )size )
   {
     errThrow
     (
@@ -129,7 +129,7 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
 
   /* */
 
-  auto arrayBuffer = ArrayBuffer::New( isolate,memory.buffer.data(),memory.buffer.length() );
+  auto arrayBuffer = ArrayBuffer::New( isolate,memory.buffer.data(),memory.buffer.size() );
   // Persistent< ArrayBuffer > buffer( isolate,_buffer );
   // buffer.SetWeak( &memory,fileUnmap,::v8::WeakCallbackType::kParameter );
 
@@ -246,7 +246,7 @@ void advise_js( const FunctionCallbackInfo< Value >& info )
 
   /* */
 
-  int result = madvise( memory.buffer.data(), memory.buffer.length(), advise );
+  int result = madvise( memory.buffer.data(), memory.buffer.size(), advise );
 
   if( result < 0 )
   memory.advise = -1;
@@ -317,7 +317,7 @@ void flush_js( const FunctionCallbackInfo< Value >& info )
   vOptionOptional_M( Int8, size, -1 );
 
   if( size == -1 )
-  size = memory.buffer.length();
+  size = memory.buffer.size();
 
   vOptionOptional_M( bool, sync, true );
   vOptionOptional_M( bool, invalidate, false );

@@ -5,7 +5,7 @@
 if( typeof module !== 'undefined' )
 {
 
-  var BufferFromFile = require( '../js/Main.ss' );
+  var BufferFromFile = require( '../Main.ss' );
   require( 'wTools' );
   var _ = wTools;
 
@@ -499,7 +499,7 @@ function advise( test )
 
   test.description = 'invalid advise';
   var buffer = BufferFromFile( filePath ).ArrayBuffer();
-  var expected = -1;
+  var expected = 0;
   BufferFromFile.advise( buffer, -1 );
   var got = BufferFromFile.status( buffer ).advise;
   test.identical( got, expected );
