@@ -70,7 +70,7 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
   if (memory.file.result <= 0)
   {
 	  fileUnmap(memory);
-	  return ::wTools::v8::errThrow("Failed open file, ", filePath);
+	  return ::wTools::v8::errThrow( "Failed open file, ", filePath );
   }
 
   uint64_t fileSize = memory.file.statbuf.st_size;
@@ -80,7 +80,7 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
 	 size = fileSize - (uint64_t)offset;
 	 if (size < 0 )
 	 {
-		::wTools::v8::errThrow("Incorrect offset value.");
+		::wTools::v8::errThrow( "Incorrect offset value." );
 		return;
 	 }
   }
