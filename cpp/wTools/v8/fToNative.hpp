@@ -18,7 +18,7 @@ bool inline toNative( const LocalValue src, Dst_A& dst )
 };
 
 #if defined( _wTypedBuffer_hpp_ ) && defined( NAN_H_ ) //
-
+xxx
 template< typename Element_A, wTypedBuffer< Element_A > >
 bool inline toNative( const LocalValue src, wTypedBuffer< Element_A >& dst )
 {
@@ -35,6 +35,27 @@ bool inline toNative( const LocalValue src, wTypedBuffer< Element_A >& dst )
 };
 
 #endif // defined( _wTypedBuffer_hpp_ ) && defined( NAN_H_ ) //
+
+#if defined( _wTypedBuffer_hpp_ ) && !defined( NAN_H_ ) //
+
+template< typename Element_A, wTypedBuffer< Element_A > >
+bool inline toNative( const LocalValue src, wTypedBuffer< Element_A >& dst )
+{
+  bool result = isTypeOf( src,dst );
+  if( !result )
+  return result;
+
+  Local<Object> object = src->ToObject();
+  Local<ArrayBuffer> buffer = v8::ArrayBufferView::Buffer( object );
+
+  // Element_A* data = node::Buffer::Data( object );
+  // size_t length = node::Buffer::Length( object ) / sizeof( Element_A );
+  // dst.use( data,length );
+
+  return result;
+};
+
+#endif // defined( _wTypedBuffer_hpp_ ) && !defined( NAN_H_ ) //
 
 //
 
