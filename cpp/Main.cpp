@@ -18,7 +18,7 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
   argsExpects_M( 1,1 );
 
   if( !info[ 0 ]->IsString() && !info[ 0 ]->IsObject() )
-  return errThrow( "Expects String ( filePath ) or Object ( options )" );
+  return ::wTools::v8::errThrow( "Expects String ( filePath ) or Object ( options )" );
 
   if( info[ 0 ]->IsString() )
   {
@@ -70,7 +70,7 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
   if (memory.file.result <= 0)
   {
 	  fileUnmap(memory);
-	  return errThrow("Failed open file, ", filePath);
+	  return ::wTools::v8::errThrow("Failed open file, ", filePath);
   }
 
   uint64_t fileSize = memory.file.statbuf.st_size;
@@ -80,27 +80,27 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
 	 size = fileSize - (uint64_t)offset;
 	 if (size < 0 )
 	 {
-		errThrow("Incorrect offset value.");
+		::wTools::v8::errThrow("Incorrect offset value.");
 		return;
 	 }
   }
 
   if( size < 0 || offset < 0 )
   {
-    errThrow( "Routine expects positive value of size/offset property." );
+    ::wTools::v8::errThrow( "Routine expects positive value of size/offset property." );
     return;
   }
 
 
   if( fileSize - offset < (uint64_t) size || ( uint64_t ) offset > fileSize )
   {
-    errThrow( "Requested bytes range goes beyond the end of a file, please provide lower size/offset values." );
+    ::wTools::v8::errThrow( "Requested bytes range goes beyond the end of a file, please provide lower size/offset values." );
     return;
   }
 
   // if( ( uint64_t ) offset % pageSizeGet() != 0 )
   // {
-  //   errThrow( "Offset: ", offset, " must be a multiple of the page size: ", pageSizeGet() );
+  //   ::wTools::v8::errThrow( "Offset: ", offset, " must be a multiple of the page size: ", pageSizeGet() );
   //   return;
   // }
 
@@ -112,9 +112,9 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
 
   memory.buffer = fileMap( offset, size, fd, protection, flag );
 
-  if( memory.buffer.size() != ( size_t )size )
+  if( memory.buffer.length() != ( long )size )
   {
-    errThrow
+    ::wTools::v8::errThrow
     (
       "BufferFromFile : mmap failed\n",
       "offset : ",offset,"\n",
@@ -129,14 +129,14 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
 
   /* */
 
-  auto arrayBuffer = ArrayBuffer::New( isolate,memory.buffer.data(),memory.buffer.size() );
+  auto arrayBuffer = ArrayBuffer::New( isolate,memory.buffer.data(),memory.buffer.length() );
   // Persistent< ArrayBuffer > buffer( isolate,_buffer );
   // buffer.SetWeak( &memory,fileUnmap,::v8::WeakCallbackType::kParameter );
 
   if( arrayBuffer.IsEmpty() )
   {
     fileUnmap( memory );
-    return errThrow( "Cant allocate buffer for mapped file" );
+    return ::wTools::v8::errThrow( "Cant allocate buffer for mapped file" );
   }
 
   arrayBuffer->SetAlignedPointerInInternalField( 0,&memory );
@@ -176,7 +176,7 @@ void unmap_js( const FunctionCallbackInfo< Value >& info )
 
   Memory& memory = *memoryOf( info[ 0 ] );
   if( &memory == NULL )
-  return errThrow( "Routine ",routineName," expects mandatory argument ( buffer ) made by ArrayFromFile" );
+  return ::wTools::v8::errThrow( "Routine ",routineName," expects mandatory argument ( buffer ) made by ArrayFromFile" );
 
   /* */
 
@@ -238,15 +238,15 @@ void advise_js( const FunctionCallbackInfo< Value >& info )
 
   Memory& memory = *memoryOf( info[ 0 ] );
   if( &memory == NULL )
-  return errThrow( "Routine ",routineName," expects mandatory argument ( buffer ) made by ArrayFromFile" );
+  return ::wTools::v8::errThrow( "Routine ",routineName," expects mandatory argument ( buffer ) made by ArrayFromFile" );
 
   Int4 advise;
   if( !toNative( info[ 1 ],advise ) )
-  return errThrow( "Routine ",routineName," expects second mandatory argument ( advise ) of type int" );
+  return ::wTools::v8::errThrow( "Routine ",routineName," expects second mandatory argument ( advise ) of type int" );
 
   /* */
 
-  int result = madvise( memory.buffer.data(), memory.buffer.size(), advise );
+  int result = madvise( memory.buffer.data(), memory.buffer.length(), advise );
 
   if( result < 0 )
   memory.advise = -1;
@@ -268,7 +268,7 @@ void flush_js( const FunctionCallbackInfo< Value >& info )
   argsExpects_M( 1,1 );
 
   if( !info[ 0 ]->IsArrayBuffer() && !info[ 0 ]->IsObject() )
-  return errThrow( "Expects ArrayBuffer ( buffer ) or Object ( options )" );
+  return ::wTools::v8::errThrow( "Expects ArrayBuffer ( buffer ) or Object ( options )" );
 
   if( info[ 0 ]->IsArrayBuffer() )
   {
@@ -309,7 +309,7 @@ void flush_js( const FunctionCallbackInfo< Value >& info )
   Memory& memory = *memoryOf( o, vstr( "buffer" ) );
 
   if( &memory == NULL )
-  return errThrow( "Routine ",routineName," expects mandatory argument ( buffer ) made by ArrayFromFile" );
+  return ::wTools::v8::errThrow( "Routine ",routineName," expects mandatory argument ( buffer ) made by ArrayFromFile" );
 
   vOption_M( Local< ArrayBuffer >, buffer );
 
@@ -317,7 +317,7 @@ void flush_js( const FunctionCallbackInfo< Value >& info )
   vOptionOptional_M( Int8, size, -1 );
 
   if( size == -1 )
-  size = memory.buffer.size();
+  size = memory.buffer.length();
 
   vOptionOptional_M( bool, sync, true );
   vOptionOptional_M( bool, invalidate, false );
@@ -328,7 +328,7 @@ void flush_js( const FunctionCallbackInfo< Value >& info )
   int ret = msync( ( (char*)buffer->GetContents().Data() ) + offset, size, flag );
 
   if( ret )
-  return errThrow
+  return ::wTools::v8::errThrow
   (
     "BufferFromFile : flush failed", "\n",
     "errno : ", errno, "\n",

@@ -5,8 +5,7 @@
   "license": "MIT",
   "description": "The module in JavaScript provides convenient means for using files as standard ArrayBuffer making mmap behind the scene.",
   "author": "Kostiantyn Wandalen <wtory.net@domainsbyproxy.com>",
-  "contributors":
-  [
+  "contributors": [
     {
       "name": "Kostiantyn Wandalen",
       "email": "wtory.net@domainsbyproxy.com>"
@@ -16,8 +15,7 @@
       "email": "volodymyr.migdal@gmail.com"
     }
   ],
-  "files":
-  [
+  "files": [
     "cpp",
     "js",
     "binding.gyp",
@@ -38,8 +36,7 @@
     "url": "https://github.com/Wandalen/BufferFromFile/issues"
   },
   "dependencies": {},
-  "devDependencies":
-  {
+  "devDependencies": {
     "wTools": "",
     "wTesting": "",
     "bufferfromfile": "."
