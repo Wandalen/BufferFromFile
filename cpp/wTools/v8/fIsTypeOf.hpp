@@ -53,6 +53,16 @@ inline isTypeOf< v8::Local< v8::ArrayBuffer > >( const LocalValue src, const v8:
 
 template<>
 bool
+inline isTypeOf< v8::Local< v8::Uint32Array > >( const LocalValue src, const v8::Local< v8::Uint32Array > target )
+{
+  // std::cout << "isTypeOf< v8::Local< v8::Object > >" << endl;
+  return src->IsUint32Array();
+};
+
+//
+
+template<>
+bool
 inline isTypeOf< Chr >( const LocalValue src, const Chr target )
 {
   // std::cout << "isTypeOf< Chr >" << endl;
