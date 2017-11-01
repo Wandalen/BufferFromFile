@@ -32,6 +32,10 @@
   if( !wTools::v8::toNative( o->Get( vstr( #name_A ) ),name_A ) ) \
   name_A = default_A; \
 
+#define vOptionNull_M( name_A ) \
+  ::v8::Handle<::v8::Primitive> name_A = ::v8::Null( ::v8::Isolate::GetCurrent() ); \
+  o->Set( vstr( #name_A ),name_A ) \
+
 // converter
 
 #define argsExpects_M( A_MIN,A_MAX )                                   \

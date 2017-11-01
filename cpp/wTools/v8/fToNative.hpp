@@ -55,6 +55,21 @@ bool inline toNative( const LocalValue src, wTypedBuffer< Element_A >& dst )
   return result;
 };
 */
+
+template< typename Element_A, wTypedBuffer< Element_A > >
+bool inline toNative( const Local< ArrayBuffer > src, wTypedBuffer< Element_A >& dst )
+{
+  bool result = isTypeOf( src,dst );
+  if( !result )
+  return result;
+
+  Element_A* data = src->GetContents().Data();
+  size_t length = src->GetContents().ByteLength();
+  dst.use( data,length );
+
+  return result;
+};
+
 #endif // defined( _wTypedBuffer_hpp_ ) && !defined( NAN_H_ ) //
 
 //

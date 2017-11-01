@@ -53,6 +53,87 @@ inline isTypeOf< v8::Local< v8::ArrayBuffer > >( const LocalValue src, const v8:
 
 template<>
 bool
+inline isTypeOf< v8::Local< v8::Int8Array > >( const LocalValue src, const v8::Local< v8::Int8Array > target )
+{
+  return src->IsInt8Array();
+};
+
+//
+
+template<>
+bool
+inline isTypeOf< v8::Local< v8::Int16Array > >( const LocalValue src, const v8::Local< v8::Int16Array > target )
+{
+  return src->IsInt16Array();
+};
+
+//
+
+template<>
+bool
+inline isTypeOf< v8::Local< v8::Int32Array > >( const LocalValue src, const v8::Local< v8::Int32Array > target )
+{
+  return src->IsInt32Array();
+};
+
+//
+
+template<>
+bool
+inline isTypeOf< v8::Local< v8::Float64Array > >( const LocalValue src, const v8::Local< v8::Float64Array > target )
+{
+  return src->IsFloat64Array();
+};
+
+//
+
+template<>
+bool
+inline isTypeOf< v8::Local< v8::Float32Array > >( const LocalValue src, const v8::Local< v8::Float32Array > target )
+{
+  return src->IsFloat32Array();
+};
+
+//
+
+template<>
+bool
+inline isTypeOf< v8::Local< v8::Uint8Array > >( const LocalValue src, const v8::Local< v8::Uint8Array > target )
+{
+  return src->IsUint8Array();
+};
+
+//
+
+template<>
+bool
+inline isTypeOf< v8::Local< v8::Uint16Array > >( const LocalValue src, const v8::Local< v8::Uint16Array > target )
+{
+  return src->IsUint16Array();
+};
+
+//
+
+template<>
+bool
+inline isTypeOf< v8::Local< v8::Uint32Array > >( const LocalValue src, const v8::Local< v8::Uint32Array > target )
+{
+  return src->IsUint32Array();
+};
+
+//
+
+template<>
+bool
+inline isTypeOf< v8::Local< v8::Uint8ClampedArray > >( const LocalValue src, const v8::Local< v8::Uint8ClampedArray > target )
+{
+  return src->IsUint8ClampedArray();
+};
+
+//
+
+template<>
+bool
 inline isTypeOf< Chr >( const LocalValue src, const Chr target )
 {
   // std::cout << "isTypeOf< Chr >" << endl;
