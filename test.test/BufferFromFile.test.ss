@@ -648,7 +648,7 @@ var Self =
   sourceFilePath : sourceFilePath,
   verbosity : 1,
 
-  onSuiteEnd : cleanTestDir,
+  onSuitEnd : cleanTestDir,
 
   tests :
   {
@@ -663,7 +663,7 @@ var Self =
 }
 
 
-Self = wTestSuite( Self )
+Self = wTestSuit( Self )
 if( typeof module !== 'undefined' && !module.parent )
 _.Tester.test( Self.name );
 
