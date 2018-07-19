@@ -278,7 +278,7 @@ public : // type
 
   template< size_t index_A >
   // static const bool IsOptional = _OptionalTupleParent< index_A,Parent >::Class::_IsOptional;
-  using IsOptional = _OptionalTupleParent< index_A,Parent >::Class::_IsOptional;
+  using IsOptional = typename _OptionalTupleParent< index_A,Parent >::Class::_IsOptional;
 
   template< size_t index_A >
   using Element = typename _OptionalTupleParent< index_A,Parent >::Class::Element;
