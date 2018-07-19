@@ -10,7 +10,7 @@ node_js:
 compiler:
   - gcc
   - clang
-script:
+script: 
   - npm test
 
 #cache:

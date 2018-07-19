@@ -82,6 +82,9 @@ bool inline toNative( const LocalValue src, v8::Local< Velement_A >& dst )
   return result;
   // dst = src->ToObject(););
 
+  // std::cout << ".IsArrayBuffer : " << src->IsArrayBuffer() << std::endl;
+  // std::cout << ".IsUint32Array : " << src->IsUint32Array() << std::endl;
+
   dst = Local< Velement_A >::Cast( src );
 
   return result;
@@ -90,7 +93,7 @@ bool inline toNative( const LocalValue src, v8::Local< Velement_A >& dst )
 //
 
 // template< typename Element_A >
-// bool inline toNative( const LocalValue src, v8::Local< v8::ArrayBuffer >& dst )
+// bool inline toNative( const LocalValue src, v8::Local< v8::Uint32Array >& dst )
 // {
 //   // bool result = isTypeOf( src,dst );
 //   // if( !result )
@@ -101,9 +104,10 @@ bool inline toNative( const LocalValue src, v8::Local< Velement_A >& dst )
 //   Local< Object > object = src->ToObject();
 //
 //   std::cout << "IsArrayBuffer : " << src->IsArrayBuffer() << std::endl;
+//   std::cout << "IsUint32Array : " << src->IsUint32Array() << std::endl;
 //
 //   // v8::Local< v8::ArrayBuffer > typed = src.As< v8::ArrayBuffer >();
-//   dst = src.As< v8::ArrayBuffer >();
+//   dst = src.As< v8::Uint32Array >();
 //
 //   // void *data = view->Buffer()->GetContents().Data();
 //

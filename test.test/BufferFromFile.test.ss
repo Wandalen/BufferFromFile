@@ -653,7 +653,7 @@ var Self =
 
   routineTimeOut : 9999999999,
 
-  onSuiteEnd : cleanTestDir,
+  onSuitEnd : cleanTestDir,
 
   tests :
   {
@@ -668,7 +668,7 @@ var Self =
 }
 
 
-Self = wTestSuite( Self )
+Self = wTestSuit( Self )
 if( typeof module !== 'undefined' && !module.parent )
 _.Tester.test( Self.name );
 
