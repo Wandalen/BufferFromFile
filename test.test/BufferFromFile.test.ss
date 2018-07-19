@@ -6,18 +6,19 @@ if( typeof module !== 'undefined' )
 {
 
   var BufferFromFile = require( '../js/Main.ss' );
+
   require( 'wTools' );
-  var _ = wTools;
+
+  var _ = _global_.wTools;
 
   _.include( 'wTesting' );
+  _.include( 'wFiles' );
 
 }
 
 //
 
 var _ = wTools;
-var Parent = wTools.Testing;
-var sourceFilePath = _.diagnosticLocation().full; // typeof module !== 'undefined' ? __filename : document.scripts[ document.scripts.length-1 ].src;
 var testData = '1 - is a random digit set from JS though mapped into memory file with help of BufferFromFile open source package.'
 var testDir = _.dirTempMake( _.pathDir( __dirname ) );
 var filePath = _.fileProvider.pathNativize( _.pathJoin( testDir, 'testFile.txt' ) );
@@ -26,7 +27,7 @@ var filePath = _.fileProvider.pathNativize( _.pathJoin( testDir, 'testFile.txt' 
 
 function cleanTestDir()
 {
-  _.fileProvider.fileDelete( testDir );
+  _.fileProvider.filesDelete( testDir );
 }
 
 // --
@@ -64,19 +65,19 @@ function buffersFromRaw( test )
 
     test.description = 'making raw buffer from file';
     var descriptor = BufferFromFile( filePath );
-    test.shouldBe( _.bufferRawIs( descriptor.ArrayBuffer() ) );
+    test.is( _.bufferRawIs( descriptor.ArrayBuffer() ) );
 
     test.description = 'making ' + type + 'from raw';
 
     var buffer = descriptor[ type ]();
-    test.shouldBe( _.bufferTypedIs( buffer ) );
+    test.is( _.bufferTypedIs( buffer ) );
     test.identical( buffer.constructor.name, type );
     test.identical( buffer.byteLength, descriptor.ArrayBuffer().byteLength );
 
     var expected = _.fileProvider.fileRead
     ({
       filePath : filePath,
-      encoding : 'arraybuffer'
+      encoding : 'buffer-raw'
     });
 
     expected = new bufferMap[ type ]( expected );
@@ -90,8 +91,8 @@ function buffersFromRaw( test )
 
   _.fileProvider.fileWrite( filePath, testData );
   var buffer = BufferFromFile( filePath ).NodeBuffer();
-  test.shouldBe( _.bufferNodeIs( buffer ) );
-  var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer' });
+  test.is( _.bufferNodeIs( buffer ) );
+  var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer-node' });
   test.identical( buffer, expected )
   BufferFromFile.unmap( buffer );
 
@@ -99,8 +100,8 @@ function buffersFromRaw( test )
 
   _.fileProvider.fileWrite( filePath, testData );
   var buffer = BufferFromFile( filePath ).ArrayBuffer();
-  test.shouldBe( _.bufferRawIs( buffer ) );
-  var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'arraybuffer' });
+  test.is( _.bufferRawIs( buffer ) );
+  var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer-raw' });
   test.identical( buffer.byteLength, expected.byteLength );
   BufferFromFile.unmap( buffer );
 }
@@ -113,10 +114,10 @@ function bufferFromFile( test )
   _.fileProvider.fileWrite( filePath, testData );
 
   var descriptor = BufferFromFile( filePath );
-  test.shouldBe( _.objectIs( descriptor ) );
-  test.shouldBe( _.bufferRawIs( descriptor.ArrayBuffer() ) );
+  test.is( _.objectIs( descriptor ) );
+  test.is( _.bufferRawIs( descriptor.ArrayBuffer() ) );
   var nodeBuffer = descriptor.NodeBuffer();
-  test.shouldBe( _.bufferNodeIs( nodeBuffer ) );
+  test.is( _.bufferNodeIs( nodeBuffer ) );
   test.identical( nodeBuffer.toString(), testData );
   BufferFromFile.unmap( nodeBuffer );
 
@@ -126,7 +127,7 @@ function bufferFromFile( test )
   /* by setting number of bytes to get from beginning of the file */
 
   var descriptor = BufferFromFile({ filePath : filePath, size : 10 });
-  test.shouldBe( _.bufferRawIs( descriptor.ArrayBuffer() ) );
+  test.is( _.bufferRawIs( descriptor.ArrayBuffer() ) );
   var buffer = descriptor.NodeBuffer();
   test.identical( buffer.byteLength, 10 );
   test.identical( buffer.toString(), testData.slice( 0, 10 ) );
@@ -149,7 +150,7 @@ function bufferFromFile( test )
 
   _.fileProvider.fileWrite( filePath, data );
   var descriptor = BufferFromFile({ filePath : filePath, size : 5, offset : blockSize });
-  test.shouldBe( _.bufferRawIs( descriptor.ArrayBuffer() ) );
+  test.is( _.bufferRawIs( descriptor.ArrayBuffer() ) );
   test.identical( descriptor.ArrayBuffer().byteLength, 5 );
   test.identical( descriptor.NodeBuffer().toString(), '11111' );
   BufferFromFile.unmap( descriptor.Buffer() );
@@ -254,8 +255,8 @@ function bufferFromFile( test )
   var buffer = BufferFromFile({ filePath : filePath, flag : BufferFromFile.Flag.private }).NodeBuffer();
   buffer[ 0 ] = 55;
   BufferFromFile.flush( buffer );
-  var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer' });
-  test.shouldBe( buffer !== expected );
+  var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer-node' });
+  test.is( buffer !== expected );
   BufferFromFile.unmap( buffer );
 
   /* flags MAP_SHARED */
@@ -264,7 +265,7 @@ function bufferFromFile( test )
   var buffer = BufferFromFile({ filePath : filePath, flag : BufferFromFile.Flag.shared }).NodeBuffer();
   buffer[ 0 ] = 55;
   BufferFromFile.flush( buffer );
-  var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer' });
+  var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer-node' });
   test.identical( buffer, expected );
   BufferFromFile.unmap( buffer );
 
@@ -363,7 +364,7 @@ function flush( test )
 
     _.fileProvider.fileWrite( filePath, data );
     var buffer = BufferFromFile( filePath )[ type ]();
-    test.shouldBe( _.bufferTypedIs( buffer ) );
+    test.is( _.bufferTypedIs( buffer ) );
 
     /**/
 
@@ -374,7 +375,7 @@ function flush( test )
     {
       BufferFromFile.flush( buffer );
     })
-    var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'arraybuffer' });
+    var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer-raw' });
     expected = new buffersMap[ type ]( expected );
     test.identical( buffer, expected );
 
@@ -385,7 +386,7 @@ function flush( test )
     {
       BufferFromFile.flush( { buffer : buffer } );
     })
-    var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'arraybuffer' });
+    var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer-raw' });
     expected = new buffersMap[ type ]( expected );
     test.identical( buffer, expected );
 
@@ -400,13 +401,13 @@ function flush( test )
 
   _.fileProvider.fileWrite( filePath, testData );
   var buffer = BufferFromFile( filePath ).NodeBuffer();
-  test.shouldBe( _.bufferNodeIs( buffer ) )
+  test.is( _.bufferNodeIs( buffer ) )
   test.mustNotThrowError( function ()
   {
     buffer[ 0 ] = 59;
     BufferFromFile.flush( buffer );
   });
-  var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer' });
+  var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer-node' });
   test.identical( buffer, expected );
 
   /* as option */
@@ -416,7 +417,7 @@ function flush( test )
     buffer[ 0 ] = 60;
     BufferFromFile.flush({ buffer : buffer });
   });
-  var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer' });
+  var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer-node' });
   test.identical( buffer, expected );
 
   BufferFromFile.unmap( buffer );
@@ -426,7 +427,7 @@ function flush( test )
   test.description = 'BufferFromFile.flush buffer is ArrayBuffer';
   _.fileProvider.fileWrite( filePath, testData );
   var buffer = BufferFromFile( filePath ).ArrayBuffer();
-  test.shouldBe( _.bufferRawIs( buffer ) );
+  test.is( _.bufferRawIs( buffer ) );
 
   /* as argument */
 
@@ -435,7 +436,7 @@ function flush( test )
     buffer[ 0 ] = 60;
     BufferFromFile.flush( buffer );
   });
-  var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'arraybuffer' });
+  var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer-raw' });
   test.identical( buffer, expected );
 
   /* as option */
@@ -445,7 +446,7 @@ function flush( test )
     buffer[ 0 ] = 61;
     BufferFromFile.flush({ buffer : buffer });
   });
-  var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'arraybuffer' });
+  var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer-raw' });
   test.identical( buffer, expected );
 
   BufferFromFile.unmap( buffer );
@@ -604,11 +605,11 @@ function unmap( test )
 {
   test.description = 'after unmap buffer is empty, changes do not affect the file'
   var buffer = BufferFromFile( filePath ).NodeBuffer();
-  var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer' });
+  var expected = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer-node' });
   BufferFromFile.unmap( buffer );
   test.identical( buffer.length, 0 );
   buffer[ 0 ] = 101;
-  var got = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer' });
+  var got = _.fileProvider.fileRead({ filePath : filePath, encoding : 'buffer-node' });
   test.identical( got, expected );
 
   //
@@ -645,8 +646,10 @@ var Self =
 {
 
   name : 'BufferFromFile',
-  sourceFilePath : sourceFilePath,
-  verbosity : 1,
+  // sourceFilePath : sourceFilePath,
+  // verbosity : 5,
+
+  silencing : 1,
 
   onSuiteEnd : cleanTestDir,
 
