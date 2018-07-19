@@ -1,15 +1,13 @@
 image:
-  # - Visual Studio 2013
-  # - Visual Studio 2015
-  - Visual Studio 2017
+  - Visual Studio 2015
   - Ubuntu
 
 platform: x64
 
 environment:
   matrix:
-        # - nodejs_version: "8"
-        - nodejs_version: "9"
+        - nodejs_version: "8"
+        # - nodejs_version: "9"
         # - nodejs_version: "10"
         # - nodejs_version: "node"
 
@@ -21,3 +19,8 @@ install:
  - cmd: powershell -command "Install-Product node $env:nodejs_version"
  - sh: nvm install $nodejs_version
  - npm install
+
+
+test_script:
+  - node --version
+  - npm test
