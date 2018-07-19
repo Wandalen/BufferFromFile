@@ -651,6 +651,8 @@ var Self =
 
   silencing : 1,
 
+  routineTimeOut : 9999999999,
+
   onSuiteEnd : cleanTestDir,
 
   tests :
