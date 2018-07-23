@@ -538,8 +538,8 @@ function status( test )
   var buffer = BufferFromFile( filePath ).ArrayBuffer();
   var status = BufferFromFile.status( buffer );
   test.identical( status.filePath, filePath );
-  test.identical( status.offset, 0 );
-  test.identical( status.size, stats.size );
+  test.identical( status.offset, BigInt( 0 ) );
+  test.identical( status.size, BigInt( stats.size ) );
   test.identical( status.protection, BufferFromFile.Protection.readWrite );
   test.identical( status.flag, BufferFromFile.Flag.shared );
   test.identical( status.advise, BufferFromFile.Advise.normal );
@@ -560,8 +560,8 @@ function status( test )
 
   var status = BufferFromFile.status( buffer );
   test.identical( status.filePath, filePath );
-  test.identical( status.offset, 10 );
-  test.identical( status.size, 10 );
+  test.identical( status.offset, BigInt( 10 ) );
+  test.identical( status.size, BigInt( 10 ) );
   test.identical( status.protection, BufferFromFile.Protection.read );
   test.identical( status.flag, BufferFromFile.Flag.private );
   test.identical( status.advise, BufferFromFile.Advise.random );
@@ -651,7 +651,7 @@ var Self =
 
   silencing : 1,
 
-  routineTimeOut : 9999999999,
+  routineTimeOut : 9999999,
 
   onSuiteEnd : cleanTestDir,
 
