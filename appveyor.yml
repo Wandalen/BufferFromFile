@@ -1,6 +1,8 @@
 image:
-  - Previous Visual Studio 2017
-  - Ubuntu
+  # - Previous Visual Studio 2017
+  - Previous Visual Studio 2015
+  - Previous Visual Studio 2013
+  # - Ubuntu
 
 platform: x64
 
