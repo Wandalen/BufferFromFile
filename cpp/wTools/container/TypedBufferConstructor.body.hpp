@@ -82,7 +82,7 @@ Self::use( typename Self::Element* begin, typename Self::Element* end )
 Template
 inline
 typename Self::Class&
-Self::use( typename const Self::Class& src )
+Self::use( const typename Self::Class& src )
 {
   self._begin = src._begin;
   self._end = src._end;
