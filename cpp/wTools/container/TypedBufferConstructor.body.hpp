@@ -14,7 +14,7 @@ inline Self::SelfConstructor()
 //
 
 Template
-inline Self::SelfConstructor( Self::Element* data, Self::SizeType length )
+inline Self::SelfConstructor( typename Self::Element* data, typename Self::SizeType length )
 {
   self.use( data,length );
 }
@@ -22,7 +22,7 @@ inline Self::SelfConstructor( Self::Element* data, Self::SizeType length )
 //
 
 Template
-inline Self::SelfConstructor( Self::Element* begin, Self::Element* end )
+inline Self::SelfConstructor( typename Self::Element* begin, typename Self::Element* end )
 {
   self.use( begin,end );
 }
@@ -30,7 +30,7 @@ inline Self::SelfConstructor( Self::Element* begin, Self::Element* end )
 //
 
 Template
-inline Self::SelfConstructor( const Self::Class& src )
+inline Self::SelfConstructor( typename const Self::Class& src )
 {
   self.use( src );
 }
@@ -40,7 +40,7 @@ inline Self::SelfConstructor( const Self::Class& src )
 Template
 inline
 typename Self::Class&
-Self::useDataOfSize( void* data, Self::SizeType size )
+Self::useDataOfSize( void* data, typename Self::SizeType size )
 {
   assert_M( size % sizeof( Self::Element ) == 0 );
 
@@ -56,7 +56,7 @@ Self::useDataOfSize( void* data, Self::SizeType size )
 Template
 inline
 typename Self::Class&
-Self::use( Self::Element* data, Self::SizeType length )
+Self::use( typename Self::Element* data, typename Self::SizeType length )
 {
   self._begin = data;
   self._end = data + length;
@@ -69,7 +69,7 @@ Self::use( Self::Element* data, Self::SizeType length )
 Template
 inline
 typename Self::Class&
-Self::use( Self::Element* begin, Self::Element* end )
+Self::use( typename Self::Element* begin, typename Self::Element* end )
 {
   self._begin = begin;
   self._end = end;
@@ -82,7 +82,7 @@ Self::use( Self::Element* begin, Self::Element* end )
 Template
 inline
 typename Self::Class&
-Self::use( const Self::Class& src )
+Self::use( typename const Self::Class& src )
 {
   self._begin = src._begin;
   self._end = src._end;
@@ -106,7 +106,7 @@ Self::clone()
 Template
 inline
 typename Self::Class&
-Self::operator=( const Self::Class& src )
+Self::operator=( typename const Self::Class& src )
 {
   self.use( src );
   return self;
