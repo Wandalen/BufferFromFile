@@ -30,7 +30,7 @@ inline Self::SelfConstructor( typename Self::Element* begin, typename Self::Elem
 //
 
 Template
-inline Self::SelfConstructor( typename const Self::Class& src )
+inline Self::SelfConstructor( const typename Self::Class& src )
 {
   self.use( src );
 }
@@ -106,7 +106,7 @@ Self::clone()
 Template
 inline
 typename Self::Class&
-Self::operator=( typename const Self::Class& src )
+Self::operator=( const typename Self::Class& src )
 {
   self.use( src );
   return self;
