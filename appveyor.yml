@@ -1,7 +1,5 @@
 image:
-  # - Previous Visual Studio 2017
-  - Previous Visual Studio 2015
-  - Previous Visual Studio 2013
+  Visual Studio 2015
   # - Ubuntu
 
 platform: x64
@@ -14,12 +12,15 @@ environment:
         # - nodejs_version: "node"
 
 build: off
+deploy: off
 
 install:
  - ps: $env:package_version = (Get-Content -Raw -Path package.json | ConvertFrom-Json).version
  - ps: Update-AppveyorBuild -Version "$env:package_version.$env:APPVEYOR_BUILD_NUMBER"
  - cmd: powershell -command "Install-Product node $env:nodejs_version"
  - sh: nvm install $nodejs_version
+ - IF /I "%PLATFORM%" == "x64" set PATH=C:\Python27-x64;%PATH%
+ - IF /I "%PLATFORM%" == "x64" CALL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
  - npm install
 
 
