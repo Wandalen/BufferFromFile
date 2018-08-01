@@ -12,6 +12,7 @@ var Self = function BufferFromFile()
 }
 
 
+
 Self.prototype = Object.create( _BufferFromFile );
 Object.assign( Self,_BufferFromFile );
 
