@@ -19,8 +19,8 @@ var _ = wTools;
 var Parent = wTools.Testing;
 var sourceFilePath = _.diagnosticLocation().full; // typeof module !== 'undefined' ? __filename : document.scripts[ document.scripts.length-1 ].src;
 var testData = '1 - is a random digit set from JS though mapped into memory file with help of BufferFromFile open source package.'
-var testDir = _.dirTempMake( _.pathDir( __dirname ) );
-var filePath = _.fileProvider.pathNativize( _.pathJoin( testDir, 'testFile.txt' ) );
+var testDir = _.dirTempMake( _.dir( __dirname ) );
+var filePath = _.fileProvider.nativize( _.join( testDir, 'testFile.txt' ) );
 
 //
 
