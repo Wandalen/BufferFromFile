@@ -20,8 +20,8 @@ if( typeof module !== 'undefined' )
 
 var _ = wTools;
 var testData = '1 - is a random digit set from JS though mapped into memory file with help of BufferFromFile open source package.'
-var testDir = _.dirTempMake( _.pathDir( __dirname ) );
-var filePath = _.fileProvider.pathNativize( _.pathJoin( testDir, 'testFile.txt' ) );
+var testDir = _.dirTempMake( _.dir( __dirname ) );
+var filePath = _.fileProvider.nativize( _.join( testDir, 'testFile.txt' ) );
 
 //
 
