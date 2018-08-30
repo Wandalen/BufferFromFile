@@ -20,14 +20,20 @@ if( typeof module !== 'undefined' )
 
 var _ = wTools;
 var testData = '1 - is a random digit set from JS though mapped into memory file with help of BufferFromFile open source package.'
-var testDir = _.dirTempMake( _.dir( __dirname ) );
-var filePath = _.fileProvider.nativize( _.join( testDir, 'testFile.txt' ) );
+var testDir = _.path.dirTempMake( _.path.dir( __dirname ) );
+var filePath = _.fileProvider.path.nativize( _.path.join( testDir, 'testFile.txt' ) );
 
 //
 
-function cleanTestDir()
+function onSuiteBegin()
+{
+  _.fileProvider.fieldPush( 'usingBigIntForStat', 0 );
+}
+
+function onSuiteEnd()
 {
   _.fileProvider.filesDelete( testDir );
+  _.fileProvider.fieldPop( 'usingBigIntForStat', 0 );
 }
 
 // --
@@ -55,7 +61,7 @@ function buffersFromRaw( test )
   {
     var data = testData;
     var type = buffers[ i ];
-    var mod = _.strCutOffLeft( type, [ 8, 16, 32, 64 ] )[ 1 ] / 8;
+    var mod = _.strIsolateBeginOrNone( type, [ 8, 16, 32, 64 ] )[ 1 ] / 8;
 
     if( mod > 1 )
     while( data.length % mod !== 0 )
@@ -356,7 +362,7 @@ function flush( test )
   {
     var data = testData;
     var type = buffers[ i ];
-    var mod = _.strCutOffLeft( type, [ 8, 16, 32, 64 ] )[ 1 ] / 8;
+    var mod = _.strIsolateBeginOrNone( type, [ 8, 16, 32, 64 ] )[ 1 ] / 8;
 
     if( mod > 1 )
     while( data.length % mod !== 0 )
@@ -653,7 +659,8 @@ var Self =
 
   routineTimeOut : 9999999,
 
-  onSuiteEnd : cleanTestDir,
+  onSuiteBegin : onSuiteBegin,
+  onSuiteEnd : onSuiteEnd,
 
   tests :
   {

@@ -2,7 +2,7 @@
   "name": "bufferfromfile",
   "version": "0.4.28",
   "engine": "node >= 6.0.0",
-  "enabled": false,
+  "enabled": true,
   "license": "MIT",
   "description": "The module in JavaScript provides convenient means for using files as standard ArrayBuffer making mmap behind the scene.",
   "author": "Kostiantyn Wandalen <wanalen@willbe.so>",
