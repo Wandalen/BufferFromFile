@@ -61,6 +61,9 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
   vOptionOptional_M( int, flag, ( protection & PROT_WRITE ) ? MAP_SHARED : MAP_PRIVATE );
   vOptionOptional_M( int, advise, MADV_NORMAL );
 
+  // vOptionOptional2_M( IsString, xxx, "xxx" );
+  // std::cout << xxx->IsString();
+
   /* */
 
   Memory& memory = *new Memory();

@@ -119,17 +119,17 @@ inline toV8( Int8Maybe4 src )
 
 #endif // Wrd8Maybe4Size == 8
 
-v8::Local< v8::Number >
+v8::Local< v8::BigInt >
 inline toV8( Wrd8 src )
 {
-  v8::Local< v8::Number > result = v8::Number::New( v8::Isolate::GetCurrent(),src );
+  v8::Local< v8::BigInt > result = v8::BigInt::New( v8::Isolate::GetCurrent(),src );
   return result;
 };
 
-v8::Local< v8::Number >
+v8::Local< v8::BigInt >
 inline toV8( Int8 src )
 {
-  v8::Local< v8::Number > result = v8::Number::New( v8::Isolate::GetCurrent(),src );
+  v8::Local< v8::BigInt > result = v8::BigInt::New( v8::Isolate::GetCurrent(),src );
   return result;
 };
 
