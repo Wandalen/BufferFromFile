@@ -644,6 +644,28 @@ function unmap( test )
   })
 }
 
+//
+
+function experiment( test )
+{ 
+  var file = _.path.join( testDir, test.name, 'fileA' );
+  _.fileProvider.fileWrite( filePath, testData );
+ 
+  var buffer = BufferFromFile( filePath ).ArrayBuffer();
+  BufferFromFile.unmap( buffer );
+  test.identical( 1,1 );
+
+  return _.timeOut( 1000, () =>
+  { 
+    var buffer = BufferFromFile( filePath ).ArrayBuffer();
+    BufferFromFile.unmap( buffer );
+    test.identical( 1,1 );
+  })
+
+}
+
+experiment.experimental = 1;
+
 // --
 // proto
 // --
@@ -657,8 +679,6 @@ var Self =
 
   silencing : 1,
 
-  routineTimeOut : 9999999,
-
   onSuiteBegin : onSuiteBegin,
   onSuiteEnd : onSuiteEnd,
 
@@ -669,7 +689,9 @@ var Self =
     flush : flush,
     advise : advise,
     status : status,
-    unmap : unmap
+    unmap : unmap,
+
+    experiment : experiment,
   },
 
 }
