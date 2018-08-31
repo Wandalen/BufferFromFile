@@ -26,7 +26,7 @@ vstr( Srcs_A ... srcs )
 std::string
 inline toStr( Local< v8::String > src )
 {
-  v8::String::Utf8Value value( src );
+  v8::String::Utf8Value value( v8::Isolate::GetCurrent(),src );
   std::string result = std::string( *value );
   return result;
 }
@@ -34,7 +34,7 @@ inline toStr( Local< v8::String > src )
 std::string
 inline toStr( Local< v8::Value > src )
 {
-  v8::String::Utf8Value value( src );
+  v8::String::Utf8Value value( v8::Isolate::GetCurrent(),src );
   std::string result = std::string( *value );
   return result;
 }
