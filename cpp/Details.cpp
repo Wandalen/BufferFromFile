@@ -127,10 +127,11 @@ void fileUnmap( Memory& memory )
   if( memory.buffer.data() != NULL )
   munmap( memory.buffer.data(), memory.buffer.length() );
 
- #ifdef _WIN32
+  #ifdef _WIN32
   CloseHandle( memory.file.data );
- #endif
+  #endif
   uv_fs_req_cleanup( &memory.file );
+
   delete &memory;
 }
 
@@ -209,7 +210,7 @@ uv_fs_t& _fileOpen( uv_fs_t& req, const string& path, int protection = O_RDWR )
   // cout << "fd : " << fd << endl;
   // cout << "result->result : " << result->result << endl;
 
-  uv_run(uv_default_loop(), UV_RUN_DEFAULT);
+  // uv_run(uv_default_loop(), UV_RUN_DEFAULT);
 
   result->result = fd;
 

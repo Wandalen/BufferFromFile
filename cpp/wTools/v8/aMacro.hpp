@@ -32,6 +32,11 @@
   if( !wTools::v8::toNative( o->Get( vstr( #name_A ) ),name_A ) ) \
   name_A = default_A; \
 
+#define vOptionOptional2_M( type_A,name_A,default_A ) \
+  LocalValue name_A = o->Get( vstr( #name_A ) ); \
+  if( name_A->IsUndefined() || !name_A->type_A() ) \
+  name_A = toV8( default_A ); \
+
 #define vOptionNull_M( name_A ) \
   ::v8::Handle<::v8::Primitive> name_A = ::v8::Null( ::v8::Isolate::GetCurrent() ); \
   o->Set( vstr( #name_A ),name_A ) \

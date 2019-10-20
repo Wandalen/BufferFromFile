@@ -1,49 +1,99 @@
 
 about :
 
-  name : "repo"
-  description : "The module in JavaScript provides convenient means for using files as standard ArrayBuffer making mmap behind the scene."
-  version : "0.4.28"
+  name : 'bufferFromFile'
+  description : 'The module in JavaScript provides convenient means for using files as standard ArrayBuffer making mmap behind the scene.'
+  version : '0.5.0'
   enabled : 1
   interpreters :
-  - nodejs >= 6.0.0
+  - njs >= 8.0.0
   - chrome >= 60.0.0
   - firefox >= 60.0.0
   keywords :
   - wTools
-
-execution :
-
-  scripts :
-    test : wtest staging
-    docgen : wdocgen staging
+  - ArrayBuffer
+  - Buffer from file
+  - ArrayBuffer from file
+  - TypedBuffer from file
+  - Nodejs buffer from file
+  - mmap
+  - mmap file
+  - zero copy
+  license : MIT
+  author : 'Kostiantyn Wandalen <wanalen@willbe.so>'
+  contributors :
+  - 'Kostiantyn Wandalen <wanalen@willbe.so>'
+  - 'Volodymyr M. <volodymyr.migdal@gmail.com>'
+  npm.name : 'bufferfromfile'
+  npm.scripts :
+    install : 'node-gyp configure && node-gyp rebuild --msvs_version=auto'
+    test : 'wtest .run test.test/**'
+    clean : 'rm -rf build node_modules'
 
 path :
 
-  repository : git+https://github.com/Wandalen/repo.git
-  bugs : https://github.com/Wandalen/repo/issues
+  repository : git+https:///github.com/Wandalen/BufferFromFile.git
+  bugtracker : https:///github.com/Wandalen/BufferFromFile/issues
 
 step :
 
-  export.proto :
-    inherit : export
+  proto.export :
+    inherit : module.export
     export : path::proto
     tar : 0
     criterion :
-      debug : 1
-      proto : 1
+      content : 'proto'
+
+  doc.export :
+    inherit : module.export
+    export : path::doc
+    tar : 0
+    criterion :
+      content : 'doc'
+
+  npm.export :
+    inherit : module.export
+    export : out.npm
+    tar : 0
+    criterion :
+      content : 'npm'
+
+  npm.publish :
+    shell : npm publish
 
 build :
 
   proto.export :
     criterion :
-      default : 1
-      debug : 1
-      raw : 1
-      proto : 1
+      content : 'proto'
       export : 1
-      tar : 1
     steps :
-      - build::debug.raw
-      - step::export.proto
+      # - build::debug.raw
+      - step::proto.export
 
+  doc.export :
+    criterion :
+      content : 'doc'
+      export : 1
+    steps :
+      # - build::debug.raw
+      - step::doc.export
+
+  npm.export :
+    criterion :
+      content : 'npm'
+      export : 1
+    steps :
+      # - build::debug.raw
+      # - step::npm.export
+      - step::npm.publish
+
+  export :
+
+    criterion :
+      default : 1
+      export : 1
+    steps :
+      # - build::npm
+      - build::proto.export
+      # - build::doc.export

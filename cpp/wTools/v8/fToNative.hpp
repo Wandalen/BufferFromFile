@@ -56,7 +56,7 @@ bool inline toNative( const LocalValue src, wTypedBuffer< Element_A >& dst )
 };
 */
 
-template< typename Element_A, wTypedBuffer< Element_A > >
+template< typename Element_A, wTypedBuffer< Element_A > & >
 bool inline toNative( const Local< ArrayBuffer > src, wTypedBuffer< Element_A >& dst )
 {
   bool result = isTypeOf( src,dst );
