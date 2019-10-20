@@ -1,7 +1,7 @@
 {
   "name": "bufferfromfile",
   "version": "0.4.28",
-  "engine": "node >= 6.0.0",
+  "engine": "node >= 8.0.0",
   "enabled": false,
   "license": "MIT",
   "description": "The module in JavaScript provides convenient means for using files as standard ArrayBuffer making mmap behind the scene.",
@@ -26,7 +26,7 @@
   "scripts": {
     "install": "node-gyp configure && node-gyp rebuild --msvs_version=auto",
     "test": "wtest staging",
-    "make_doc": "./doc.sh",
+    "docgen": "wdocgen proto",
     "clean": "rm -rf build node_modules"
   },
   "repository": {

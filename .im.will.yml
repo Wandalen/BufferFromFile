@@ -1,0 +1,88 @@
+
+submodule :
+
+path :
+
+  proto : './proto'
+  in : '.'
+  out : 'out'
+  out.debug :
+    path : './out.debug'
+    criterion :
+      debug : 1
+  out.release :
+    path : './out.release'
+    criterion :
+      debug : 0
+
+reflector :
+
+  reflect.proto :
+    inherit : predefined.*
+    criterion :
+      debug : [ 0,1 ]
+    filePath :
+      path::proto : path::out.*=1
+
+  reflect.submodules :
+    inherit : predefined.*
+    criterion :
+      debug : 1
+    filePath :
+      submodule::*/exported::*=1/path::exportedDir*=1 : path::out.*=1
+
+step :
+
+  reflect.proto :
+    inherit : predefined.reflect
+    reflector :
+      reflector::reflect.proto.*=1
+    criterion :
+      debug : [ 0,1 ]
+      raw : [ 0,1 ]
+
+  reflect.submodules :
+    inherit : predefined.reflect
+    reflector :
+      reflector::reflect.submodules*=1
+    criterion :
+      debug : 1
+      raw : [ 0,1 ]
+
+build :
+
+  debug.raw :
+    criterion :
+      default : 1
+      debug : 1
+      raw : 1
+    steps :
+      - step::reflect.proto.*=1
+      # - step::reflect.submodules*=1
+
+  debug.compiled :
+    criterion :
+      debug : 1
+      raw : 0
+    steps :
+      - step::reflect.proto.*=1
+
+  release.raw :
+    criterion :
+      debug : 0
+      raw : 1
+    steps :
+      - step::reflect.proto.*=1
+
+  release.compiled :
+    criterion :
+      debug : 0
+      raw : 0
+    steps :
+      - step::reflect.proto.*=1
+
+  all :
+    steps :
+      - build::debug.raw
+      - build::release.compiled
+

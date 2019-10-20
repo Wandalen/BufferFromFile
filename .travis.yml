@@ -1,18 +1,17 @@
+
 sudo: false
 language: node_js
 os:
-  - osx
   - linux
+  - osx
+  - windows
 node_js:
   - '8'
   - '9'
-  - 'node'
-compiler:
-  - gcc
-  - clang
-script: 
+  - '10'
+  - '12'
+  - 'lts/*'
+script:
   - npm test
-
-#cache:
-#  directories:
-#    - node_modules
+cache:
+  npm: false
