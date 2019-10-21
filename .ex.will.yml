@@ -33,7 +33,7 @@ about :
 path :
 
   repository : git+https:///github.com/Wandalen/BufferFromFile.git
-  remotes :
+  origins :
    - git+https:///github.com/Wandalen/bufferFromFile.git
    - npm:///bufferfromfile
   bugtracker : https:///github.com/Wandalen/BufferFromFile/issues
