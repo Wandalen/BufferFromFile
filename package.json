@@ -30,7 +30,7 @@
     "url" : "https://github.com/Wandalen/BufferFromFile/issues"
   }, 
   "dependencies" : {}, 
-  "devDependencies" : { "wTools" : "", "wTesting" : "", "bufferfromfile" : "." }, 
+  "devDependencies" : { "wTools" : "beta", "wTesting" : "beta", "bufferfromfile" : "." }, 
   "gypfile" : true, 
   "keywords" : 
   [
