@@ -21,7 +21,11 @@ path :
 
   in : '.'
   out : 'out'
-  temp : 'path::out'
+  temp :
+    - 'path::out'
+    - 'package-lock.json'
+    - 'package.json'
+    - 'node_modules'
   proto : './js'
   export : '{path::proto}/**'
   doc : './doc'

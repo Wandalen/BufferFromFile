@@ -3,18 +3,19 @@ root:
   - bufferFromFile.out
 consistency:
   bufferFromFile.out.will.yml: &ref_0
-    hash: ab4a9f3b560c8db8f5c45a5cc84825c1
-    size: 38099
+    hash: dcb4429309be20de170b4933f68088f2
+    size: 38128
   ../.ex.will.yml: &ref_1
     hash: 695a3e0ecb8d6a01a8cb6432d70c812c
     size: 2086
   ../.im.will.yml: &ref_2
-    hash: 01553ac2fac7865cfa7f9da820b0a93e
-    size: 4859
+    hash: 40fb70940aef1a31af70860771dd0e2c
+    size: 4933
 module:
   bufferFromFile.out:
     about:
       name: bufferFromFile
+      org: noorg
       description: >-
         The module in JavaScript provides convenient means for using files as
         standard ArrayBuffer making mmap behind the scene.
@@ -72,9 +73,6 @@ module:
       download:
         criterion:
           predefined: 1
-      remote:
-        criterion:
-          predefined: 1
       repository:
         path: 'git+https:///github.com/Wandalen/BufferFromFile.git'
       origins:
@@ -84,15 +82,15 @@ module:
       bugtracker:
         path: 'https:///github.com/Wandalen/BufferFromFile/issues'
       in:
-        criterion:
-          predefined: 0
         path: .
       out:
-        criterion:
-          predefined: 0
         path: .
       temp:
-        path: 'path::out'
+        path:
+          - 'path::out'
+          - ../package-lock.json
+          - ../package.json
+          - ../node_modules
       proto:
         path: ../js
       export:
@@ -157,11 +155,13 @@ module:
         path: '{path::out.*=}/source/Index.s'
       exported.dir.proto.export:
         criterion:
+          generated: 1
           content: proto
           export: 1
         path: ../js
       exported.files.proto.export:
         criterion:
+          generated: 1
           content: proto
           export: 1
         path:
@@ -334,6 +334,7 @@ module:
           prefixPath: ../js
         mandatory: 1
         criterion:
+          generated: 1
           content: proto
           export: 1
       exported.files.proto.export:
@@ -346,6 +347,7 @@ module:
         recursive: 0
         mandatory: 1
         criterion:
+          generated: 1
           content: proto
           export: 1
     step:
@@ -703,6 +705,7 @@ module:
         opts:
           reflector: 'reflector::exported.proto.export*'
         criterion:
+          generated: 1
           content: proto
           export: 1
         inherit:
@@ -711,6 +714,7 @@ module:
         opts:
           reflector: 'reflector::exported.files.proto.export*'
         criterion:
+          generated: 1
           content: proto
           export: 1
         inherit:
@@ -809,6 +813,7 @@ module:
   ../:
     about:
       name: bufferFromFile
+      org: noorg
       description: >-
         The module in JavaScript provides convenient means for using files as
         standard ArrayBuffer making mmap behind the scene.
@@ -866,9 +871,6 @@ module:
       download:
         criterion:
           predefined: 1
-      remote:
-        criterion:
-          predefined: 1
       repository:
         path: 'git+https:///github.com/Wandalen/BufferFromFile.git'
       origins:
@@ -878,21 +880,21 @@ module:
       bugtracker:
         path: 'https:///github.com/Wandalen/BufferFromFile/issues'
       in:
-        criterion:
-          predefined: 0
         path: .
       out:
-        criterion:
-          predefined: 0
         path: out
       temp:
-        path: 'path::out'
+        path:
+          - 'path::out'
+          - package-lock.json
+          - package.json
+          - node_modules
       proto:
-        path: ./js
+        path: js
       export:
         path: '{path::proto}/**'
       doc:
-        path: ./doc
+        path: doc
       out.raw.debug:
         criterion:
           debug: debug
@@ -1512,6 +1514,6 @@ module:
         hash: 695a3e0ecb8d6a01a8cb6432d70c812c
         size: 2086
       ../.im.will.yml:
-        hash: 01553ac2fac7865cfa7f9da820b0a93e
-        size: 4859
+        hash: 40fb70940aef1a31af70860771dd0e2c
+        size: 4933
       bufferFromFile.out.will.yml: *ref_0
