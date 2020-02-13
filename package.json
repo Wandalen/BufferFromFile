@@ -15,7 +15,7 @@
   "main" : "js/Main.ss", 
   "scripts" : 
   {
-    "install" : "node-gyp configure && node-gyp rebuild --msvs_version=auto", 
+    "install" : "node-gyp configure && node-gyp rebuild --msvs_version=2017", 
     "test" : "wtest test.test", 
     "make_doc" : "./doc.sh", 
     "clean" : "rm -rf build node_modules"

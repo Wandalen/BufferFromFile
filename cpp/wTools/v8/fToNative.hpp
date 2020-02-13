@@ -235,7 +235,7 @@ bool inline toNative< Wrd8Maybe4 >( const LocalValue src, Wrd8Maybe4& dst )
   bool result = isTypeOf( src,dst );
   if( !result )
   return result;
-  dst = src->IntegerValue();
+  dst = src->IntegerValue( v8::Isolate::GetCurrent()->GetCurrentContext() ).FromJust();
   return result;
 };
 
@@ -247,7 +247,7 @@ bool inline toNative< Int8Maybe4 >( const LocalValue src, Int8Maybe4& dst )
   bool result = isTypeOf( src,dst );
   if( !result )
   return result;
-  dst = src->IntegerValue();
+  dst = src->IntegerValue( v8::Isolate::GetCurrent()->GetCurrentContext() ).FromJust();
   return result;
 };
 
