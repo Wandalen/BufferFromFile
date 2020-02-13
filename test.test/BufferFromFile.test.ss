@@ -13,6 +13,7 @@ if( typeof module !== 'undefined' )
 
   _.include( 'wTesting' );
   _.include( 'wFiles' );
+  _.include( 'wAppBasic' );
 
 }
 
@@ -25,19 +26,57 @@ var _ = wTools;
 function onSuiteBegin()
 { 
   let context = this;
-  context.suitePath = _.fileProvider.path.pathDirTempOpen( _.path.join( __dirname, '..'  ),'BufferFromFile' );
-  context.filePath = _.fileProvider.path.nativize( _.path.join( context.suitePath, 'testFile.txt' ) );
+  
+  context.suiteTempPath = _.path.pathDirTempOpen( _.path.join( __dirname, '..'  ), 'BufferFromFile' );
+  context.assetsOriginalSuitePath = _.path.join( __dirname, '_asset' );
+  context.filePath = _.fileProvider.path.nativize( _.path.join( context.suiteTempPath, 'testFile.txt' ) );
   context.testData = '1 - is a random digit set from JS though mapped into memory file with help of BufferFromFile open source package.'
-
+  context.bufferFromFilePath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), '../js/Main.ss' ) );
+  context.toolsPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), '../proto/dwtools/Tools.s' ) );
   _.fileProvider.fieldPush( 'UsingBigIntForStat', 0 );
 }
 
 function onSuiteEnd()
 { 
   let context = this;
-  _.assert( _.strHas( context.suitePath, 'BufferFromFile' ), context.suitePath );
-  _.fileProvider.path.pathDirTempClose( context.suitePath );
+  _.assert( _.strHas( context.suiteTempPath, 'BufferFromFile' ), context.suiteTempPath );
+  _.fileProvider.path.pathDirTempClose( context.suiteTempPath );
   _.fileProvider.fieldPop( 'UsingBigIntForStat', 0 );
+}
+
+function assetFor( test, asset )
+{
+  let self = this;
+  let a = test.assetFor( asset );
+
+  a.reflect = function reflect()
+  {
+
+    let reflected = a.fileProvider.filesReflect({ reflectMap : { [ a.originalAssetPath ] : a.routinePath }, onUp : onUp });
+
+    reflected.forEach( ( r ) =>
+    { 
+      if( r.dst.ext !== 'js' && r.dst.ext !== 's' )
+      return;
+      var read = a.fileProvider.fileRead( r.dst.absolute );
+      read = _.strReplace( read, `'wTools'`, `'${_.strEscape( self.toolsPath )}'` );
+      read = _.strReplace( read, `'bufferFromFile'`, `'${_.strEscape( self.bufferFromFilePath )}'` );
+      a.fileProvider.fileWrite( r.dst.absolute, read );
+    });
+
+  }
+
+  return a;
+
+  function onUp( r )
+  {
+    if( !_.strHas( r.dst.relative, '.atest.' ) )
+    return;
+    let relative = _.strReplace( r.dst.relative, '.atest.', '.test.' );
+    r.dst.relative = relative;
+    _.assert( _.strHas( r.dst.absolute, '.test.' ) );
+  }
+
 }
 
 // --
@@ -665,6 +704,80 @@ function unmap( test )
 
 //
 
+function ipc( test )
+{
+  let context = this;
+  
+  let a = context.assetFor( test, 'ipc' );
+  
+  a.reflect();
+  
+  _.fileProvider.fileWrite( _.path.join( a.routinePath, 'File.txt' ), 'abc' );
+  
+  var buffer = BufferFromFile( _.path.nativize( _.path.join( a.routinePath, 'File.txt' ) ) ).NodeBuffer();
+  buffer.fill( 'a' );
+  BufferFromFile.flush( buffer );
+  
+  let childProgramPath = _.path.join( a.routinePath, 'Child.js' );
+  
+  var o = 
+  { 
+    execPath : 'node ' + childProgramPath,
+    currentPath : context.suiteTempPath,
+    ipc : 1,
+    mode : 'spawn'
+  }
+
+  /* */
+
+  let ready = _.process.start( o );
+  let childBuffer;
+  let finalBuffer;
+  
+  o.process.on( 'message', ( m ) => 
+  { 
+    if( m.ready === 1 )
+    {
+      buffer.fill( 'a' );
+      BufferFromFile.flush( buffer );
+      o.process.send( 'ready' );
+    }
+    else if( m.childBuffer )
+    {
+      childBuffer = m.childBuffer;
+    }
+    else if( m.ready === 2 )
+    {
+      finalBuffer = buffer.toString();
+    }
+  })
+  
+  ready.finally( ( err, op ) =>
+  { 
+    BufferFromFile.unmap( buffer );
+    
+    if( err )
+    throw err;
+    
+    test.identical( op.exitCode, 0 );
+    test.identical( childBuffer, 'aaa' )
+    test.identical( finalBuffer, 'bbb' )
+    return null;
+  })
+
+  /* */
+
+  return ready;
+}
+
+ipc.description = 
+`
+  Main process sends data to child via buffer, child reads buffer and sends receveived data back via ipc.
+  Child process sends data to parent via buffer, parent reads buffer and checks both results.
+`
+
+//
+
 function experiment( test )
 {  
   let context = this;
@@ -703,9 +816,14 @@ var Proto =
   
   context : 
   {
-    suitePath : null,
+    suiteTempPath : null,
+    assetsOriginalSuitePath : null,
+    execJsPath : null,
     filePath : null,
     testData : null,
+    bufferFromFilePath : null,
+    toolsPath : null,
+    assetFor
   },
 
   tests :
@@ -716,6 +834,8 @@ var Proto =
     advise,
     status,
     unmap,
+    
+    ipc,
 
     experiment
   },

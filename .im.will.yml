@@ -16,6 +16,11 @@ submodule :
     enabled : 0 # submodule
     criterion :
       development : 1
+  wAppBasic :
+    path : npm:///wappbasic
+    enabled : 0 # submodule
+    criterion :
+      development : 1
 
 path :
 
