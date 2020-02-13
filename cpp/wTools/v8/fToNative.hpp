@@ -130,7 +130,7 @@ bool inline toNative< Wrd1 >( const LocalValue src, Wrd1& dst )
   bool result = isTypeOf( src,dst );
   if( !result )
   return result;
-  dst = src->Uint32Value();
+  dst = src->Uint32Value( v8::Isolate::GetCurrent()->GetCurrentContext() ).FromJust();
   return result;
 };
 
@@ -142,7 +142,7 @@ bool inline toNative< Int1 >( const LocalValue src, Int1& dst )
   bool result = isTypeOf( src,dst );
   if( !result )
   return result;
-  dst = src->Int32Value();
+  dst = src->Int32Value( v8::Isolate::GetCurrent()->GetCurrentContext() ).FromJust();
   return result;
 };
 
@@ -156,7 +156,7 @@ bool inline toNative< Wrd2 >( const LocalValue src, Wrd2& dst )
   bool result = isTypeOf( src,dst );
   if( !result )
   return result;
-  dst = src->Uint32Value();
+  dst = src->Uint32Value( v8::Isolate::GetCurrent()->GetCurrentContext() ).FromJust();
   return result;
 };
 
@@ -168,7 +168,7 @@ bool inline toNative< Int2 >( const LocalValue src, Int2& dst )
   bool result = isTypeOf( src,dst );
   if( !result )
   return result;
-  dst = src->Int32Value();
+  dst = src->Int32Value( v8::Isolate::GetCurrent()->GetCurrentContext() ).FromJust();
   return result;
 };
 
@@ -182,7 +182,7 @@ bool inline toNative< Wrd4Maybe2 >( const LocalValue src, Wrd4Maybe2& dst )
   bool result = isTypeOf( src,dst );
   if( !result )
   return result;
-  dst = src->Uint32Value();
+  dst = src->Uint32Value( v8::Isolate::GetCurrent()->GetCurrentContext() ).FromJust();
   return result;
 };
 
@@ -195,7 +195,7 @@ bool inline toNative< Int4Maybe2 >( const LocalValue src, Int4Maybe2& dst )
   bool result = isTypeOf( src,dst );
   if( !result )
   return result;
-  dst = src->Int32Value();
+  dst = src->Int32Value( v8::Isolate::GetCurrent()->GetCurrentContext() ).FromJust();
   return result;
 };
 
@@ -209,7 +209,7 @@ bool inline toNative< Wrd8Maybe4 >( const LocalValue src, Wrd8Maybe4& dst )
   bool result = isTypeOf( src,dst );
   if( !result )
   return result;
-  dst = src->Uint32Value();
+  dst = src->Uint32Value( v8::Isolate::GetCurrent()->GetCurrentContext() ).FromJust();
   return result;
 };
 
@@ -221,7 +221,7 @@ bool inline toNative< Int8Maybe4 >( const LocalValue src, Int8Maybe4& dst )
   bool result = isTypeOf( src,dst );
   if( !result )
   return result;
-  dst = src->Int32Value();
+  dst = src->Int32Value( v8::Isolate::GetCurrent()->GetCurrentContext() ).FromJust();
   return result;
 };
 
@@ -261,7 +261,7 @@ bool inline toNative< Wrd8 >( const LocalValue src, Wrd8& dst )
   bool result = isTypeOf( src,dst );
   if( !result )
   return result;
-  dst = src->IntegerValue();
+  dst = src->IntegerValue( v8::Isolate::GetCurrent()->GetCurrentContext() ).FromJust();
   return result;
 };
 
@@ -273,7 +273,7 @@ bool inline toNative< Int8 >( const LocalValue src, Int8& dst )
   bool result = isTypeOf( src,dst );
   if( !result )
   return result;
-  dst = src->IntegerValue();
+  dst = src->IntegerValue( v8::Isolate::GetCurrent()->GetCurrentContext() ).FromJust();
   return result;
 };
 
@@ -286,7 +286,7 @@ bool inline toNative< bool >( const LocalValue src, bool& dst )
   bool result = isTypeOf( src,dst );
   if( !result )
   return result;
-  dst = src->Int32Value();
+  dst = src->Int32Value( v8::Isolate::GetCurrent()->GetCurrentContext() ).FromJust();
   return result;
 };
 

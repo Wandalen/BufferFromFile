@@ -27,7 +27,7 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
   }
   else
   {
-    o = info[ 0 ]->ToObject();
+    o = info[ 0 ]->ToObject( ::wTools::v8::Isolate::GetCurrent()->GetCurrentContext() ).ToLocalChecked();
   }
 
   // ArgumentsOf
@@ -280,7 +280,7 @@ void flush_js( const FunctionCallbackInfo< Value >& info )
   }
   else
   {
-    o = info[ 0 ]->ToObject();
+    o = info[ 0 ]->ToObject( ::wTools::v8::Isolate::GetCurrent()->GetCurrentContext() ).ToLocalChecked();
   }
 
   /* arguments */
@@ -345,7 +345,7 @@ void flush_js( const FunctionCallbackInfo< Value >& info )
 
 //
 
-void Init( Handle< Object > exports, Handle< Object > module )
+void Init( Local< Object > exports, Local< Object > module )
 {
   Isolate* isolate = Isolate::GetCurrent();
   // Local< Context > context = isolate->GetCurrentContext();
