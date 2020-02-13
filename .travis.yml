@@ -6,11 +6,11 @@ os:
   - osx
   - windows
 node_js:
-  - '8'
-  - '9'
+  # - '8'
+  # - '9'
   - '10'
   - '12'
-  - 'lts/*'
+  # - 'lts/*'
 script:
   - npm test
 cache:
