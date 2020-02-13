@@ -611,11 +611,12 @@ function status( test )
   //
 
   test.description = 'too many args'
+  var buffer = BufferFromFile( context.filePath ).NodeBuffer();
   test.shouldThrowErrorSync( function ()
   {
-    var buffer = BufferFromFile( context.filePath ).NodeBuffer();
     BufferFromFile.status( buffer, 1, 2 );
   })
+  BufferFromFile.unmap( buffer );
 }
 
 //
@@ -652,13 +653,14 @@ function unmap( test )
   })
 
   //
-
+  
   test.description = 'too many args'
+  var buffer = BufferFromFile( context.filePath ).NodeBuffer();
   test.shouldThrowErrorSync( function ()
   {
-    var buffer = BufferFromFile( context.filePath ).NodeBuffer();
     BufferFromFile.unmap( buffer, 1, 2 );
   })
+  BufferFromFile.unmap( buffer );
 }
 
 //
