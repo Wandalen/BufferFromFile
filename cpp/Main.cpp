@@ -27,7 +27,7 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
   }
   else
   {
-    o = info[ 0 ]->ToObject();
+    o = info[ 0 ]->ToObject( ::wTools::v8::Isolate::GetCurrent()->GetCurrentContext() ).ToLocalChecked();
   }
 
   // ArgumentsOf
@@ -72,7 +72,7 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
 
   if (memory.file.result <= 0)
   {
-	  fileUnmap(memory);
+	  fileUnmap( memory );
 	  return ::wTools::v8::errThrow( "Failed open file, ", filePath );
   }
 
@@ -83,22 +83,22 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
 	 size = fileSize - (uint64_t)offset;
 	 if (size < 0 )
 	 {
-		::wTools::v8::errThrow( "Incorrect offset value." );
-		return;
+    fileUnmap( memory );
+		return ::wTools::v8::errThrow( "Incorrect offset value." );
 	 }
   }
 
   if( size < 0 || offset < 0 )
   {
-    ::wTools::v8::errThrow( "Routine expects positive value of size/offset property." );
-    return;
+    fileUnmap( memory );
+    return ::wTools::v8::errThrow( "Routine expects positive value of size/offset property." );
   }
 
 
   if( fileSize - offset < (uint64_t) size || ( uint64_t ) offset > fileSize )
-  {
-    ::wTools::v8::errThrow( "Requested bytes range goes beyond the end of a file, please provide lower size/offset values." );
-    return;
+  {  
+    fileUnmap( memory );
+    return ::wTools::v8::errThrow( "Requested bytes range goes beyond the end of a file, please provide lower size/offset values." );
   }
 
   // if( ( uint64_t ) offset % pageSizeGet() != 0 )
@@ -280,7 +280,7 @@ void flush_js( const FunctionCallbackInfo< Value >& info )
   }
   else
   {
-    o = info[ 0 ]->ToObject();
+    o = info[ 0 ]->ToObject( ::wTools::v8::Isolate::GetCurrent()->GetCurrentContext() ).ToLocalChecked();
   }
 
   /* arguments */
@@ -345,7 +345,7 @@ void flush_js( const FunctionCallbackInfo< Value >& info )
 
 //
 
-void Init( Handle< Object > exports, Handle< Object > module )
+void Init( Local< Object > exports, Local< Object > module )
 {
   Isolate* isolate = Isolate::GetCurrent();
   // Local< Context > context = isolate->GetCurrentContext();
