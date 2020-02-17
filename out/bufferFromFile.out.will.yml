@@ -2,15 +2,12 @@ format: outwillfile-2.0
 root:
   - bufferFromFile.out
 consistency:
-  bufferFromFile.out.will.yml: &ref_0
-    hash: dcb4429309be20de170b4933f68088f2
-    size: 38128
-  ../.ex.will.yml: &ref_1
+  ../.ex.will.yml: &ref_0
     hash: 695a3e0ecb8d6a01a8cb6432d70c812c
     size: 2086
-  ../.im.will.yml: &ref_2
-    hash: 40fb70940aef1a31af70860771dd0e2c
-    size: 4933
+  ../.im.will.yml: &ref_1
+    hash: 07a9683a3977fefa4c0808590b6790da
+    size: 5041
 module:
   bufferFromFile.out:
     about:
@@ -21,11 +18,11 @@ module:
         standard ArrayBuffer making mmap behind the scene.
       enabled: 1
       version: 0.5.0
-      interpreters:
+      interpreters: &ref_2
         - njs >= 8.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords:
+      keywords: &ref_3
         - wTools
         - ArrayBuffer
         - Buffer from file
@@ -37,11 +34,11 @@ module:
         - zero copy
       license: MIT
       author: Kostiantyn Wandalen <wanalen@willbe.so>
-      contributors:
+      contributors: &ref_4
         - Kostiantyn Wandalen <wanalen@willbe.so>
         - Volodymyr M. <volodymyr.migdal@gmail.com>
       npm.name: bufferfromfile
-      npm.scripts:
+      npm.scripts: &ref_5
         install: node-gyp configure && node-gyp rebuild --msvs_version=auto
         test: wtest .run test.test/**
         clean: rm -rf build node_modules
@@ -182,6 +179,12 @@ module:
           development: 1
       wTesting:
         path: 'npm:///wTesting'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          development: 1
+      wAppBasic:
+        path: 'npm:///wappbasic'
         autoExporting: 0
         enabled: 0
         criterion:
@@ -701,24 +704,6 @@ module:
           content: prime
         inherit:
           - files.transpile
-      exported.proto.export:
-        opts:
-          reflector: 'reflector::exported.proto.export*'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
-      exported.files.proto.export:
-        opts:
-          reflector: 'reflector::exported.files.proto.export*'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
     build:
       proto.export:
         steps:
@@ -807,9 +792,8 @@ module:
           content: proto
           export: 1
     consistency:
-      bufferFromFile.out.will.yml: *ref_0
-      ../.ex.will.yml: *ref_1
-      ../.im.will.yml: *ref_2
+      ../.ex.will.yml: *ref_0
+      ../.im.will.yml: *ref_1
   ../:
     about:
       name: bufferFromFile
@@ -819,30 +803,13 @@ module:
         standard ArrayBuffer making mmap behind the scene.
       enabled: 1
       version: 0.5.0
-      interpreters:
-        - njs >= 8.0.0
-        - chrome >= 60.0.0
-        - firefox >= 60.0.0
-      keywords:
-        - wTools
-        - ArrayBuffer
-        - Buffer from file
-        - ArrayBuffer from file
-        - TypedBuffer from file
-        - Nodejs buffer from file
-        - mmap
-        - mmap file
-        - zero copy
+      interpreters: *ref_2
+      keywords: *ref_3
       license: MIT
       author: Kostiantyn Wandalen <wanalen@willbe.so>
-      contributors:
-        - Kostiantyn Wandalen <wanalen@willbe.so>
-        - Volodymyr M. <volodymyr.migdal@gmail.com>
+      contributors: *ref_4
       npm.name: bufferfromfile
-      npm.scripts:
-        install: node-gyp configure && node-gyp rebuild --msvs_version=auto
-        test: wtest .run test.test/**
-        clean: rm -rf build node_modules
+      npm.scripts: *ref_5
     path:
       module.willfiles:
         criterion:
@@ -966,6 +933,12 @@ module:
           development: 1
       wTesting:
         path: 'npm:///wTesting'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          development: 1
+      wAppBasic:
+        path: 'npm:///wappbasic'
         autoExporting: 0
         enabled: 0
         criterion:
@@ -1514,6 +1487,5 @@ module:
         hash: 695a3e0ecb8d6a01a8cb6432d70c812c
         size: 2086
       ../.im.will.yml:
-        hash: 40fb70940aef1a31af70860771dd0e2c
-        size: 4933
-      bufferFromFile.out.will.yml: *ref_0
+        hash: 07a9683a3977fefa4c0808590b6790da
+        size: 5041

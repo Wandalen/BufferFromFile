@@ -1,6 +1,6 @@
 {
   "name" : "bufferfromfile", 
-  "version" : "0.4.81", 
+  "version" : "0.4.82", 
   "engine" : "node >= 6.0.0", 
   "enabled" : true, 
   "license" : "MIT", 
@@ -15,7 +15,7 @@
   "main" : "js/Main.ss", 
   "scripts" : 
   {
-    "install" : "node-gyp configure && node-gyp rebuild --msvs_version=2017", 
+    "install" : "node-gyp configure && node-gyp rebuild --msvs_version=auto", 
     "test" : "wtest test.test", 
     "make_doc" : "./doc.sh", 
     "clean" : "rm -rf build node_modules"
@@ -30,7 +30,13 @@
     "url" : "https://github.com/Wandalen/BufferFromFile/issues"
   }, 
   "dependencies" : {}, 
-  "devDependencies" : { "bufferfromfile" : ".", "wTools" : "alpha", "wTesting" : "alpha" }, 
+  "devDependencies" : 
+  {
+    "wppbasic" : "", 
+    "bufferfromfile" : ".", 
+    "wTools" : "alpha", 
+    "wTesting" : "alpha"
+  }, 
   "gypfile" : true, 
   "keywords" : 
   [
