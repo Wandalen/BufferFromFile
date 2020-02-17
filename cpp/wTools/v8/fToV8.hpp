@@ -26,7 +26,7 @@ inline toV8( v8::FunctionCallback src )
   // v8::Local< v8::FunctionTemplate > t = v8::FunctionTemplate::New( v8::Isolate::GetCurrent(),src );
   // v8::Local< v8::Function > f = t->GetFunction();
   // v8::FunctionTemplate result( src );
-  v8::Local< v8::Function > result = v8::Function::New( v8::Isolate::GetCurrent(),src );
+  v8::Local< v8::Function > result = v8::Function::New( v8::Isolate::GetCurrent()->GetCurrentContext(),src ).ToLocalChecked();
   return result;
 };
 
