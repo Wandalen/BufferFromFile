@@ -34,7 +34,7 @@
   {
     "wTools" : "", 
     "wTesting" : "", 
-    "wppbasic" : "", 
+    "wappbasic" : "", 
     "bufferfromfile" : "."
   }, 
   "gypfile" : true, 
