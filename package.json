@@ -1,6 +1,6 @@
 {
   "name" : "bufferfromfile", 
-  "version" : "0.4.86", 
+  "version" : "0.4.87", 
   "engine" : "node >= 6.0.0", 
   "enabled" : true, 
   "license" : "MIT", 
@@ -15,7 +15,7 @@
   "main" : "js/Main.ss", 
   "scripts" : 
   {
-    "install" : "node-gyp configure && node-gyp rebuild --msvs_version=auto", 
+    "install" : "node-gyp configure && node-gyp rebuild", 
     "test" : "wtest test.test", 
     "make_doc" : "./doc.sh", 
     "clean" : "rm -rf build node_modules"
