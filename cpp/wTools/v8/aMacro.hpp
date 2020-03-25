@@ -24,22 +24,22 @@
 
 #define vOption_M( type_A,name_A ) \
   type_A name_A; \
-  if( !wTools::v8::toNative( o->Get( vstr( #name_A ) ),name_A ) ) \
+  if( !wTools::v8::toNative( o->Get( ::wTools::v8::Isolate::GetCurrent()->GetCurrentContext(), vstr( #name_A ) ).ToLocalChecked(), name_A ) ) \
   return wTools::v8::errThrow( "Routine ",routineName," expects mandatory option ",#name_A ); \
 
 #define vOptionOptional_M( type_A,name_A,default_A ) \
   type_A name_A; \
-  if( !wTools::v8::toNative( o->Get( vstr( #name_A ) ),name_A ) ) \
+  if( !wTools::v8::toNative( o->Get( ::wTools::v8::Isolate::GetCurrent()->GetCurrentContext(), vstr( #name_A ) ).ToLocalChecked(), name_A ) ) \
   name_A = default_A; \
 
 #define vOptionOptional2_M( type_A,name_A,default_A ) \
-  LocalValue name_A = o->Get( vstr( #name_A ) ); \
+  LocalValue name_A = o->Get( ::wTools::v8::Isolate::GetCurrent()->GetCurrentContext(), vstr( #name_A ) ).ToLocalChecked(); \
   if( name_A->IsUndefined() || !name_A->type_A() ) \
   name_A = toV8( default_A ); \
 
 #define vOptionNull_M( name_A ) \
   ::v8::Handle<::v8::Primitive> name_A = ::v8::Null( ::v8::Isolate::GetCurrent() ); \
-  o->Set( vstr( #name_A ),name_A ) \
+  o->Set( ::wTools::v8::Isolate::GetCurrent()->GetCurrentContext(), vstr( #name_A ),name_A ) \
 
 // converter
 
