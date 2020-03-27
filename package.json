@@ -1,6 +1,6 @@
 {
   "name" : "bufferfromfile", 
-  "version" : "0.4.113", 
+  "version" : "0.4.114", 
   "engine" : "node >= 6.0.0", 
   "enabled" : true, 
   "license" : "MIT", 
@@ -32,10 +32,10 @@
   "dependencies" : {}, 
   "devDependencies" : 
   {
-    "wTools" : "", 
-    "wTesting" : "", 
-    "wappbasic" : "", 
-    "bufferfromfile" : "."
+    "bufferfromfile" : ".", 
+    "wTools" : "alpha", 
+    "wTesting" : "alpha", 
+    "wappbasic" : "alpha"
   }, 
   "gypfile" : true, 
   "keywords" : 
