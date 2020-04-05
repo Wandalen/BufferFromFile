@@ -1,832 +1,99 @@
-format: willfile-1.0.0
-about:
-  name: bufferFromFile
-  description: >-
-    The module in JavaScript provides convenient means for using files as
-    standard ArrayBuffer making mmap behind the scene.
-  enabled: 1
-  version: 0.5.0
-  interpreters: &ref_0
-    - njs >= 8.0.0
-    - chrome >= 60.0.0
-    - firefox >= 60.0.0
-  keywords: &ref_1
-    - wTools
-    - ArrayBuffer
-    - Buffer from file
-    - ArrayBuffer from file
-    - TypedBuffer from file
-    - Nodejs buffer from file
-    - mmap
-    - mmap file
-    - zero copy
-  license: MIT
-  author: Kostiantyn Wandalen <wanalen@willbe.so>
-  contributors: &ref_2
-    - Kostiantyn Wandalen <wanalen@willbe.so>
-    - Volodymyr M. <volodymyr.migdal@gmail.com>
-  npm.name: bufferfromfile
-  npm.scripts: &ref_3
-    install: node-gyp configure && node-gyp rebuild --msvs_version=auto
-    test: wtest .run test.test/**
-    clean: rm -rf build node_modules
-path:
-  module.willfiles:
-    criterion:
-      predefined: 1
-    path: bufferFromFile.out.will.yml
-  module.common:
-    criterion:
-      predefined: 1
-    path: bufferFromFile.out
-  module.original.willfiles:
-    criterion:
-      predefined: 1
-    path:
-      - ../.im.will.yml
-      - ../.ex.will.yml
-  local:
-    criterion:
-      predefined: 1
-  remote:
-    criterion:
-      predefined: 1
-  in:
-    criterion:
-      predefined: 0
-    path: .
-  out:
-    criterion:
-      predefined: 0
-    path: .
-  temp:
-    path:
-      - 'path::out'
-      - ../package-lock.json
-      - ../package.json
-      - ../node_modules
-  proto:
-    path: ../js
-  export:
-    path: '{path::proto}/**'
-  doc:
-    path: ../doc
-  out.raw.debug:
-    criterion:
-      debug: debug
-      raw: raw
-      content: prime
-    path: '{path::out}/debug'
-  out.compiled.debug:
-    criterion:
-      debug: debug
-      raw: compiled
-      content: prime
-    path: '{path::out}/compiled.debug'
-  out.raw.release:
-    criterion:
-      debug: release
-      raw: raw
-      content: prime
-    path: '{path::out}/raw.release'
-  out.compiled.release:
-    criterion:
-      debug: release
-      raw: compiled
-      content: prime
-    path: '{path::out}/release'
-  entry.proto.no.tests:
-    criterion:
-      tests: no.tests
-    path: ../js/Main.ss
-  entry.proto.only.tests:
-    criterion:
-      tests: only.tests
-    path: ../proto/**/*.test.s
-  entry.out.raw.debug.debug:
-    criterion:
-      debug: debug
-      raw: raw
-      content: prime
-    path: '{path::out.*=1}/source/Main.ss'
-  entry.out.raw.debug.release:
-    criterion:
-      debug: release
-      raw: raw
-      content: prime
-    path: '{path::out.*=1}/source/Main.ss'
-  entry.out.compiled.debug.debug:
-    criterion:
-      debug: debug
-      raw: compiled
-      content: prime
-    path: '{path::out.*=}/source/Index.s'
-  entry.out.compiled.debug.release:
-    criterion:
-      debug: release
-      raw: compiled
-      content: prime
-    path: '{path::out.*=}/source/Index.s'
-  repository:
-    path: 'git+https:///github.com/Wandalen/BufferFromFile.git'
-  origins:
-    path:
-      - 'git+https:///github.com/Wandalen/bufferFromFile.git'
-      - 'npm:///bufferfromfile'
-  bugtracker:
-    path: 'https:///github.com/Wandalen/BufferFromFile/issues'
-  exported.dir.proto.export:
-    criterion:
-      content: proto
-      export: 1
-    path: ../js
-  exported.files.proto.export:
-    criterion:
-      content: proto
-      export: 1
-    path:
-      - ../js
-      - ../js/Main.ss
-submodule:
-  bufferfromfile:
-    path: 'hd://..'
-    autoExporting: 0
-    enabled: 0
-    criterion:
-      development: 1
-  wTools:
-    path: 'npm:///wTools'
-    autoExporting: 0
-    enabled: 0
-    criterion:
-      development: 1
-  wTesting:
-    path: 'npm:///wTesting'
-    autoExporting: 0
-    enabled: 0
-    criterion:
-      development: 1
-  wAppBasic:
-    path: 'npm:///wappbasic'
-    autoExporting: 0
-    enabled: 0
-    criterion:
-      development: 1
-reflector:
-  reflect.proto.debug.raw:
-    src:
-      filePath:
-        'path::proto': '{path::out.*=1}/source'
-      prefixPath: ''
-    dst:
-      prefixPath: ''
-    mandatory: 1
-    criterion:
-      tests: no.tests
-      debug: debug
-      raw: raw
-      content: prime
-    inherit:
-      - predefined.*
-  reflect.proto.release.raw:
-    src:
-      filePath:
-        'path::proto': '{path::out.*=1}/source'
-      prefixPath: ''
-    dst:
-      prefixPath: ''
-    mandatory: 1
-    criterion:
-      tests: no.tests
-      debug: release
-      raw: raw
-      content: prime
-    inherit:
-      - predefined.*
-  reflect.proto.debug.compiled:
-    src:
-      filePath:
-        'path::proto': '{path::out.*=1}/source'
-      prefixPath: ''
-    dst:
-      prefixPath: ''
-    mandatory: 1
-    criterion:
-      tests: no.tests
-      debug: debug
-      raw: compiled
-      content: prime
-    inherit:
-      - predefined.*
-  reflect.proto.release.compiled:
-    src:
-      filePath:
-        'path::proto': '{path::out.*=1}/source'
-      prefixPath: ''
-    dst:
-      prefixPath: ''
-    mandatory: 1
-    criterion:
-      tests: no.tests
-      debug: release
-      raw: compiled
-      content: prime
-    inherit:
-      - predefined.*
-  transpile.proto.raw:
-    src:
-      filePath:
-        'path::proto': '{path::out.raw.release}'
-      prefixPath: ''
-    dst:
-      prefixPath: ''
-    mandatory: 1
-    criterion:
-      raw: raw
-      debug: release
-      content: prime
-    inherit:
-      - predefined.*
-  transpile.proto.no.tests.compiled.debug:
-    src:
-      filePath:
-        '**.test*': false
-        '**.test/**': false
-        'path::proto': '{path::out.*=1}/Main.s'
-      prefixPath: ''
-    dst:
-      prefixPath: ''
-    mandatory: 1
-    criterion:
-      tests: no.tests
-      raw: compiled
-      debug: debug
-      content: prime
-    inherit:
-      - predefined.*
-  transpile.proto.no.tests.compiled.release:
-    src:
-      filePath:
-        '**.test*': false
-        '**.test/**': false
-        'path::proto': '{path::out.*=1}/Main.s'
-      prefixPath: ''
-    dst:
-      prefixPath: ''
-    mandatory: 1
-    criterion:
-      tests: no.tests
-      raw: compiled
-      debug: release
-      content: prime
-    inherit:
-      - predefined.*
-  transpile.proto.only.tests.compiled.debug:
-    src:
-      filePath:
-        '**.test*': true
-        'path::proto': '{path::out.*=1}/Tests.test.s'
-      prefixPath: ''
-    dst:
-      prefixPath: ''
-    mandatory: 1
-    criterion:
-      tests: only.tests
-      raw: compiled
-      debug: debug
-      content: prime
-    inherit:
-      - predefined.*
-  transpile.proto.only.tests.compiled.release:
-    src:
-      filePath:
-        '**.test*': true
-        'path::proto': '{path::out.*=1}/Tests.test.s'
-      prefixPath: ''
-    dst:
-      prefixPath: ''
-    mandatory: 1
-    criterion:
-      tests: only.tests
-      raw: compiled
-      debug: release
-      content: prime
-    inherit:
-      - predefined.*
-  exported.proto.export:
-    src:
-      filePath:
-        '**': ''
-      prefixPath: ../js
-    mandatory: 1
-    criterion:
-      content: proto
-      export: 1
-  exported.files.proto.export:
-    src:
-      filePath:
-        'path::exported.files.proto.export': ''
-      basePath: .
-      prefixPath: 'path::exported.dir.proto.export'
-    recursive: 0
-    mandatory: 1
-    criterion:
-      content: proto
-      export: 1
-step:
-  npm.generate.debug.raw:
-    opts:
-      entryPath: 'path::entry.out.*=1'
-      packagePath: '{path::out.*=1}/package.json'
-      filesPath: '{path::out.*=1}/source/**'
-    criterion:
-      debug: debug
-      raw: raw
-    inherit:
-      - npm.generate
-  npm.generate.release.raw:
-    opts:
-      entryPath: 'path::entry.out.*=1'
-      packagePath: '{path::out.*=1}/package.json'
-      filesPath: '{path::out.*=1}/source/**'
-    criterion:
-      debug: release
-      raw: raw
-    inherit:
-      - npm.generate
-  npm.generate.debug.compiled:
-    opts:
-      entryPath: 'path::entry.out.*=1'
-      packagePath: '{path::out.*=1}/package.json'
-      filesPath: '{path::out.*=1}/source/**'
-    criterion:
-      debug: debug
-      raw: compiled
-    inherit:
-      - npm.generate
-  npm.generate.release.compiled:
-    opts:
-      entryPath: 'path::entry.out.*=1'
-      packagePath: '{path::out.*=1}/package.json'
-      filesPath: '{path::out.*=1}/source/**'
-    criterion:
-      debug: release
-      raw: compiled
-    inherit:
-      - npm.generate
-  clean.out.debug.raw.no.tests.prime:
-    opts:
-      filePath: '{path::out.*=1}/source'
-    criterion:
-      debug: debug
-      raw: raw
-      tests: no.tests
-      content: prime
-    inherit:
-      - files.delete
-  clean.out.release.raw.no.tests.prime:
-    opts:
-      filePath: '{path::out.*=1}/source'
-    criterion:
-      debug: release
-      raw: raw
-      tests: no.tests
-      content: prime
-    inherit:
-      - files.delete
-  clean.out.debug.compiled.no.tests.prime:
-    opts:
-      filePath: '{path::out.*=1}/source'
-    criterion:
-      debug: debug
-      raw: compiled
-      tests: no.tests
-      content: prime
-    inherit:
-      - files.delete
-  clean.out.release.compiled.no.tests.prime:
-    opts:
-      filePath: '{path::out.*=1}/source'
-    criterion:
-      debug: release
-      raw: compiled
-      tests: no.tests
-      content: prime
-    inherit:
-      - files.delete
-  clean.out.debug.raw.only.tests.prime:
-    opts:
-      filePath: '{path::out.*=1}/source'
-    criterion:
-      debug: debug
-      raw: raw
-      tests: only.tests
-      content: prime
-    inherit:
-      - files.delete
-  clean.out.release.raw.only.tests.prime:
-    opts:
-      filePath: '{path::out.*=1}/source'
-    criterion:
-      debug: release
-      raw: raw
-      tests: only.tests
-      content: prime
-    inherit:
-      - files.delete
-  clean.out.debug.compiled.only.tests.prime:
-    opts:
-      filePath: '{path::out.*=1}/source'
-    criterion:
-      debug: debug
-      raw: compiled
-      tests: only.tests
-      content: prime
-    inherit:
-      - files.delete
-  clean.out.release.compiled.only.tests.prime:
-    opts:
-      filePath: '{path::out.*=1}/source'
-    criterion:
-      debug: release
-      raw: compiled
-      tests: only.tests
-      content: prime
-    inherit:
-      - files.delete
-  clean.out.debug.raw.no.tests.npm:
-    opts:
-      filePath: '{path::out.*=1}/source'
-    criterion:
-      debug: debug
-      raw: raw
-      tests: no.tests
-      content: npm
-    inherit:
-      - files.delete
-  clean.out.release.raw.no.tests.npm:
-    opts:
-      filePath: '{path::out.*=1}/source'
-    criterion:
-      debug: release
-      raw: raw
-      tests: no.tests
-      content: npm
-    inherit:
-      - files.delete
-  clean.out.debug.compiled.no.tests.npm:
-    opts:
-      filePath: '{path::out.*=1}/source'
-    criterion:
-      debug: debug
-      raw: compiled
-      tests: no.tests
-      content: npm
-    inherit:
-      - files.delete
-  clean.out.release.compiled.no.tests.npm:
-    opts:
-      filePath: '{path::out.*=1}/source'
-    criterion:
-      debug: release
-      raw: compiled
-      tests: no.tests
-      content: npm
-    inherit:
-      - files.delete
-  clean.out.debug.raw.only.tests.npm:
-    opts:
-      filePath: '{path::out.*=1}/source'
-    criterion:
-      debug: debug
-      raw: raw
-      tests: only.tests
-      content: npm
-    inherit:
-      - files.delete
-  clean.out.release.raw.only.tests.npm:
-    opts:
-      filePath: '{path::out.*=1}/source'
-    criterion:
-      debug: release
-      raw: raw
-      tests: only.tests
-      content: npm
-    inherit:
-      - files.delete
-  clean.out.debug.compiled.only.tests.npm:
-    opts:
-      filePath: '{path::out.*=1}/source'
-    criterion:
-      debug: debug
-      raw: compiled
-      tests: only.tests
-      content: npm
-    inherit:
-      - files.delete
-  clean.out.release.compiled.only.tests.npm:
-    opts:
-      filePath: '{path::out.*=1}/source'
-    criterion:
-      debug: release
-      raw: compiled
-      tests: only.tests
-      content: npm
-    inherit:
-      - files.delete
-  clean.out.npm:
-    opts:
-      filePath: 'path::out.*=1'
-    criterion:
-      debug: debug
-      raw: compiled
-      tests: no.tests
-      content: npm
-    inherit:
-      - files.delete
-  tst.proto:
-    opts:
-      shell: 'tst {path::proto}'
-    criterion:
-      content: proto
-  tst.debug:
-    opts:
-      shell: 'tst {path::out.*=1}'
-    criterion:
-      content: prime
-      debug: debug
-  tst.release:
-    opts:
-      shell: 'tst {path::out.*=1}'
-    criterion:
-      content: prime
-      debug: release
-  reflect.proto.debug.raw:
-    opts:
-      reflector: 'reflector::reflect.proto*'
-    criterion:
-      tests: no.tests
-      debug: debug
-      raw: raw
-      content: prime
-    inherit:
-      - files.reflect
-  reflect.proto.release.raw:
-    opts:
-      reflector: 'reflector::reflect.proto*'
-    criterion:
-      tests: no.tests
-      debug: release
-      raw: raw
-      content: prime
-    inherit:
-      - files.reflect
-  reflect.proto.debug.compiled:
-    opts:
-      reflector: 'reflector::reflect.proto*'
-    criterion:
-      tests: no.tests
-      debug: debug
-      raw: compiled
-      content: prime
-    inherit:
-      - files.reflect
-  reflect.proto.release.compiled:
-    opts:
-      reflector: 'reflector::reflect.proto*'
-    criterion:
-      tests: no.tests
-      debug: release
-      raw: compiled
-      content: prime
-    inherit:
-      - files.reflect
-  transpile.proto.raw:
-    opts:
-      entry: 'path::entry.proto.no.tests'
-      reflector: 'reflector::transpile.proto.raw*'
-    criterion:
-      raw: raw
-      debug: release
-      content: prime
-    inherit:
-      - files.transpile
-  transpile.proto.no.tests.compiled.debug:
-    opts:
-      entry: 'path::entry.proto.*=1'
-      reflector: 'reflector::transpile.proto.no.tests.compiled*'
-    criterion:
-      tests: no.tests
-      raw: compiled
-      debug: debug
-      content: prime
-    inherit:
-      - files.transpile
-  transpile.proto.no.tests.compiled.release:
-    opts:
-      entry: 'path::entry.proto.*=1'
-      reflector: 'reflector::transpile.proto.no.tests.compiled*'
-    criterion:
-      tests: no.tests
-      raw: compiled
-      debug: release
-      content: prime
-    inherit:
-      - files.transpile
-  transpile.proto.only.tests.compiled.debug:
-    opts:
-      entry: 'path::entry.proto.*=1'
-      external.before: '{path::out.*=1}/Main.s'
-      reflector: 'reflector::transpile.proto.only.tests.compiled*'
-    criterion:
-      tests: only.tests
-      raw: compiled
-      debug: debug
-      content: prime
-    inherit:
-      - files.transpile
-  transpile.proto.only.tests.compiled.release:
-    opts:
-      entry: 'path::entry.proto.*=1'
-      external.before: '{path::out.*=1}/Main.s'
-      reflector: 'reflector::transpile.proto.only.tests.compiled*'
-    criterion:
-      tests: only.tests
-      raw: compiled
-      debug: release
-      content: prime
-    inherit:
-      - files.transpile
-  proto.export:
-    opts:
-      export: 'path::export'
-      tar: 0
-    criterion:
-      content: proto
-    inherit:
-      - module.export
-  doc.export:
-    opts:
-      export: 'path::doc'
-      tar: 0
-    criterion:
-      content: doc
-    inherit:
-      - module.export
-  npm.export:
-    opts:
-      export: out.npm
-      tar: 0
-    criterion:
-      content: npm
-    inherit:
-      - module.export
-  npm.publish:
-    opts:
-      shell: npm publish
-build:
-  debug:
-    steps:
-      - 'step::clean.out*=2'
-      - reflect.proto.*=1
-    criterion:
-      default: 1
-      debug: debug
-      raw: raw
-      content: prime
-  compiled.debug:
-    steps:
-      - 'step::clean.out*=2'
-      - transpile.proto.no.tests*=1
-      - transpile.proto.only.tests*=1
-    criterion:
-      debug: debug
-      raw: compiled
-      content: prime
-  raw.release:
-    steps:
-      - 'step::clean.out*=2'
-      - transpile.proto.raw
-    criterion:
-      debug: release
-      raw: raw
-      content: prime
-  release:
-    steps:
-      - 'step::clean.out*=2'
-      - transpile.proto.no.tests*=1
-      - transpile.proto.only.tests*=1
-    criterion:
-      debug: release
-      raw: compiled
-      content: prime
-  npm:
-    steps:
-      - npm.generate.*=1
-    criterion:
-      debug: debug
-      raw: raw
-      content: npm
-  all:
-    steps:
-      - 'build::debug'
-      - 'build::compiled.debug'
-      - 'build::raw.release'
-      - 'build::release'
-      - 'build::npm'
-  proto.export:
-    steps:
-      - 'step::proto.export'
-    criterion:
-      content: proto
-      export: 1
-  doc.export:
-    steps:
-      - 'step::doc.export'
-    criterion:
-      content: doc
-      export: 1
-  npm.export:
-    steps:
-      - 'step::npm.publish'
-    criterion:
-      content: npm
-      export: 1
-  export:
-    steps:
-      - 'build::proto.export'
-    criterion:
-      default: 1
-      export: 1
-exported:
-  proto.export:
-    version: 0.5.0
-    exportedReflector: 'reflector::exported.proto.export'
-    exportedFilesReflector: 'reflector::exported.files.proto.export'
-    exportedDirPath: 'path::exported.dir.proto.export'
-    exportedFilesPath: 'path::exported.files.proto.export'
-    criterion:
-      content: proto
-      export: 1
+format: outwillfile-2.0
+root:
+  - bufferFromFile.out
+consistency:
+  ../.ex.will.yml: &ref_0
+    hash: 695a3e0ecb8d6a01a8cb6432d70c812c
+    size: 2086
+  ../.im.will.yml: &ref_1
+    hash: 07a9683a3977fefa4c0808590b6790da
+    size: 5041
 module:
-  ../:
+  bufferFromFile.out:
     about:
       name: bufferFromFile
+      org: noorg
       description: >-
         The module in JavaScript provides convenient means for using files as
         standard ArrayBuffer making mmap behind the scene.
       enabled: 1
       version: 0.5.0
-      interpreters: *ref_0
-      keywords: *ref_1
+      interpreters: &ref_2
+        - njs >= 8.0.0
+        - chrome >= 60.0.0
+        - firefox >= 60.0.0
+      keywords: &ref_3
+        - wTools
+        - ArrayBuffer
+        - Buffer from file
+        - ArrayBuffer from file
+        - TypedBuffer from file
+        - Nodejs buffer from file
+        - mmap
+        - mmap file
+        - zero copy
       license: MIT
       author: Kostiantyn Wandalen <wanalen@willbe.so>
-      contributors: *ref_2
+      contributors: &ref_4
+        - Kostiantyn Wandalen <wanalen@willbe.so>
+        - Volodymyr M. <volodymyr.migdal@gmail.com>
       npm.name: bufferfromfile
-      npm.scripts: *ref_3
+      npm.scripts: &ref_5
+        install: node-gyp configure && node-gyp rebuild --msvs_version=auto
+        test: wtest .run test.test/**
+        clean: rm -rf build node_modules
     path:
       module.willfiles:
         criterion:
           predefined: 1
-        path:
-          - .im.will.yml
-          - .ex.will.yml
+        path: bufferFromFile.out.will.yml
+      module.common:
+        criterion:
+          predefined: 1
+        path: bufferFromFile.out
       module.original.willfiles:
         criterion:
           predefined: 1
         path:
-          - .im.will.yml
-          - .ex.will.yml
-      module.common:
+          - ../.ex.will.yml
+          - ../.im.will.yml
+      module.peer.willfiles:
         criterion:
           predefined: 1
-        path: ./
-      local:
+        path:
+          - ../.ex.will.yml
+          - ../.im.will.yml
+      module.peer.in:
         criterion:
           predefined: 1
-      remote:
+        path: ..
+      download:
         criterion:
           predefined: 1
+      repository:
+        path: 'git+https:///github.com/Wandalen/BufferFromFile.git'
+      origins:
+        path:
+          - 'git+https:///github.com/Wandalen/bufferFromFile.git'
+          - 'npm:///bufferfromfile'
+      bugtracker:
+        path: 'https:///github.com/Wandalen/BufferFromFile/issues'
       in:
-        criterion:
-          predefined: 0
         path: .
       out:
-        criterion:
-          predefined: 0
-        path: out
+        path: .
       temp:
         path:
           - 'path::out'
-          - package-lock.json
-          - package.json
-          - node_modules
+          - ../package-lock.json
+          - ../package.json
+          - ../node_modules
       proto:
-        path: ./js
+        path: ../js
       export:
         path: '{path::proto}/**'
       doc:
-        path: ./doc
+        path: ../doc
       out.raw.debug:
         criterion:
           debug: debug
@@ -854,11 +121,11 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: js/Main.ss
+        path: ../js/Main.ss
       entry.proto.only.tests:
         criterion:
           tests: only.tests
-        path: proto/**/*.test.s
+        path: ../proto/**/*.test.s
       entry.out.raw.debug.debug:
         criterion:
           debug: debug
@@ -883,29 +150,23 @@ module:
           raw: compiled
           content: prime
         path: '{path::out.*=}/source/Index.s'
-      repository:
-        path: 'git+https:///github.com/Wandalen/BufferFromFile.git'
-      origins:
-        path:
-          - 'git+https:///github.com/Wandalen/bufferFromFile.git'
-          - 'npm:///bufferfromfile'
-      bugtracker:
-        path: 'https:///github.com/Wandalen/BufferFromFile/issues'
       exported.dir.proto.export:
         criterion:
+          generated: 1
           content: proto
           export: 1
-        path: ./js
+        path: ../js
       exported.files.proto.export:
         criterion:
+          generated: 1
           content: proto
           export: 1
         path:
-          - js
-          - js/Main.ss
+          - ../js
+          - ../js/Main.ss
     submodule:
       bufferfromfile:
-        path: 'hd://.'
+        path: 'hd://..'
         autoExporting: 0
         enabled: 0
         criterion:
@@ -933,6 +194,9 @@ module:
         src:
           filePath:
             'path::proto': '{path::out.*=1}/source'
+          prefixPath: ''
+        dst:
+          prefixPath: ''
         mandatory: 1
         criterion:
           tests: no.tests
@@ -945,6 +209,9 @@ module:
         src:
           filePath:
             'path::proto': '{path::out.*=1}/source'
+          prefixPath: ''
+        dst:
+          prefixPath: ''
         mandatory: 1
         criterion:
           tests: no.tests
@@ -957,6 +224,9 @@ module:
         src:
           filePath:
             'path::proto': '{path::out.*=1}/source'
+          prefixPath: ''
+        dst:
+          prefixPath: ''
         mandatory: 1
         criterion:
           tests: no.tests
@@ -969,6 +239,9 @@ module:
         src:
           filePath:
             'path::proto': '{path::out.*=1}/source'
+          prefixPath: ''
+        dst:
+          prefixPath: ''
         mandatory: 1
         criterion:
           tests: no.tests
@@ -981,6 +254,9 @@ module:
         src:
           filePath:
             'path::proto': '{path::out.raw.release}'
+          prefixPath: ''
+        dst:
+          prefixPath: ''
         mandatory: 1
         criterion:
           raw: raw
@@ -991,9 +267,12 @@ module:
       transpile.proto.no.tests.compiled.debug:
         src:
           filePath:
-            '**.test*': 0
-            '**.test/**': 0
+            '**.test*': false
+            '**.test/**': false
             'path::proto': '{path::out.*=1}/Main.s'
+          prefixPath: ''
+        dst:
+          prefixPath: ''
         mandatory: 1
         criterion:
           tests: no.tests
@@ -1005,9 +284,12 @@ module:
       transpile.proto.no.tests.compiled.release:
         src:
           filePath:
-            '**.test*': 0
-            '**.test/**': 0
+            '**.test*': false
+            '**.test/**': false
             'path::proto': '{path::out.*=1}/Main.s'
+          prefixPath: ''
+        dst:
+          prefixPath: ''
         mandatory: 1
         criterion:
           tests: no.tests
@@ -1019,8 +301,11 @@ module:
       transpile.proto.only.tests.compiled.debug:
         src:
           filePath:
-            '**.test*': 1
+            '**.test*': true
             'path::proto': '{path::out.*=1}/Tests.test.s'
+          prefixPath: ''
+        dst:
+          prefixPath: ''
         mandatory: 1
         criterion:
           tests: only.tests
@@ -1032,8 +317,11 @@ module:
       transpile.proto.only.tests.compiled.release:
         src:
           filePath:
-            '**.test*': 1
+            '**.test*': true
             'path::proto': '{path::out.*=1}/Tests.test.s'
+          prefixPath: ''
+        dst:
+          prefixPath: ''
         mandatory: 1
         criterion:
           tests: only.tests
@@ -1046,9 +334,10 @@ module:
         src:
           filePath:
             '**': ''
-          prefixPath: js
+          prefixPath: ../js
         mandatory: 1
         criterion:
+          generated: 1
           content: proto
           export: 1
       exported.files.proto.export:
@@ -1057,12 +346,41 @@ module:
             'path::exported.files.proto.export': ''
           basePath: .
           prefixPath: 'path::exported.dir.proto.export'
+          recursive: 0
         recursive: 0
         mandatory: 1
         criterion:
+          generated: 1
           content: proto
           export: 1
     step:
+      proto.export:
+        opts:
+          export: 'path::export'
+          tar: 0
+        criterion:
+          content: proto
+        inherit:
+          - module.export
+      doc.export:
+        opts:
+          export: 'path::doc'
+          tar: 0
+        criterion:
+          content: doc
+        inherit:
+          - module.export
+      npm.export:
+        opts:
+          export: out.npm
+          tar: 0
+        criterion:
+          content: npm
+        inherit:
+          - module.export
+      npm.publish:
+        opts:
+          shell: npm publish
       npm.generate.debug.raw:
         opts:
           entryPath: 'path::entry.out.*=1'
@@ -1386,34 +704,31 @@ module:
           content: prime
         inherit:
           - files.transpile
+    build:
       proto.export:
-        opts:
-          export: 'path::export'
-          tar: 0
+        steps:
+          - 'step::proto.export'
         criterion:
           content: proto
-        inherit:
-          - module.export
+          export: 1
       doc.export:
-        opts:
-          export: 'path::doc'
-          tar: 0
+        steps:
+          - 'step::doc.export'
         criterion:
           content: doc
-        inherit:
-          - module.export
+          export: 1
       npm.export:
-        opts:
-          export: out.npm
-          tar: 0
+        steps:
+          - 'step::npm.publish'
         criterion:
           content: npm
-        inherit:
-          - module.export
-      npm.publish:
-        opts:
-          shell: npm publish
-    build:
+          export: 1
+      export:
+        steps:
+          - 'build::proto.export'
+        criterion:
+          default: 1
+          export: 1
       debug:
         steps:
           - 'step::clean.out*=2'
@@ -1463,6 +778,637 @@ module:
           - 'build::raw.release'
           - 'build::release'
           - 'build::npm'
+    exported:
+      proto.export:
+        version: 0.5.0
+        recursive: 0
+        withIntegrated: 2
+        tar: 0
+        exportedReflector: 'reflector::exported.proto.export'
+        exportedFilesReflector: 'reflector::exported.files.proto.export'
+        exportedDirPath: 'path::exported.dir.proto.export'
+        exportedFilesPath: 'path::exported.files.proto.export'
+        criterion:
+          content: proto
+          export: 1
+    consistency:
+      ../.ex.will.yml: *ref_0
+      ../.im.will.yml: *ref_1
+  ../:
+    about:
+      name: bufferFromFile
+      org: noorg
+      description: >-
+        The module in JavaScript provides convenient means for using files as
+        standard ArrayBuffer making mmap behind the scene.
+      enabled: 1
+      version: 0.5.0
+      interpreters: *ref_2
+      keywords: *ref_3
+      license: MIT
+      author: Kostiantyn Wandalen <wanalen@willbe.so>
+      contributors: *ref_4
+      npm.name: bufferfromfile
+      npm.scripts: *ref_5
+    path:
+      module.willfiles:
+        criterion:
+          predefined: 1
+        path:
+          - .ex.will.yml
+          - .im.will.yml
+      module.original.willfiles:
+        criterion:
+          predefined: 1
+        path:
+          - .ex.will.yml
+          - .im.will.yml
+      module.peer.willfiles:
+        criterion:
+          predefined: 1
+        path: out/bufferFromFile.out.will.yml
+      module.peer.in:
+        criterion:
+          predefined: 1
+        path: out
+      module.common:
+        criterion:
+          predefined: 1
+        path: ./
+      download:
+        criterion:
+          predefined: 1
+      repository:
+        path: 'git+https:///github.com/Wandalen/BufferFromFile.git'
+      origins:
+        path:
+          - 'git+https:///github.com/Wandalen/bufferFromFile.git'
+          - 'npm:///bufferfromfile'
+      bugtracker:
+        path: 'https:///github.com/Wandalen/BufferFromFile/issues'
+      in:
+        path: .
+      out:
+        path: out
+      temp:
+        path:
+          - 'path::out'
+          - package-lock.json
+          - package.json
+          - node_modules
+      proto:
+        path: js
+      export:
+        path: '{path::proto}/**'
+      doc:
+        path: doc
+      out.raw.debug:
+        criterion:
+          debug: debug
+          raw: raw
+          content: prime
+        path: '{path::out}/debug'
+      out.compiled.debug:
+        criterion:
+          debug: debug
+          raw: compiled
+          content: prime
+        path: '{path::out}/compiled.debug'
+      out.raw.release:
+        criterion:
+          debug: release
+          raw: raw
+          content: prime
+        path: '{path::out}/raw.release'
+      out.compiled.release:
+        criterion:
+          debug: release
+          raw: compiled
+          content: prime
+        path: '{path::out}/release'
+      entry.proto.no.tests:
+        criterion:
+          tests: no.tests
+        path: js/Main.ss
+      entry.proto.only.tests:
+        criterion:
+          tests: only.tests
+        path: proto/**/*.test.s
+      entry.out.raw.debug.debug:
+        criterion:
+          debug: debug
+          raw: raw
+          content: prime
+        path: '{path::out.*=1}/source/Main.ss'
+      entry.out.raw.debug.release:
+        criterion:
+          debug: release
+          raw: raw
+          content: prime
+        path: '{path::out.*=1}/source/Main.ss'
+      entry.out.compiled.debug.debug:
+        criterion:
+          debug: debug
+          raw: compiled
+          content: prime
+        path: '{path::out.*=}/source/Index.s'
+      entry.out.compiled.debug.release:
+        criterion:
+          debug: release
+          raw: compiled
+          content: prime
+        path: '{path::out.*=}/source/Index.s'
+    submodule:
+      bufferfromfile:
+        path: 'hd://.'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          development: 1
+      wTools:
+        path: 'npm:///wTools'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          development: 1
+      wTesting:
+        path: 'npm:///wTesting'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          development: 1
+      wAppBasic:
+        path: 'npm:///wappbasic'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          development: 1
+    reflector:
+      reflect.proto.debug.raw:
+        src:
+          filePath:
+            'path::proto': '{path::out.*=1}/source'
+        mandatory: 1
+        criterion:
+          tests: no.tests
+          debug: debug
+          raw: raw
+          content: prime
+        inherit:
+          - predefined.*
+      reflect.proto.release.raw:
+        src:
+          filePath:
+            'path::proto': '{path::out.*=1}/source'
+        mandatory: 1
+        criterion:
+          tests: no.tests
+          debug: release
+          raw: raw
+          content: prime
+        inherit:
+          - predefined.*
+      reflect.proto.debug.compiled:
+        src:
+          filePath:
+            'path::proto': '{path::out.*=1}/source'
+        mandatory: 1
+        criterion:
+          tests: no.tests
+          debug: debug
+          raw: compiled
+          content: prime
+        inherit:
+          - predefined.*
+      reflect.proto.release.compiled:
+        src:
+          filePath:
+            'path::proto': '{path::out.*=1}/source'
+        mandatory: 1
+        criterion:
+          tests: no.tests
+          debug: release
+          raw: compiled
+          content: prime
+        inherit:
+          - predefined.*
+      transpile.proto.raw:
+        src:
+          filePath:
+            'path::proto': '{path::out.raw.release}'
+        mandatory: 1
+        criterion:
+          raw: raw
+          debug: release
+          content: prime
+        inherit:
+          - predefined.*
+      transpile.proto.no.tests.compiled.debug:
+        src:
+          filePath:
+            '**.test*': 0
+            '**.test/**': 0
+            'path::proto': '{path::out.*=1}/Main.s'
+        mandatory: 1
+        criterion:
+          tests: no.tests
+          raw: compiled
+          debug: debug
+          content: prime
+        inherit:
+          - predefined.*
+      transpile.proto.no.tests.compiled.release:
+        src:
+          filePath:
+            '**.test*': 0
+            '**.test/**': 0
+            'path::proto': '{path::out.*=1}/Main.s'
+        mandatory: 1
+        criterion:
+          tests: no.tests
+          raw: compiled
+          debug: release
+          content: prime
+        inherit:
+          - predefined.*
+      transpile.proto.only.tests.compiled.debug:
+        src:
+          filePath:
+            '**.test*': 1
+            'path::proto': '{path::out.*=1}/Tests.test.s'
+        mandatory: 1
+        criterion:
+          tests: only.tests
+          raw: compiled
+          debug: debug
+          content: prime
+        inherit:
+          - predefined.*
+      transpile.proto.only.tests.compiled.release:
+        src:
+          filePath:
+            '**.test*': 1
+            'path::proto': '{path::out.*=1}/Tests.test.s'
+        mandatory: 1
+        criterion:
+          tests: only.tests
+          raw: compiled
+          debug: release
+          content: prime
+        inherit:
+          - predefined.*
+    step:
+      proto.export:
+        opts:
+          export: 'path::export'
+          tar: 0
+        criterion:
+          content: proto
+        inherit:
+          - module.export
+      doc.export:
+        opts:
+          export: 'path::doc'
+          tar: 0
+        criterion:
+          content: doc
+        inherit:
+          - module.export
+      npm.export:
+        opts:
+          export: out.npm
+          tar: 0
+        criterion:
+          content: npm
+        inherit:
+          - module.export
+      npm.publish:
+        opts:
+          shell: npm publish
+      npm.generate.debug.raw:
+        opts:
+          entryPath: 'path::entry.out.*=1'
+          packagePath: '{path::out.*=1}/package.json'
+          filesPath: '{path::out.*=1}/source/**'
+        criterion:
+          debug: debug
+          raw: raw
+        inherit:
+          - npm.generate
+      npm.generate.release.raw:
+        opts:
+          entryPath: 'path::entry.out.*=1'
+          packagePath: '{path::out.*=1}/package.json'
+          filesPath: '{path::out.*=1}/source/**'
+        criterion:
+          debug: release
+          raw: raw
+        inherit:
+          - npm.generate
+      npm.generate.debug.compiled:
+        opts:
+          entryPath: 'path::entry.out.*=1'
+          packagePath: '{path::out.*=1}/package.json'
+          filesPath: '{path::out.*=1}/source/**'
+        criterion:
+          debug: debug
+          raw: compiled
+        inherit:
+          - npm.generate
+      npm.generate.release.compiled:
+        opts:
+          entryPath: 'path::entry.out.*=1'
+          packagePath: '{path::out.*=1}/package.json'
+          filesPath: '{path::out.*=1}/source/**'
+        criterion:
+          debug: release
+          raw: compiled
+        inherit:
+          - npm.generate
+      clean.out.debug.raw.no.tests.prime:
+        opts:
+          filePath: '{path::out.*=1}/source'
+        criterion:
+          debug: debug
+          raw: raw
+          tests: no.tests
+          content: prime
+        inherit:
+          - files.delete
+      clean.out.release.raw.no.tests.prime:
+        opts:
+          filePath: '{path::out.*=1}/source'
+        criterion:
+          debug: release
+          raw: raw
+          tests: no.tests
+          content: prime
+        inherit:
+          - files.delete
+      clean.out.debug.compiled.no.tests.prime:
+        opts:
+          filePath: '{path::out.*=1}/source'
+        criterion:
+          debug: debug
+          raw: compiled
+          tests: no.tests
+          content: prime
+        inherit:
+          - files.delete
+      clean.out.release.compiled.no.tests.prime:
+        opts:
+          filePath: '{path::out.*=1}/source'
+        criterion:
+          debug: release
+          raw: compiled
+          tests: no.tests
+          content: prime
+        inherit:
+          - files.delete
+      clean.out.debug.raw.only.tests.prime:
+        opts:
+          filePath: '{path::out.*=1}/source'
+        criterion:
+          debug: debug
+          raw: raw
+          tests: only.tests
+          content: prime
+        inherit:
+          - files.delete
+      clean.out.release.raw.only.tests.prime:
+        opts:
+          filePath: '{path::out.*=1}/source'
+        criterion:
+          debug: release
+          raw: raw
+          tests: only.tests
+          content: prime
+        inherit:
+          - files.delete
+      clean.out.debug.compiled.only.tests.prime:
+        opts:
+          filePath: '{path::out.*=1}/source'
+        criterion:
+          debug: debug
+          raw: compiled
+          tests: only.tests
+          content: prime
+        inherit:
+          - files.delete
+      clean.out.release.compiled.only.tests.prime:
+        opts:
+          filePath: '{path::out.*=1}/source'
+        criterion:
+          debug: release
+          raw: compiled
+          tests: only.tests
+          content: prime
+        inherit:
+          - files.delete
+      clean.out.debug.raw.no.tests.npm:
+        opts:
+          filePath: '{path::out.*=1}/source'
+        criterion:
+          debug: debug
+          raw: raw
+          tests: no.tests
+          content: npm
+        inherit:
+          - files.delete
+      clean.out.release.raw.no.tests.npm:
+        opts:
+          filePath: '{path::out.*=1}/source'
+        criterion:
+          debug: release
+          raw: raw
+          tests: no.tests
+          content: npm
+        inherit:
+          - files.delete
+      clean.out.debug.compiled.no.tests.npm:
+        opts:
+          filePath: '{path::out.*=1}/source'
+        criterion:
+          debug: debug
+          raw: compiled
+          tests: no.tests
+          content: npm
+        inherit:
+          - files.delete
+      clean.out.release.compiled.no.tests.npm:
+        opts:
+          filePath: '{path::out.*=1}/source'
+        criterion:
+          debug: release
+          raw: compiled
+          tests: no.tests
+          content: npm
+        inherit:
+          - files.delete
+      clean.out.debug.raw.only.tests.npm:
+        opts:
+          filePath: '{path::out.*=1}/source'
+        criterion:
+          debug: debug
+          raw: raw
+          tests: only.tests
+          content: npm
+        inherit:
+          - files.delete
+      clean.out.release.raw.only.tests.npm:
+        opts:
+          filePath: '{path::out.*=1}/source'
+        criterion:
+          debug: release
+          raw: raw
+          tests: only.tests
+          content: npm
+        inherit:
+          - files.delete
+      clean.out.debug.compiled.only.tests.npm:
+        opts:
+          filePath: '{path::out.*=1}/source'
+        criterion:
+          debug: debug
+          raw: compiled
+          tests: only.tests
+          content: npm
+        inherit:
+          - files.delete
+      clean.out.release.compiled.only.tests.npm:
+        opts:
+          filePath: '{path::out.*=1}/source'
+        criterion:
+          debug: release
+          raw: compiled
+          tests: only.tests
+          content: npm
+        inherit:
+          - files.delete
+      clean.out.npm:
+        opts:
+          filePath: 'path::out.*=1'
+        criterion:
+          debug: debug
+          raw: compiled
+          tests: no.tests
+          content: npm
+        inherit:
+          - files.delete
+      tst.proto:
+        opts:
+          shell: 'tst {path::proto}'
+        criterion:
+          content: proto
+      tst.debug:
+        opts:
+          shell: 'tst {path::out.*=1}'
+        criterion:
+          content: prime
+          debug: debug
+      tst.release:
+        opts:
+          shell: 'tst {path::out.*=1}'
+        criterion:
+          content: prime
+          debug: release
+      reflect.proto.debug.raw:
+        opts:
+          reflector: 'reflector::reflect.proto*'
+        criterion:
+          tests: no.tests
+          debug: debug
+          raw: raw
+          content: prime
+        inherit:
+          - files.reflect
+      reflect.proto.release.raw:
+        opts:
+          reflector: 'reflector::reflect.proto*'
+        criterion:
+          tests: no.tests
+          debug: release
+          raw: raw
+          content: prime
+        inherit:
+          - files.reflect
+      reflect.proto.debug.compiled:
+        opts:
+          reflector: 'reflector::reflect.proto*'
+        criterion:
+          tests: no.tests
+          debug: debug
+          raw: compiled
+          content: prime
+        inherit:
+          - files.reflect
+      reflect.proto.release.compiled:
+        opts:
+          reflector: 'reflector::reflect.proto*'
+        criterion:
+          tests: no.tests
+          debug: release
+          raw: compiled
+          content: prime
+        inherit:
+          - files.reflect
+      transpile.proto.raw:
+        opts:
+          entry: 'path::entry.proto.no.tests'
+          reflector: 'reflector::transpile.proto.raw*'
+        criterion:
+          raw: raw
+          debug: release
+          content: prime
+        inherit:
+          - files.transpile
+      transpile.proto.no.tests.compiled.debug:
+        opts:
+          entry: 'path::entry.proto.*=1'
+          reflector: 'reflector::transpile.proto.no.tests.compiled*'
+        criterion:
+          tests: no.tests
+          raw: compiled
+          debug: debug
+          content: prime
+        inherit:
+          - files.transpile
+      transpile.proto.no.tests.compiled.release:
+        opts:
+          entry: 'path::entry.proto.*=1'
+          reflector: 'reflector::transpile.proto.no.tests.compiled*'
+        criterion:
+          tests: no.tests
+          raw: compiled
+          debug: release
+          content: prime
+        inherit:
+          - files.transpile
+      transpile.proto.only.tests.compiled.debug:
+        opts:
+          entry: 'path::entry.proto.*=1'
+          external.before: '{path::out.*=1}/Main.s'
+          reflector: 'reflector::transpile.proto.only.tests.compiled*'
+        criterion:
+          tests: only.tests
+          raw: compiled
+          debug: debug
+          content: prime
+        inherit:
+          - files.transpile
+      transpile.proto.only.tests.compiled.release:
+        opts:
+          entry: 'path::entry.proto.*=1'
+          external.before: '{path::out.*=1}/Main.s'
+          reflector: 'reflector::transpile.proto.only.tests.compiled*'
+        criterion:
+          tests: only.tests
+          raw: compiled
+          debug: release
+          content: prime
+        inherit:
+          - files.transpile
+    build:
       proto.export:
         steps:
           - 'step::proto.export'
@@ -1487,14 +1433,59 @@ module:
         criterion:
           default: 1
           export: 1
-    exported:
-      proto.export:
-        version: 0.5.0
-        exportedReflector: 'reflector::exported.proto.export'
-        exportedFilesReflector: 'reflector::exported.files.proto.export'
-        exportedDirPath: 'path::exported.dir.proto.export'
-        exportedFilesPath: 'path::exported.files.proto.export'
+      debug:
+        steps:
+          - 'step::clean.out*=2'
+          - reflect.proto.*=1
         criterion:
-          content: proto
-          export: 1
-  bufferFromFile.out: root
+          default: 1
+          debug: debug
+          raw: raw
+          content: prime
+      compiled.debug:
+        steps:
+          - 'step::clean.out*=2'
+          - transpile.proto.no.tests*=1
+          - transpile.proto.only.tests*=1
+        criterion:
+          debug: debug
+          raw: compiled
+          content: prime
+      raw.release:
+        steps:
+          - 'step::clean.out*=2'
+          - transpile.proto.raw
+        criterion:
+          debug: release
+          raw: raw
+          content: prime
+      release:
+        steps:
+          - 'step::clean.out*=2'
+          - transpile.proto.no.tests*=1
+          - transpile.proto.only.tests*=1
+        criterion:
+          debug: release
+          raw: compiled
+          content: prime
+      npm:
+        steps:
+          - npm.generate.*=1
+        criterion:
+          debug: debug
+          raw: raw
+          content: npm
+      all:
+        steps:
+          - 'build::debug'
+          - 'build::compiled.debug'
+          - 'build::raw.release'
+          - 'build::release'
+          - 'build::npm'
+    consistency:
+      ../.ex.will.yml:
+        hash: 695a3e0ecb8d6a01a8cb6432d70c812c
+        size: 2086
+      ../.im.will.yml:
+        hash: 07a9683a3977fefa4c0808590b6790da
+        size: 5041
