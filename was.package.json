@@ -1,53 +1,53 @@
 {
-  "name" : "bufferfromfile", 
-  "version" : "0.4.138", 
-  "engine" : "node >= 6.0.0", 
-  "enabled" : true, 
-  "license" : "MIT", 
-  "description" : "The module in JavaScript provides convenient means for using files as standard ArrayBuffer making mmap behind the scene.", 
-  "author" : "Kostiantyn Wandalen <wanalen@willbe.so>", 
-  "contributors" : 
+  "name" : "bufferfromfile",
+  "version" : "0.4.139",
+  "engine" : "node >= 6.0.0",
+  "enabled" : true,
+  "license" : "MIT",
+  "description" : "The module in JavaScript provides convenient means for using files as standard ArrayBuffer making mmap behind the scene.",
+  "author" : "Kostiantyn Wandalen <wanalen@willbe.so>",
+  "contributors" :
   [
-    { "name" : "Kostiantyn Wandalen", "email" : "wanalen@willbe.so" }, 
+    { "name" : "Kostiantyn Wandalen", "email" : "wanalen@willbe.so" },
     { "name" : "Volodymyr M.", "email" : "volodymyr.migdal@gmail.com" }
-  ], 
-  "files" : [ "cpp", "js", "binding.gyp", "Makefile" ], 
-  "main" : "js/Main.ss", 
-  "scripts" : 
+  ],
+  "files" : [ "cpp", "js", "binding.gyp", "Makefile" ],
+  "main" : "js/Main.ss",
+  "scripts" :
   {
-    "install" : "node-gyp configure && node-gyp rebuild", 
-    "test" : "wtest test.test", 
-    "make_doc" : "./doc.sh", 
+    "install" : "node-gyp configure && node-gyp rebuild",
+    "test" : "wtest test.test",
+    "make_doc" : "./doc.sh",
     "clean" : "rm -rf build node_modules"
-  }, 
-  "repository" : 
+  },
+  "repository" :
   {
-    "type" : "git", 
+    "type" : "git",
     "url" : "https://github.com/Wandalen/BufferFromFile.git"
-  }, 
-  "bugs" : 
+  },
+  "bugs" :
   {
     "url" : "https://github.com/Wandalen/BufferFromFile/issues"
-  }, 
-  "dependencies" : {}, 
-  "devDependencies" : 
+  },
+  "dependencies" : {},
+  "devDependencies" :
   {
-    "wTools" : "", 
-    "wTesting" : "", 
-    "wappbasic" : "", 
+    "wTools" : "",
+    "wTesting" : "",
+    "wappbasic" : "",
     "bufferfromfile" : "."
-  }, 
-  "gypfile" : true, 
-  "keywords" : 
+  },
+  "gypfile" : true,
+  "keywords" :
   [
-    "wTools", 
-    "ArrayBuffer", 
-    "Buffer from file", 
-    "ArrayBuffer from file", 
-    "TypedBuffer from file", 
-    "Nodejs buffer from file", 
-    "mmap", 
-    "mmap file", 
+    "wTools",
+    "ArrayBuffer",
+    "Buffer from file",
+    "ArrayBuffer from file",
+    "TypedBuffer from file",
+    "Nodejs buffer from file",
+    "mmap",
+    "mmap file",
     "zero copy"
   ]
 }
