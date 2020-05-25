@@ -194,9 +194,13 @@ step :
       content : prime
       debug : release
       
-  npm.install.and.compile :
+  npm.install :
     currentPath : path::in
     shell : 'npm i'
+  
+  node-gyp.build :
+    currentPath : path::in
+    shell : 'npm run-script build'
 
 build :
 
@@ -207,7 +211,8 @@ build :
       - clean.out.cpp
       - reflect.cpp
       - reflect.common
-      - npm.install.and.compile
+      - npm.install
+      - node-gyp.build
 
   compiled.debug :
     criterion :
