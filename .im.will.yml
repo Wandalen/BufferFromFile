@@ -1,6 +1,8 @@
 
 submodule :
 
+  NjsCppBasic : git+https:///github.com/Wandalen/wNjsCppBasic.git@master
+
   bufferfromfile :
     path : hd://.
     enabled : 0 # submodule
@@ -34,6 +36,8 @@ path :
   proto : './js'
   export : '{path::proto}/**'
   doc : './doc'
+  js : 'js'
+  cpp : 'cpp'
 
   out.raw.debug :
     path : '{path::out}/debug'
@@ -96,6 +100,15 @@ reflector :
       content : prime
     filePath :
       path::proto : '{path::out.*=1}/source'
+      
+  reflect.cpp :
+    inherit : predefined.*
+    filePath :
+      path::cpp : '{path::out}/cpp'
+      
+  reflect.common :
+    inherit : submodule::NjsCppBasic/exported::cpp.export/reflector::exported.files.cpp.export
+    dst : '{path::out}/cpp'
 
   transpile.proto.raw :
     inherit : predefined.*
@@ -152,12 +165,7 @@ step :
 
   clean.out :
     inherit : files.delete
-    filePath : '{path::out.*=1}/source'
-    criterion :
-      debug : [ debug, release ]
-      raw : [ raw, compiled ]
-      tests : [ 'no.tests', 'only.tests' ]
-      content : [ 'prime', 'npm' ]
+    filePath : '{path::out}'
 
   clean.out.npm :
     inherit : files.delete
@@ -184,18 +192,21 @@ step :
     criterion :
       content : prime
       debug : release
+      
+  npm.install.and.compile :
+    currentPath : path::in
+    shell : 'npm i'
 
 build :
 
   debug :
     criterion :
       default : 1
-      debug : debug
-      raw : raw
-      content : prime
     steps :
-      - step::clean.out*=2
-      - reflect.proto.*=1
+      - clean.out
+      - reflect.cpp
+      - reflect.common
+      - npm.install.and.compile
 
   compiled.debug :
     criterion :

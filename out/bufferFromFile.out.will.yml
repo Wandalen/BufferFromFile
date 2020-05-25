@@ -6,8 +6,8 @@ consistency:
     hash: 08fd5d2ca7efa23fd57ae046fd63f7d4
     size: 2086
   ../.im.will.yml: &ref_1
-    hash: 07a9683a3977fefa4c0808590b6790da
-    size: 5041
+    hash: bf6d07769838574eba19bc422b492cb5
+    size: 5287
 module:
   bufferFromFile.out:
     about:
@@ -94,6 +94,10 @@ module:
         path: '{path::proto}/**'
       doc:
         path: ../doc
+      js:
+        path: ../js
+      cpp:
+        path: ../cpp
       out.raw.debug:
         criterion:
           debug: debug
@@ -165,6 +169,10 @@ module:
           - ../js
           - ../js/Main.ss
     submodule:
+      NjsCppBasic:
+        path: 'git+https:///github.com/Wandalen/wNjsCppBasic.git@master'
+        autoExporting: 0
+        enabled: 1
       bufferfromfile:
         path: 'hd://..'
         autoExporting: 0
@@ -254,6 +262,28 @@ module:
           content: prime
         inherit:
           - predefined.*
+      reflect.cpp:
+        src:
+          filePath:
+            'path::cpp': '{path::out}/cpp'
+          prefixPath: ''
+        dst:
+          prefixPath: ''
+        mandatory: 1
+        dstRewritingOnlyPreserving: 1
+        inherit:
+          - predefined.*
+      reflect.common:
+        src:
+          filePath:
+            '': .
+        dst:
+          prefixPath: '{path::out}/cpp'
+        mandatory: 1
+        dstRewritingOnlyPreserving: 1
+        inherit:
+          - >-
+            submodule::NjsCppBasic/exported::cpp.export/reflector::exported.files.cpp.export
       transpile.proto.raw:
         src:
           filePath:
@@ -432,164 +462,9 @@ module:
           raw: compiled
         inherit:
           - npm.generate
-      clean.out.debug.raw.no.tests.prime:
+      clean.out:
         opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: debug
-          raw: raw
-          tests: no.tests
-          content: prime
-        inherit:
-          - files.delete
-      clean.out.release.raw.no.tests.prime:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: release
-          raw: raw
-          tests: no.tests
-          content: prime
-        inherit:
-          - files.delete
-      clean.out.debug.compiled.no.tests.prime:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: debug
-          raw: compiled
-          tests: no.tests
-          content: prime
-        inherit:
-          - files.delete
-      clean.out.release.compiled.no.tests.prime:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: release
-          raw: compiled
-          tests: no.tests
-          content: prime
-        inherit:
-          - files.delete
-      clean.out.debug.raw.only.tests.prime:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: debug
-          raw: raw
-          tests: only.tests
-          content: prime
-        inherit:
-          - files.delete
-      clean.out.release.raw.only.tests.prime:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: release
-          raw: raw
-          tests: only.tests
-          content: prime
-        inherit:
-          - files.delete
-      clean.out.debug.compiled.only.tests.prime:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: debug
-          raw: compiled
-          tests: only.tests
-          content: prime
-        inherit:
-          - files.delete
-      clean.out.release.compiled.only.tests.prime:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: release
-          raw: compiled
-          tests: only.tests
-          content: prime
-        inherit:
-          - files.delete
-      clean.out.debug.raw.no.tests.npm:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: debug
-          raw: raw
-          tests: no.tests
-          content: npm
-        inherit:
-          - files.delete
-      clean.out.release.raw.no.tests.npm:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: release
-          raw: raw
-          tests: no.tests
-          content: npm
-        inherit:
-          - files.delete
-      clean.out.debug.compiled.no.tests.npm:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: debug
-          raw: compiled
-          tests: no.tests
-          content: npm
-        inherit:
-          - files.delete
-      clean.out.release.compiled.no.tests.npm:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: release
-          raw: compiled
-          tests: no.tests
-          content: npm
-        inherit:
-          - files.delete
-      clean.out.debug.raw.only.tests.npm:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: debug
-          raw: raw
-          tests: only.tests
-          content: npm
-        inherit:
-          - files.delete
-      clean.out.release.raw.only.tests.npm:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: release
-          raw: raw
-          tests: only.tests
-          content: npm
-        inherit:
-          - files.delete
-      clean.out.debug.compiled.only.tests.npm:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: debug
-          raw: compiled
-          tests: only.tests
-          content: npm
-        inherit:
-          - files.delete
-      clean.out.release.compiled.only.tests.npm:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: release
-          raw: compiled
-          tests: only.tests
-          content: npm
+          filePath: '{path::out}'
         inherit:
           - files.delete
       clean.out.npm:
@@ -619,9 +494,13 @@ module:
         criterion:
           content: prime
           debug: release
+      npm.install.and.compile:
+        opts:
+          currentPath: 'path::in'
+          shell: npm i
       reflect.proto.debug.raw:
         opts:
-          reflector: 'reflector::reflect.proto*'
+          filePath: 'reflector::reflect.proto*'
         criterion:
           tests: no.tests
           debug: debug
@@ -631,7 +510,7 @@ module:
           - files.reflect
       reflect.proto.release.raw:
         opts:
-          reflector: 'reflector::reflect.proto*'
+          filePath: 'reflector::reflect.proto*'
         criterion:
           tests: no.tests
           debug: release
@@ -641,7 +520,7 @@ module:
           - files.reflect
       reflect.proto.debug.compiled:
         opts:
-          reflector: 'reflector::reflect.proto*'
+          filePath: 'reflector::reflect.proto*'
         criterion:
           tests: no.tests
           debug: debug
@@ -651,7 +530,7 @@ module:
           - files.reflect
       reflect.proto.release.compiled:
         opts:
-          reflector: 'reflector::reflect.proto*'
+          filePath: 'reflector::reflect.proto*'
         criterion:
           tests: no.tests
           debug: release
@@ -659,10 +538,20 @@ module:
           content: prime
         inherit:
           - files.reflect
+      reflect.cpp:
+        opts:
+          filePath: 'reflector::reflect.cpp*'
+        inherit:
+          - files.reflect
+      reflect.common:
+        opts:
+          filePath: 'reflector::reflect.common*'
+        inherit:
+          - files.reflect
       transpile.proto.raw:
         opts:
           entry: 'path::entry.proto.no.tests'
-          reflector: 'reflector::transpile.proto.raw*'
+          filePath: 'reflector::transpile.proto.raw*'
         criterion:
           raw: raw
           debug: release
@@ -672,7 +561,7 @@ module:
       transpile.proto.no.tests.compiled.debug:
         opts:
           entry: 'path::entry.proto.*=1'
-          reflector: 'reflector::transpile.proto.no.tests.compiled*'
+          filePath: 'reflector::transpile.proto.no.tests.compiled*'
         criterion:
           tests: no.tests
           raw: compiled
@@ -683,7 +572,7 @@ module:
       transpile.proto.no.tests.compiled.release:
         opts:
           entry: 'path::entry.proto.*=1'
-          reflector: 'reflector::transpile.proto.no.tests.compiled*'
+          filePath: 'reflector::transpile.proto.no.tests.compiled*'
         criterion:
           tests: no.tests
           raw: compiled
@@ -695,7 +584,7 @@ module:
         opts:
           entry: 'path::entry.proto.*=1'
           external.before: '{path::out.*=1}/Main.s'
-          reflector: 'reflector::transpile.proto.only.tests.compiled*'
+          filePath: 'reflector::transpile.proto.only.tests.compiled*'
         criterion:
           tests: only.tests
           raw: compiled
@@ -707,7 +596,7 @@ module:
         opts:
           entry: 'path::entry.proto.*=1'
           external.before: '{path::out.*=1}/Main.s'
-          reflector: 'reflector::transpile.proto.only.tests.compiled*'
+          filePath: 'reflector::transpile.proto.only.tests.compiled*'
         criterion:
           tests: only.tests
           raw: compiled
@@ -742,13 +631,12 @@ module:
           export: 1
       debug:
         steps:
-          - 'step::clean.out*=2'
-          - reflect.proto.*=1
+          - clean.out
+          - reflect.cpp
+          - reflect.common
+          - npm.install.and.compile
         criterion:
           default: 1
-          debug: debug
-          raw: raw
-          content: prime
       compiled.debug:
         steps:
           - 'step::clean.out*=2'
@@ -873,6 +761,10 @@ module:
         path: '{path::proto}/**'
       doc:
         path: doc
+      js:
+        path: js
+      cpp:
+        path: cpp
       out.raw.debug:
         criterion:
           debug: debug
@@ -930,6 +822,10 @@ module:
           content: prime
         path: '{path::out.*=}/source/Index.s'
     submodule:
+      NjsCppBasic:
+        path: 'git+https:///github.com/Wandalen/wNjsCppBasic.git@master'
+        autoExporting: 0
+        enabled: 1
       bufferfromfile:
         path: 'hd://.'
         autoExporting: 0
@@ -1007,6 +903,25 @@ module:
           content: prime
         inherit:
           - predefined.*
+      reflect.cpp:
+        src:
+          filePath:
+            'path::cpp': '{path::out}/cpp'
+        mandatory: 1
+        dstRewritingOnlyPreserving: 1
+        inherit:
+          - predefined.*
+      reflect.common:
+        src:
+          filePath:
+            '': .
+        dst:
+          prefixPath: '{path::out}/cpp'
+        mandatory: 1
+        dstRewritingOnlyPreserving: 1
+        inherit:
+          - >-
+            submodule::NjsCppBasic/exported::cpp.export/reflector::exported.files.cpp.export
       transpile.proto.raw:
         src:
           filePath:
@@ -1145,164 +1060,9 @@ module:
           raw: compiled
         inherit:
           - npm.generate
-      clean.out.debug.raw.no.tests.prime:
+      clean.out:
         opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: debug
-          raw: raw
-          tests: no.tests
-          content: prime
-        inherit:
-          - files.delete
-      clean.out.release.raw.no.tests.prime:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: release
-          raw: raw
-          tests: no.tests
-          content: prime
-        inherit:
-          - files.delete
-      clean.out.debug.compiled.no.tests.prime:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: debug
-          raw: compiled
-          tests: no.tests
-          content: prime
-        inherit:
-          - files.delete
-      clean.out.release.compiled.no.tests.prime:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: release
-          raw: compiled
-          tests: no.tests
-          content: prime
-        inherit:
-          - files.delete
-      clean.out.debug.raw.only.tests.prime:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: debug
-          raw: raw
-          tests: only.tests
-          content: prime
-        inherit:
-          - files.delete
-      clean.out.release.raw.only.tests.prime:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: release
-          raw: raw
-          tests: only.tests
-          content: prime
-        inherit:
-          - files.delete
-      clean.out.debug.compiled.only.tests.prime:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: debug
-          raw: compiled
-          tests: only.tests
-          content: prime
-        inherit:
-          - files.delete
-      clean.out.release.compiled.only.tests.prime:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: release
-          raw: compiled
-          tests: only.tests
-          content: prime
-        inherit:
-          - files.delete
-      clean.out.debug.raw.no.tests.npm:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: debug
-          raw: raw
-          tests: no.tests
-          content: npm
-        inherit:
-          - files.delete
-      clean.out.release.raw.no.tests.npm:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: release
-          raw: raw
-          tests: no.tests
-          content: npm
-        inherit:
-          - files.delete
-      clean.out.debug.compiled.no.tests.npm:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: debug
-          raw: compiled
-          tests: no.tests
-          content: npm
-        inherit:
-          - files.delete
-      clean.out.release.compiled.no.tests.npm:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: release
-          raw: compiled
-          tests: no.tests
-          content: npm
-        inherit:
-          - files.delete
-      clean.out.debug.raw.only.tests.npm:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: debug
-          raw: raw
-          tests: only.tests
-          content: npm
-        inherit:
-          - files.delete
-      clean.out.release.raw.only.tests.npm:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: release
-          raw: raw
-          tests: only.tests
-          content: npm
-        inherit:
-          - files.delete
-      clean.out.debug.compiled.only.tests.npm:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: debug
-          raw: compiled
-          tests: only.tests
-          content: npm
-        inherit:
-          - files.delete
-      clean.out.release.compiled.only.tests.npm:
-        opts:
-          filePath: '{path::out.*=1}/source'
-        criterion:
-          debug: release
-          raw: compiled
-          tests: only.tests
-          content: npm
+          filePath: '{path::out}'
         inherit:
           - files.delete
       clean.out.npm:
@@ -1332,9 +1092,13 @@ module:
         criterion:
           content: prime
           debug: release
+      npm.install.and.compile:
+        opts:
+          currentPath: 'path::in'
+          shell: npm i
       reflect.proto.debug.raw:
         opts:
-          reflector: 'reflector::reflect.proto*'
+          filePath: 'reflector::reflect.proto*'
         criterion:
           tests: no.tests
           debug: debug
@@ -1344,7 +1108,7 @@ module:
           - files.reflect
       reflect.proto.release.raw:
         opts:
-          reflector: 'reflector::reflect.proto*'
+          filePath: 'reflector::reflect.proto*'
         criterion:
           tests: no.tests
           debug: release
@@ -1354,7 +1118,7 @@ module:
           - files.reflect
       reflect.proto.debug.compiled:
         opts:
-          reflector: 'reflector::reflect.proto*'
+          filePath: 'reflector::reflect.proto*'
         criterion:
           tests: no.tests
           debug: debug
@@ -1364,7 +1128,7 @@ module:
           - files.reflect
       reflect.proto.release.compiled:
         opts:
-          reflector: 'reflector::reflect.proto*'
+          filePath: 'reflector::reflect.proto*'
         criterion:
           tests: no.tests
           debug: release
@@ -1372,10 +1136,20 @@ module:
           content: prime
         inherit:
           - files.reflect
+      reflect.cpp:
+        opts:
+          filePath: 'reflector::reflect.cpp*'
+        inherit:
+          - files.reflect
+      reflect.common:
+        opts:
+          filePath: 'reflector::reflect.common*'
+        inherit:
+          - files.reflect
       transpile.proto.raw:
         opts:
           entry: 'path::entry.proto.no.tests'
-          reflector: 'reflector::transpile.proto.raw*'
+          filePath: 'reflector::transpile.proto.raw*'
         criterion:
           raw: raw
           debug: release
@@ -1385,7 +1159,7 @@ module:
       transpile.proto.no.tests.compiled.debug:
         opts:
           entry: 'path::entry.proto.*=1'
-          reflector: 'reflector::transpile.proto.no.tests.compiled*'
+          filePath: 'reflector::transpile.proto.no.tests.compiled*'
         criterion:
           tests: no.tests
           raw: compiled
@@ -1396,7 +1170,7 @@ module:
       transpile.proto.no.tests.compiled.release:
         opts:
           entry: 'path::entry.proto.*=1'
-          reflector: 'reflector::transpile.proto.no.tests.compiled*'
+          filePath: 'reflector::transpile.proto.no.tests.compiled*'
         criterion:
           tests: no.tests
           raw: compiled
@@ -1408,7 +1182,7 @@ module:
         opts:
           entry: 'path::entry.proto.*=1'
           external.before: '{path::out.*=1}/Main.s'
-          reflector: 'reflector::transpile.proto.only.tests.compiled*'
+          filePath: 'reflector::transpile.proto.only.tests.compiled*'
         criterion:
           tests: only.tests
           raw: compiled
@@ -1420,7 +1194,7 @@ module:
         opts:
           entry: 'path::entry.proto.*=1'
           external.before: '{path::out.*=1}/Main.s'
-          reflector: 'reflector::transpile.proto.only.tests.compiled*'
+          filePath: 'reflector::transpile.proto.only.tests.compiled*'
         criterion:
           tests: only.tests
           raw: compiled
@@ -1455,13 +1229,12 @@ module:
           export: 1
       debug:
         steps:
-          - 'step::clean.out*=2'
-          - reflect.proto.*=1
+          - clean.out
+          - reflect.cpp
+          - reflect.common
+          - npm.install.and.compile
         criterion:
           default: 1
-          debug: debug
-          raw: raw
-          content: prime
       compiled.debug:
         steps:
           - 'step::clean.out*=2'
@@ -1507,5 +1280,5 @@ module:
         hash: 08fd5d2ca7efa23fd57ae046fd63f7d4
         size: 2086
       ../.im.will.yml:
-        hash: 07a9683a3977fefa4c0808590b6790da
-        size: 5041
+        hash: bf6d07769838574eba19bc422b492cb5
+        size: 5287
