@@ -6,8 +6,8 @@ consistency:
     hash: 08fd5d2ca7efa23fd57ae046fd63f7d4
     size: 2086
   ../.im.will.yml: &ref_1
-    hash: bf6d07769838574eba19bc422b492cb5
-    size: 5287
+    hash: c8056258cb5effb6b675a1434aaa20cb
+    size: 5324
 module:
   bufferFromFile.out:
     about:
@@ -84,9 +84,9 @@ module:
         path: .
       temp:
         path:
-          - 'path::out'
+          - '{path::out}/cpp'
+          - '{path::build}'
           - ../package-lock.json
-          - ../package.json
           - ../node_modules
       proto:
         path: ../js
@@ -98,6 +98,8 @@ module:
         path: ../js
       cpp:
         path: ../cpp
+      build:
+        path: ../build
       out.raw.debug:
         criterion:
           debug: debug
@@ -462,9 +464,9 @@ module:
           raw: compiled
         inherit:
           - npm.generate
-      clean.out:
+      clean.out.cpp:
         opts:
-          filePath: '{path::out}'
+          filePath: '{path::out}/cpp'
         inherit:
           - files.delete
       clean.out.npm:
@@ -631,7 +633,7 @@ module:
           export: 1
       debug:
         steps:
-          - clean.out
+          - clean.out.cpp
           - reflect.cpp
           - reflect.common
           - npm.install.and.compile
@@ -751,9 +753,9 @@ module:
         path: out
       temp:
         path:
-          - 'path::out'
+          - '{path::out}/cpp'
+          - '{path::build}'
           - package-lock.json
-          - package.json
           - node_modules
       proto:
         path: js
@@ -765,6 +767,8 @@ module:
         path: js
       cpp:
         path: cpp
+      build:
+        path: build
       out.raw.debug:
         criterion:
           debug: debug
@@ -1060,9 +1064,9 @@ module:
           raw: compiled
         inherit:
           - npm.generate
-      clean.out:
+      clean.out.cpp:
         opts:
-          filePath: '{path::out}'
+          filePath: '{path::out}/cpp'
         inherit:
           - files.delete
       clean.out.npm:
@@ -1229,7 +1233,7 @@ module:
           export: 1
       debug:
         steps:
-          - clean.out
+          - clean.out.cpp
           - reflect.cpp
           - reflect.common
           - npm.install.and.compile
@@ -1280,5 +1284,5 @@ module:
         hash: 08fd5d2ca7efa23fd57ae046fd63f7d4
         size: 2086
       ../.im.will.yml:
-        hash: bf6d07769838574eba19bc422b492cb5
-        size: 5287
+        hash: c8056258cb5effb6b675a1434aaa20cb
+        size: 5324

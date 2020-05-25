@@ -29,15 +29,16 @@ path :
   in : '.'
   out : 'out'
   temp :
-    - 'path::out'
+    - '{path::out}/cpp'
+    - '{path::build}'
     - 'package-lock.json'
-    - 'package.json'
     - 'node_modules'
   proto : './js'
   export : '{path::proto}/**'
   doc : './doc'
   js : 'js'
   cpp : 'cpp'
+  build : 'build'
 
   out.raw.debug :
     path : '{path::out}/debug'
@@ -163,9 +164,9 @@ step :
       debug : [ debug, release ]
       raw : [ raw, compiled ]
 
-  clean.out :
+  clean.out.cpp :
     inherit : files.delete
-    filePath : '{path::out}'
+    filePath : '{path::out}/cpp'
 
   clean.out.npm :
     inherit : files.delete
@@ -203,7 +204,7 @@ build :
     criterion :
       default : 1
     steps :
-      - clean.out
+      - clean.out.cpp
       - reflect.cpp
       - reflect.common
       - npm.install.and.compile
