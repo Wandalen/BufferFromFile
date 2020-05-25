@@ -5,10 +5,10 @@
   "enabled": true,
   "license": "MIT",
   "description": "The module in JavaScript provides convenient means for using files as standard ArrayBuffer making mmap behind the scene.",
-  "author": "Kostiantyn Wandalen <wanalen@01.school>",
+  "author": "Kostiantyn volodymyrmigdal <wanalen@01.school>",
   "contributors": [
     {
-      "name": "Kostiantyn Wandalen",
+      "name": "Kostiantyn volodymyrmigdal",
       "email": "wanalen@01.school"
     },
     {
@@ -39,10 +39,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Wandalen/BufferFromFile.git"
+    "url": "https://github.com/volodymyrmigdal/BufferFromFile.git"
   },
   "bugs": {
-    "url": "https://github.com/Wandalen/BufferFromFile/issues"
+    "url": "https://github.com/volodymyrmigdal/BufferFromFile/issues"
   },
   "dependencies": {},
   "devDependencies": {
