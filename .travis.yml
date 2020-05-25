@@ -10,6 +10,8 @@ node_js:
   - '12'
   - 'node'
 script:
+  - npm -g i willbe@alpha
+  - will .build
   - npm test
 cache:
   npm: false

@@ -16,7 +16,9 @@ install:
  - ps: Update-AppveyorBuild -Version "$env:package_version.$env:APPVEYOR_BUILD_NUMBER"
  - cmd: powershell -command "Install-Product node $env:nodejs_version"
  - sh: nvm install $nodejs_version
- - npm install
+ - npm -g i willbe@alpha
+ - will .build
+ - npm test
 
 
 test_script:

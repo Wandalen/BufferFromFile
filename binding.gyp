@@ -2,11 +2,11 @@
   "targets":
   [{
     "target_name" : "BufferFromFile",
-    "sources" : [ "cpp/Main.cpp" ],
+    "sources" : [ "out/cpp/Main.cpp" ],
     "include_dirs":
     [
-      "cpp",
-      "cpp/wTools/meta",
+      "out/cpp",
+      "out/cpp/wTools/meta",
     ],
     'cflags!': [ '-fno-exceptions' ],
     'cflags_cc!': [ '-fno-exceptions' ],

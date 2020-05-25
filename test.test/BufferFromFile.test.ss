@@ -818,7 +818,7 @@ var Proto =
   {
     suiteTempPath : null,
     assetsOriginalSuitePath : null,
-    execJsPath : null,
+    appJsPath : null,
     filePath : null,
     testData : null,
     bufferFromFilePath : null,
