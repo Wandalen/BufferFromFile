@@ -28,3 +28,5 @@ jobs:
     - run: npm -g i willbe@alpha
     - run: will .build
     - run: npm test
+    - run: npm run node-pre-gyp-package && npm run node-pre-gyp-github-release
+      if: success() && startsWith(toJson(github.event.commits), 'version')

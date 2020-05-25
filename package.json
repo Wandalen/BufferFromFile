@@ -1,45 +1,60 @@
 {
-  "name" : "bufferfromfile",
-  "version" : "0.4.152",
-  "engine" : "node >= 6.0.0",
-  "enabled" : true,
-  "license" : "MIT",
-  "description" : "The module in JavaScript provides convenient means for using files as standard ArrayBuffer making mmap behind the scene.",
-  "author" : "Kostiantyn Wandalen <wanalen@01.school>",
-  "contributors" :
-  [
-    { "name" : "Kostiantyn Wandalen", "email" : "wanalen@01.school" },
-    { "name" : "Volodymyr M.", "email" : "volodymyr.migdal@gmail.com" }
+  "name": "bufferfromfile",
+  "version": "0.4.152",
+  "engine": "node >= 6.0.0",
+  "enabled": true,
+  "license": "MIT",
+  "description": "The module in JavaScript provides convenient means for using files as standard ArrayBuffer making mmap behind the scene.",
+  "author": "Kostiantyn Wandalen <wanalen@01.school>",
+  "contributors": [
+    {
+      "name": "Kostiantyn Wandalen",
+      "email": "wanalen@01.school"
+    },
+    {
+      "name": "Volodymyr M.",
+      "email": "volodymyr.migdal@gmail.com"
+    }
   ],
-  "files" : [ "cpp", "js", "binding.gyp", "Makefile" ],
-  "main" : "js/Main.ss",
-  "scripts" :
-  {
-    "build" : "node-gyp configure && node-gyp rebuild",
-    "test" : "wtest test.test",
-    "make_doc" : "./doc.sh",
-    "clean" : "rm -rf build node_modules"
+  "files": [
+    "cpp",
+    "js",
+    "binding.gyp",
+    "Makefile"
+  ],
+  "main": "js/Main.ss",
+  "scripts": {
+    "build": "node-pre-gyp install --fallback-to-build",
+    "node-pre-gyp-package": "node-pre-gyp package",
+    "node-pre-gyp-github-release": "node-pre-gyp-github publish --release",
+    "test": "wtest test.test",
+    "make_doc": "./doc.sh",
+    "clean": "rm -rf build node_modules"
   },
-  "repository" :
-  {
-    "type" : "git",
-    "url" : "https://github.com/Wandalen/BufferFromFile.git"
+  "binary": {
+    "module_name": "bufferfromfile",
+    "module_path": "./lib/binding/",
+    "host": "https://github.com/volodymyrmigdal/BufferFromFile/releases/download/",
+    "remote_path": "{version}"
   },
-  "bugs" :
-  {
-    "url" : "https://github.com/Wandalen/BufferFromFile/issues"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wandalen/BufferFromFile.git"
   },
-  "dependencies" : {},
-  "devDependencies" :
-  {
-    "bufferfromfile" : ".",
-    "wTools" : "alpha",
-    "wTesting" : "alpha",
-    "wappbasic" : "alpha"
+  "bugs": {
+    "url": "https://github.com/Wandalen/BufferFromFile/issues"
   },
-  "gypfile" : false,
-  "keywords" :
-  [
+  "dependencies": {},
+  "devDependencies": {
+    "bufferfromfile": ".",
+    "wTools": "alpha",
+    "wTesting": "alpha",
+    "wappbasic": "alpha",
+    "node-pre-gyp": "",
+    "node-pre-gyp-github": ""
+  },
+  "gypfile": false,
+  "keywords": [
     "wTools",
     "ArrayBuffer",
     "Buffer from file",

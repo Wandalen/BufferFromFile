@@ -15,10 +15,18 @@
   "main" : "js/Main.ss",
   "scripts" :
   {
-    "build" : "node-gyp configure && node-gyp rebuild",
+    "build": "node-pre-gyp install --fallback-to-build",
+    "node-pre-gyp-package": "node-pre-gyp package",
+    "node-pre-gyp-github-release": "node-pre-gyp-github publish --release",
     "test" : "wtest test.test",
     "make_doc" : "./doc.sh",
     "clean" : "rm -rf build node_modules"
+  },
+  "binary": {
+    "module_name": "bufferfromfile",
+    "module_path": "./lib/binding/",
+    "host": "https://github.com/volodymyrmigdal/BufferFromFile/releases/download/",
+    "remote_path": "{version}"
   },
   "repository" :
   {
@@ -35,7 +43,9 @@
     "wTools" : "",
     "wTesting" : "",
     "wappbasic" : "",
-    "bufferfromfile" : "."
+    "bufferfromfile" : ".",
+    "node-pre-gyp": "",
+    "node-pre-gyp-github": ""
   },
   "gypfile" : false,
   "keywords" :
