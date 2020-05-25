@@ -6,8 +6,8 @@ consistency:
     hash: 08fd5d2ca7efa23fd57ae046fd63f7d4
     size: 2086
   ../.im.will.yml: &ref_1
-    hash: c8056258cb5effb6b675a1434aaa20cb
-    size: 5324
+    hash: b6f89ca4ef932b535ddc0668aca09f5b
+    size: 5407
 module:
   bufferFromFile.out:
     about:
@@ -496,10 +496,14 @@ module:
         criterion:
           content: prime
           debug: release
-      npm.install.and.compile:
+      npm.install:
         opts:
           currentPath: 'path::in'
           shell: npm i
+      node-gyp.build:
+        opts:
+          currentPath: 'path::in'
+          shell: npm run-script build
       reflect.proto.debug.raw:
         opts:
           filePath: 'reflector::reflect.proto*'
@@ -636,7 +640,8 @@ module:
           - clean.out.cpp
           - reflect.cpp
           - reflect.common
-          - npm.install.and.compile
+          - npm.install
+          - node-gyp.build
         criterion:
           default: 1
       compiled.debug:
@@ -1096,10 +1101,14 @@ module:
         criterion:
           content: prime
           debug: release
-      npm.install.and.compile:
+      npm.install:
         opts:
           currentPath: 'path::in'
           shell: npm i
+      node-gyp.build:
+        opts:
+          currentPath: 'path::in'
+          shell: npm run-script build
       reflect.proto.debug.raw:
         opts:
           filePath: 'reflector::reflect.proto*'
@@ -1236,7 +1245,8 @@ module:
           - clean.out.cpp
           - reflect.cpp
           - reflect.common
-          - npm.install.and.compile
+          - npm.install
+          - node-gyp.build
         criterion:
           default: 1
       compiled.debug:
@@ -1284,5 +1294,5 @@ module:
         hash: 08fd5d2ca7efa23fd57ae046fd63f7d4
         size: 2086
       ../.im.will.yml:
-        hash: c8056258cb5effb6b675a1434aaa20cb
-        size: 5324
+        hash: b6f89ca4ef932b535ddc0668aca09f5b
+        size: 5407
