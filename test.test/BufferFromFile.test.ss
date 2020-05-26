@@ -2,14 +2,16 @@
 
 'use strict';
 
+let BufferFromFile;
+
 if( typeof module !== 'undefined' )
 {
 
-  var BufferFromFile = require( '../js/Main.ss' );
+  BufferFromFile = require( '../js/Main.ss' );
 
   require( 'wTools' );
 
-  var _ = _global_.wTools;
+  let _ = _global_.wTools;
 
   _.include( 'wTesting' );
   _.include( 'wFiles' );
@@ -17,16 +19,14 @@ if( typeof module !== 'undefined' )
 
 }
 
-//
-
-var _ = wTools;
+let _ = _global_.wTools;
 
 //
 
 function onSuiteBegin()
-{ 
+{
   let context = this;
-  
+
   context.suiteTempPath = _.path.pathDirTempOpen( _.path.join( __dirname, '..'  ), 'BufferFromFile' );
   context.assetsOriginalSuitePath = _.path.join( __dirname, '_asset' );
   context.filePath = _.fileProvider.path.nativize( _.path.join( context.suiteTempPath, 'testFile.txt' ) );
@@ -37,7 +37,7 @@ function onSuiteBegin()
 }
 
 function onSuiteEnd()
-{ 
+{
   let context = this;
   _.assert( _.strHas( context.suiteTempPath, 'BufferFromFile' ), context.suiteTempPath );
   _.fileProvider.path.pathDirTempClose( context.suiteTempPath );
@@ -55,7 +55,7 @@ function assetFor( test, asset )
     let reflected = a.fileProvider.filesReflect({ reflectMap : { [ a.originalAssetPath ] : a.routinePath }, onUp : onUp });
 
     reflected.forEach( ( r ) =>
-    { 
+    {
       if( r.dst.ext !== 'js' && r.dst.ext !== 's' )
       return;
       var read = a.fileProvider.fileRead( r.dst.absolute );
@@ -84,7 +84,7 @@ function assetFor( test, asset )
 // --
 
 function buffersFromRaw( test )
-{ 
+{
   let context = this;
   var bufferMap =
   {
@@ -123,7 +123,7 @@ function buffersFromRaw( test )
     test.is( _.bufferTypedIs( buffer ) );
     test.identical( buffer.constructor.name, type );
     test.identical( buffer.byteLength, descriptor.ArrayBuffer().byteLength );
-    
+
     var expected = _.fileProvider.fileRead
     ({
       filePath : context.filePath,
@@ -159,9 +159,9 @@ function buffersFromRaw( test )
 //
 
 function bufferFromFile( test )
-{ 
+{
   let context = this;
-  
+
   test.description = 'create raw buffer from file';
   _.fileProvider.fileWrite( context.filePath, context.testData );
 
@@ -388,9 +388,9 @@ function bufferFromFile( test )
 //
 
 function flush( test )
-{ 
+{
   let context = this;
-  
+
   var buffersMap =
   {
     'Int8Array' : Int8Array,
@@ -533,9 +533,9 @@ function flush( test )
 //
 
 function advise( test )
-{ 
+{
   let context = this;
-  
+
   var advises = _.mapOwnKeys( BufferFromFile.Advise );
   _.fileProvider.fileWrite( context.filePath, context.testData );
 
@@ -584,9 +584,9 @@ function advise( test )
 //
 
 function status( test )
-{ 
+{
   let context = this;
-  
+
   _.fileProvider.fileWrite( context.filePath, context.testData );
   var stats = _.fileProvider.statRead( context.filePath );
 
@@ -661,11 +661,11 @@ function status( test )
 //
 
 function unmap( test )
-{ 
+{
   let context = this;
-  
+
   _.fileProvider.fileWrite( context.filePath, context.testData );
-  
+
   test.description = 'after unmap buffer is empty, changes do not affect the file'
   var buffer = BufferFromFile( context.filePath ).NodeBuffer();
   var expected = _.fileProvider.fileRead({ filePath : context.filePath, encoding : 'buffer.node' });
@@ -692,7 +692,7 @@ function unmap( test )
   })
 
   //
-  
+
   test.description = 'too many args'
   var buffer = BufferFromFile( context.filePath ).NodeBuffer();
   test.shouldThrowErrorSync( function ()
@@ -708,16 +708,16 @@ function readOnlyBuffer( test )
 {
   let context = this;
   let a = test.assetFor( false );
-  
+
   let _BufferFromFilePath_ = a.path.nativize( require.resolve( '../js/Main.ss' ) );
-  
+
   let program1Path = a.program({ routine : program1, locals : { _BufferFromFilePath_, _FilePath_ : context.filePath } });
   let program2Path = a.program({ routine : program2, locals : { _BufferFromFilePath_, _FilePath_ : context.filePath } });
-  
+
   _.fileProvider.fileWrite( context.filePath, context.testData );
-  
+
   /* */
-  
+
   a.appStartNonThrowing({ execPath : program1Path })
   .then( ( op ) =>
   {
@@ -726,9 +726,9 @@ function readOnlyBuffer( test )
     test.is( _.strHas( op.output, '49' ) );
     return null;
   });
-  
+
   /* */
-  
+
   a.appStartNonThrowing({ execPath : program2Path })
   .then( ( op ) =>
   {
@@ -739,16 +739,16 @@ function readOnlyBuffer( test )
     test.identical( op.exitSignal, 'SIGSEGV' );
     else if( process.platform === 'darwin' )
     test.identical( op.exitSignal, 'SIGBUS' );
-    
+
     test.is( !_.strHas( op.output, 'Buffer changed' ) );
     return null;
   });
 
-  
+
   /* */
-  
+
   return a.ready;
-  
+
   function program1()
   {
     let BufferFromFile = require( _BufferFromFilePath_ )
@@ -756,7 +756,7 @@ function readOnlyBuffer( test )
     console.log( buffer[ 0 ].toString() )
     BufferFromFile.unmap( buffer );
   }
-  
+
   function program2()
   {
     let BufferFromFile = require( _BufferFromFilePath_ )
@@ -774,21 +774,21 @@ readOnlyBuffer.timeOut = 30000;
 function ipc( test )
 {
   let context = this;
-  
+
   let a = context.assetFor( test, 'ipc' );
-  
+
   a.reflect();
-  
+
   _.fileProvider.fileWrite( _.path.join( a.routinePath, 'File.txt' ), 'abc' );
-  
+
   var buffer = BufferFromFile( _.path.nativize( _.path.join( a.routinePath, 'File.txt' ) ) ).NodeBuffer();
   buffer.fill( 'a' );
   BufferFromFile.flush( buffer );
-  
+
   let childProgramPath = _.path.join( a.routinePath, 'Child.js' );
-  
-  var o = 
-  { 
+
+  var o =
+  {
     execPath : 'node ' + childProgramPath,
     currentPath : context.suiteTempPath,
     ipc : 1,
@@ -800,9 +800,9 @@ function ipc( test )
   let ready = _.process.start( o );
   let childBuffer;
   let finalBuffer;
-  
-  o.process.on( 'message', ( m ) => 
-  { 
+
+  o.process.on( 'message', ( m ) =>
+  {
     if( m.ready === 1 )
     {
       buffer.fill( 'a' );
@@ -818,14 +818,14 @@ function ipc( test )
       finalBuffer = buffer.toString();
     }
   })
-  
+
   ready.finally( ( err, op ) =>
-  { 
+  {
     BufferFromFile.unmap( buffer );
-    
+
     if( err )
     throw err;
-    
+
     test.identical( op.exitCode, 0 );
     test.identical( childBuffer, 'aaa' )
     test.identical( finalBuffer, 'bbb' )
@@ -837,7 +837,7 @@ function ipc( test )
   return ready;
 }
 
-ipc.description = 
+ipc.description =
 `
   Main process sends data to child via buffer, child reads buffer and sends receveived data back via ipc.
   Child process sends data to parent via buffer, parent reads buffer and checks both results.
@@ -846,18 +846,18 @@ ipc.description =
 //
 
 function experiment( test )
-{  
+{
   let context = this;
-  
+
   var file = _.path.join( testDir, test.name, 'fileA' );
   _.fileProvider.fileWrite( context.filePath, context.testData );
- 
+
   var buffer = BufferFromFile( filePath ).ArrayBuffer();
   BufferFromFile.unmap( buffer );
   test.identical( 1,1 );
 
   return _.timeOut( 1000, () =>
-  { 
+  {
     var buffer = BufferFromFile( filePath ).ArrayBuffer();
     BufferFromFile.unmap( buffer );
     test.identical( 1,1 );
@@ -880,8 +880,8 @@ var Proto =
 
   onSuiteBegin,
   onSuiteEnd,
-  
-  context : 
+
+  context :
   {
     suiteTempPath : null,
     assetsOriginalSuitePath : null,
@@ -901,9 +901,9 @@ var Proto =
     advise,
     status,
     unmap,
-    
+
     readOnlyBuffer,
-    
+
     ipc,
 
     experiment
