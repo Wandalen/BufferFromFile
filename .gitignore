@@ -1,5 +1,5 @@
 
-./_
+/_*
 .*
 -*
 *.log
@@ -9,4 +9,3 @@
 node_modules
 package-lock.json
 out/cpp
-build
