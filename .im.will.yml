@@ -216,9 +216,13 @@ step :
       content : prime
       debug : release
   
-  node-gyp.build :
+  node-gyp.configure :
     currentPath : path::in
-    shell : 'npm run-script build'
+    shell : 'node node_modules/.bin/node-pre-gyp configure'
+    
+  node-gyp.rebuild :
+    currentPath : path::in
+    shell : 'node node_modules/.bin/node-pre-gyp rebuild'
     
   node-gyp.install :
     currentPath : path::in
@@ -231,7 +235,8 @@ build :
       default : 1
     steps :
       - submodules.update
-      - node-gyp.build
+      - node-gyp.configure
+      - node-gyp.rebuild
       
   install :
     steps :
