@@ -23,6 +23,11 @@ submodule :
     enabled : 0 # submodule
     criterion :
       development : 1
+  willbe :
+    path : npm:///willbe
+    enabled : 0 # submodule
+    criterion :
+      development : 1
   node-pre-gyp :
     path : npm:///node-pre-gyp
     enabled : 0 # submodule
@@ -48,6 +53,8 @@ path :
     - '{path::build}'
     - 'package-lock.json'
     - 'node_modules'
+    - 'build'
+    - 'binding'
   proto : './js'
   export : '{path::proto}/**'
   doc : './doc'
@@ -212,6 +219,10 @@ step :
   node-gyp.build :
     currentPath : path::in
     shell : 'npm run-script build'
+    
+  node-gyp.install :
+    currentPath : path::in
+    shell : 'node node_modules/.bin/node-pre-gyp install --update-binary --fallback-to-build'
 
 build :
 
@@ -221,6 +232,11 @@ build :
     steps :
       - submodules.update
       - node-gyp.build
+      
+  install :
+    steps :
+      - submodules.update
+      - node-gyp.install
 
   compiled.debug :
     criterion :

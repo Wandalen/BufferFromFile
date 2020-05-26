@@ -24,8 +24,8 @@
   ],
   "main": "js/Main.ss",
   "scripts": {
-    "install": "node-pre-gyp install --fallback-to-build",
-    "build": "node-pre-gyp configure && node-pre-gyp rebuild",
+    "install": "node node_modules/.bin/will .build install",
+    "node-pre-gyp-build": "node-pre-gyp configure && node-pre-gyp rebuild",
     "node-pre-gyp-package": "node-pre-gyp package",
     "node-pre-gyp-github-release": "node-pre-gyp-github publish --release",
     "test": "wtest test.test",
@@ -34,7 +34,7 @@
   },
   "binary": {
     "module_name": "bufferfromfile",
-    "module_path": "./lib/binding/",
+    "module_path": "./binding/",
     "host": "https://github.com/volodymyrmigdal/BufferFromFile/releases/download/",
     "remote_path": "{version}"
   },
@@ -47,10 +47,10 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "bufferfromfile": ".",
     "wTools": "alpha",
     "wTesting": "alpha",
     "wappbasic": "alpha",
+    "willbe": "alpha",
     "node-pre-gyp": "",
     "node-pre-gyp-github": "",
     "eslint": ""
