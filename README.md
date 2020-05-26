@@ -1,5 +1,5 @@
 
-# BufferFromFile [![Build Status](https://travis-ci.org/Wandalen/BufferFromFile.svg?branch=master)](https://travis-ci.org/Wandalen/BufferFromFile) 
+# BufferFromFile [![Build Status](https://travis-ci.org/Wandalen/BufferFromFile.svg?branch=master)](https://travis-ci.org/Wandalen/BufferFromFile)
 
 Native module for Nodejs providing convenient means for using files as standard ArrayBuffer making mmap behind the scene.
 BufferFromFile uses mmap to map file from hard drive to memory returning ArrayBuffer or TypedBuffer which can be manipulated just like ordinary buffer.
@@ -9,101 +9,32 @@ Just like [native](http://man7.org/linux/man-pages/man2/mmap.2.html) version of 
 
 BufferFromFIle works on Windows, OSX, Linux and other Unix-like systems.
 The module doesn't depend of module nan and does not support deprecated versions of Nodejs.
-The module can convert a file to standard ArrayBuffer or any kind of TypedBuffer or even deprecated Nodejs Buffer.
+The module can convert a file to standard ArrayBuffer or any kind of TypedBuffer. Nonstandard Nodejs Buffer is supported also.
 
 ### Usage:
 
-###### Sample simply mmap a file
+```
+npm install
+node sample/Sample.js
+```
+
+### Sample
+
 ```javascript
 
 var buffer = BufferFromFile( filePath ).Uint8Array();
 
-// edit single byte
+// let's edit the first byte
 
 buffer[ 0 ] = 48 + Math.round( Math.random()*9 );
 
 // print the buffer
 
-console.log( 'buffer.length :',buffer.length );
-console.log( 'buffer.toString :',buffer.toString() );
+console.log( 'buffer.length :', buffer.length );
+console.log( 'buffer.toString :', buffer.toString() );
 
 // unmap file
 
 BufferFromFile.unmap( buffer );
 
 ```
-
-###### Sample make read only buffer from a file
-```javascript
-
-// mmap file
-
-var filePath = __dirname + '/TestFile.txt';
-var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.Protection.read }).Uint8Array();
-
-// attempt to write data would give error
-
-/* buffer[ 0 ] = 48 + Math.round( Math.random()*9 ); */
-
-// read data and status
-
-console.log( 'buffer.toString :',buffer.toString() );
-console.log( 'status',BufferFromFile.status( buffer ) );
-
-// unmap file
-
-BufferFromFile.unmap( buffer );
-
-```
-
-###### Sample make read only buffer from a file
-```javascript
-
-// mmap file
-
-var buffer = BufferFromFile( filePath ).Uint8Array();
-
-// write data
-
-buffer[ 0 ] = 48 + Math.round( Math.random()*9 );
-
-// flush written data to make sure data on will get on hard drive shortly
-
-BufferFromFile.flush( buffer );
-
-// rewrite data
-
-buffer[ 0 ] = 48 + Math.round( Math.random()*9 );
-
-// unmap file
-
-BufferFromFile.unmap( buffer );
-
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

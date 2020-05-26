@@ -19,7 +19,6 @@
     "node-pre-gyp-package": "node-pre-gyp package",
     "node-pre-gyp-github-release": "node-pre-gyp-github publish --release",
     "test" : "wtest test.test",
-    "make_doc" : "./doc.sh",
     "clean" : "rm -rf build node_modules"
   },
   "binary": {
