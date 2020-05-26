@@ -25,7 +25,6 @@
             'OTHER_LDFLAGS' : [ '-stdlib=libc++' ],
             'MACOSX_DEPLOYMENT_TARGET': '10.10',
             'GCC_ENABLE_CPP_EXCEPTIONS': 'YES'
-
           }
         }
       ]

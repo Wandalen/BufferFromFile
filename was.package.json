@@ -17,7 +17,6 @@
   {
     "build" : "node-gyp configure && node-gyp rebuild",
     "test" : "wtest test.test",
-    "make_doc" : "./doc.sh",
     "clean" : "rm -rf build node_modules"
   },
   "repository" :

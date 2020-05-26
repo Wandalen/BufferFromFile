@@ -4,17 +4,8 @@
 -*
 *.log
 *.db
-*.sh
-*.bat
 *.tmp
-*.special
 *.out
-build
-builder
-html.build.coffee
 node_modules
 package-lock.json
 out/cpp
-
-*/dwtools/atop/starter.test/_asset/**/.module
-*/dwtools/atop/starter.test/_asset/**/out
