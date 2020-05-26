@@ -13,11 +13,11 @@ buffer[ 0 ] = 48 + Math.round( Math.random()*9 );
 
 // print the buffer
 
-console.log( 'buffer.length :',buffer.length );
-console.log( 'buffer.toString :',buffer.toString() );
+console.log( 'buffer.length :', buffer.length );
+console.log( 'buffer.toString :', buffer.toString() );
 
 // unmap file
 
 BufferFromFile.unmap( buffer );
 
-console.log( "\nTry : cat sample/TestFile.txt" );
+console.log( '\nTry : cat sample/TestFile.txt' );

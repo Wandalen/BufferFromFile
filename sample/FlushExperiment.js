@@ -12,12 +12,12 @@ buffer[ 0 ] = 48 + Math.round( Math.random()*9 );
 
 BufferFromFile.flush( buffer );
 
-console.log( "OK" );
+console.log( 'OK' );
 
 buffer[ 0 ] = 48 + Math.round( Math.random()*9 );
 
-BufferFromFile.flush({ buffer : buffer } );
+BufferFromFile.flush( { buffer } );
 
-console.log( "OK" );
+console.log( 'OK' );
 
 BufferFromFile.unmap( buffer );

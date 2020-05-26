@@ -23,4 +23,4 @@ buffer[ 0 ] = 48 + Math.round( Math.random()*9 );
 
 BufferFromFile.unmap( buffer );
 
-console.log( "\nTry : cat sample/TestFile.txt" );
+console.log( '\nTry : cat sample/TestFile.txt' );
