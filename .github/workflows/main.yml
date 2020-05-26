@@ -31,4 +31,4 @@ jobs:
     - run: npm run node-pre-gyp-package && npm run node-pre-gyp-github-release
       env:
         NODE_PRE_GYP_GITHUB_TOKEN : ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
-      if: "( succeeded() || failed() ) && startsWith(github.event.head_commit.message, 'version')"
+      if: "( success() || failure() ) && startsWith(github.event.head_commit.message, 'version')"
