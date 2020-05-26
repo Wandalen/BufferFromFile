@@ -26,7 +26,7 @@
   "binary": {
     "module_name": "bufferfromfile",
     "module_path": "./binding/",
-    "host": "https://github.com/volodymyrmigdal/BufferFromFile/releases/download/",
+    "host": "https://github.com/Wandalen/BufferFromFile/releases/download/",
     "remote_path": "{version}"
   },
   "repository" :
