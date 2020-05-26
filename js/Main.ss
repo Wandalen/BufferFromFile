@@ -1,18 +1,15 @@
 ( function _BufferFromFile_js_( ) { //
 
-var _BufferFromFile = require( __dirname + '/../binding/bufferfromfile.node' );
-var Self = function BufferFromFile()
+let _BufferFromFile = require( __dirname + '/../binding/bufferfromfile.node' );
+let Self = function BufferFromFile()
 {
   if( this instanceof Self )
   return;
-  var buffer = _BufferFromFile.mmap.apply( this,arguments );
-  var result = new Self();
+  let buffer = _BufferFromFile.mmap.apply( this,arguments );
+  let result = new Self();
   result._buffer = buffer;
   return result;
 }
-
-
-
 
 Self.prototype = Object.create( _BufferFromFile );
 Object.assign( Self,_BufferFromFile );
@@ -40,7 +37,7 @@ function _NodeBuffer()
 
 //
 
-var bufferMap =
+let bufferMap =
 {
   'Int8Array' : Int8Array,
   'Uint8Array' : Uint8Array,
@@ -55,9 +52,9 @@ var bufferMap =
 
 //
 
-for( var b in bufferMap ) (function()
+for( let b in bufferMap ) (function()
 {
-  var TypedBuffer = bufferMap[ b ];
+  let TypedBuffer = bufferMap[ b ];
   Self.prototype[ b ] = function make()
   {
     return new TypedBuffer( this._buffer );
