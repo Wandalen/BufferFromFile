@@ -71,8 +71,7 @@ rules :
   func-name-matching : off
   func-names : off
   func-style :
-    # - error
-    - warn
+    - error
     - declaration
     - allowArrowFunctions : true
   function-paren-newline :
@@ -185,7 +184,7 @@ rules :
   no-labels : error
   no-lone-blocks : error
   no-lonely-if : off
-  no-loop-func : warn
+  no-loop-func : error
   no-magic-numbers : off
   no-mixed-operators : off
   no-mixed-requires : error
