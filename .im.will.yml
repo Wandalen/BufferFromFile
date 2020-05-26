@@ -208,10 +208,6 @@ step :
     criterion :
       content : prime
       debug : release
-      
-  npm.install :
-    currentPath : path::in
-    shell : 'npm i'
   
   node-gyp.build :
     currentPath : path::in
