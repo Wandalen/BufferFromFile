@@ -23,7 +23,7 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
   if( info[ 0 ]->IsString() )
   {
     o = Object::New( isolate );
-    o->Set( ::wTools::v8::Isolate::GetCurrent()->GetCurrentContext(), vstr( "filePath" ),info[ 0 ] );
+    ( void )o->Set( ::wTools::v8::Isolate::GetCurrent()->GetCurrentContext(), vstr( "filePath" ),info[ 0 ] );
   }
   else
   {
@@ -276,7 +276,7 @@ void flush_js( const FunctionCallbackInfo< Value >& info )
   if( info[ 0 ]->IsArrayBuffer() )
   {
     o = Object::New( isolate );
-    o->Set( ::wTools::v8::Isolate::GetCurrent()->GetCurrentContext(), vstr( "buffer" ),info[ 0 ] );
+    ( void )o->Set( ::wTools::v8::Isolate::GetCurrent()->GetCurrentContext(), vstr( "buffer" ),info[ 0 ] );
   }
   else
   {
