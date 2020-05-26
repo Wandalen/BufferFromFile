@@ -1,6 +1,6 @@
 ( function _BufferFromFile_js_( ) { //
 
-var _BufferFromFile = require( __dirname + '/../build/Release/BufferFromFile.node' );
+var _BufferFromFile = require( __dirname + '/../binding/bufferfromfile.node' );
 var Self = function BufferFromFile()
 {
   if( this instanceof Self )

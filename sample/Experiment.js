@@ -21,7 +21,7 @@ buffer[ 0 ] = 48 + Math.round( Math.random()*9 );
 BufferFromFile.advise( buffer,BufferFromFile.Advise.sequential );
 BufferFromFile.unmap( buffer );
 
-// return;
+return;
 
 console.log( 'buffer.length :',buffer.length );
 console.log( 'buffer.toString :',buffer.toString() );

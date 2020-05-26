@@ -23,6 +23,26 @@ submodule :
     enabled : 0 # submodule
     criterion :
       development : 1
+  willbe :
+    path : npm:///willbe
+    enabled : 0 # submodule
+    criterion :
+      development : 1
+  node-pre-gyp :
+    path : npm:///node-pre-gyp
+    enabled : 0 # submodule
+    criterion :
+      development : 1
+  node-pre-gyp-github :
+    path : npm:///node-pre-gyp-github
+    enabled : 0 # submodule
+    criterion :
+      development : 1
+  eslint :
+    path : npm:///eslint
+    enabled : 0 # submodule
+    criterion :
+      development : 1
 
 path :
 
@@ -33,6 +53,8 @@ path :
     - '{path::build}'
     - 'package-lock.json'
     - 'node_modules'
+    - 'build'
+    - 'binding'
   proto : './js'
   export : '{path::proto}/**'
   doc : './doc'
@@ -193,14 +215,14 @@ step :
     criterion :
       content : prime
       debug : release
-      
-  npm.install :
-    currentPath : path::in
-    shell : 'npm i'
   
   node-gyp.build :
     currentPath : path::in
     shell : 'npm run-script build'
+    
+  node-gyp.install :
+    currentPath : path::in
+    shell : 'node node_modules/.bin/node-pre-gyp install --update-binary --fallback-to-build'
 
 build :
 
@@ -208,11 +230,13 @@ build :
     criterion :
       default : 1
     steps :
-      - clean.out.cpp
-      - reflect.cpp
-      - reflect.common
-      - npm.install
+      - submodules.update
       - node-gyp.build
+      
+  install :
+    steps :
+      - submodules.update
+      - node-gyp.install
 
   compiled.debug :
     criterion :

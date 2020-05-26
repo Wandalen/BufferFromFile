@@ -1,0 +1,29 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast : false
+      matrix:
+        os: [ windows-2019, ubuntu-18.04, macos-10.15 ]
+        node-version: [  12.x, 13.x ]
+
+    steps:
+    - run: git config --global core.autocrlf input
+    - uses: actions/checkout@v2
+    - name: ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm i --ignore-scripts    
+    - run: npm -g i willbe@alpha
+    - run: will .build
+    - run: npm test
