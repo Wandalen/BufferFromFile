@@ -23,6 +23,21 @@ submodule :
     enabled : 0 # submodule
     criterion :
       development : 1
+  node-pre-gyp :
+    path : npm:///node-pre-gyp
+    enabled : 0 # submodule
+    criterion :
+      development : 1
+  node-pre-gyp-github :
+    path : npm:///node-pre-gyp-github
+    enabled : 0 # submodule
+    criterion :
+      development : 1
+  eslint :
+    path : npm:///eslint
+    enabled : 0 # submodule
+    criterion :
+      development : 1
 
 path :
 
@@ -208,10 +223,7 @@ build :
     criterion :
       default : 1
     steps :
-      - clean.out.cpp
-      - reflect.cpp
-      - reflect.common
-      - npm.install
+      - submodules.update
       - node-gyp.build
 
   compiled.debug :

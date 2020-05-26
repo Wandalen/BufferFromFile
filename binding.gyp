@@ -4,14 +4,15 @@
     {
       "target_name" : "bufferfromfile",
       "product_extension": "node",
-      "sources" : [ "out/cpp/Main.cpp" ],
+      "sources" : [ "cpp/Main.cpp" ],
       "include_dirs":
       [
-        "out/cpp",
-        "out/cpp/wTools/meta",
+        "cpp",
+        ".module/NjsCppBasic/cpp",
+        ".module/NjsCppBasic/cpp/wTools/meta",
       ],
-      'cflags!': [ '-fno-exceptions' ],
-      'cflags_cc!': [ '-fno-exceptions' ],
+      "cflags!": [ '-fno-exceptions' ],
+      "cflags_cc!": [ '-fno-exceptions' ],
       "cflags_cc":
       [
         '-std=c++1y','-O3','-Wno-tautological-undefined-compare','-Wno-null-dereference','-Fno-delete-null-pointer-checks','-fno-delete-null-pointer-checks'
@@ -21,10 +22,13 @@
       [
         [ 'OS=="mac"',
           {
+            "xcode_settings": {
+              
             'OTHER_CPLUSPLUSFLAGS' : [ '-std=c++1y','-stdlib=libc++','-mavx','-O3','-Wno-tautological-undefined-compare','-Wno-null-dereference','-Fno-delete-null-pointer-checks','-fno-delete-null-pointer-checks' ],
             'OTHER_LDFLAGS' : [ '-stdlib=libc++' ],
-            'MACOSX_DEPLOYMENT_TARGET': '10.10',
+            'MACOSX_DEPLOYMENT_TARGET': '10.14',
             'GCC_ENABLE_CPP_EXCEPTIONS': 'YES'
+            }
           }
         ]
       ]

@@ -15,7 +15,8 @@
   "main" : "js/Main.ss",
   "scripts" :
   {
-    "build": "node-pre-gyp install --fallback-to-build",
+    "install": "node-pre-gyp install --fallback-to-build",
+    "build": "node-pre-gyp configure && node-pre-gyp rebuild",
     "node-pre-gyp-package": "node-pre-gyp package",
     "node-pre-gyp-github-release": "node-pre-gyp-github publish --release",
     "test" : "wtest test.test",
@@ -44,7 +45,8 @@
     "wappbasic" : "",
     "bufferfromfile" : ".",
     "node-pre-gyp": "",
-    "node-pre-gyp-github": ""
+    "node-pre-gyp-github": "",
+    "eslint" : ""
   },
   "gypfile" : false,
   "keywords" :
