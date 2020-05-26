@@ -1,4 +1,4 @@
-name: Build
+name: Release
 
 on:
   push:
@@ -14,8 +14,6 @@ jobs:
       fail-fast : false
       matrix:
         os: [ windows-2019, ubuntu-18.04, macos-10.15 ]
-        # os: [ ubuntu-18.04 ]
-        # node-version: [ 10.x, 12.x, 13.x ]
         node-version: [  12.x, 13.x ]
 
     steps:
@@ -27,11 +25,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm i --ignore-scripts    
     - run: npm -g i willbe@alpha
-    - name: build bufferfromfile
-      run: will .build
-      continue-on-error: false
-    - run: npm test
-      continue-on-error: true
+    - run: will .build
     - run: npm run node-pre-gyp-package && npm run node-pre-gyp-github-release
       env:
         NODE_PRE_GYP_GITHUB_TOKEN : ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
