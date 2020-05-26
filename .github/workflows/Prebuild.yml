@@ -1,4 +1,4 @@
-name: Build & Test
+name: Prebuild
 
 on:
   push:
@@ -7,9 +7,9 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  release:
+    if: "startsWith(github.event.head_commit.message, 'version')"
     runs-on: ${{ matrix.os }}
-
     strategy:
       fail-fast : false
       matrix:
@@ -23,7 +23,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm i --ignore-scripts    
+    - run: npm i --ignore-scripts
     - run: npm -g i willbe@alpha
     - run: will .build
-    - run: npm test
+    - run: npm run node-pre-gyp-package && npm run node-pre-gyp-github-release
+      env:
+        NODE_PRE_GYP_GITHUB_TOKEN : ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
