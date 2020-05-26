@@ -1,6 +1,6 @@
 // Sample simply mmap a file
 
-var BufferFromFile = require( '..' );
+var BufferFromFile = require( 'bufferfromfile' );
 
 // mmap file to buffer
 

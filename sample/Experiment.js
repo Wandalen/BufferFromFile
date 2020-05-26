@@ -1,4 +1,4 @@
-var BufferFromFile = require( '..' );
+var BufferFromFile = require( 'bufferfromfile' );
 var File = require( 'fs' );
 var _ = require( 'wTools' );
 
