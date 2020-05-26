@@ -1,6 +1,6 @@
 // Sample make read only buffer from a file
 
-var BufferFromFile = require( 'bufferfromfile' );
+var BufferFromFile = require( '..' );
 
 // mmap file
 

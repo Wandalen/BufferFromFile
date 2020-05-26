@@ -1,13 +1,6 @@
 // Sample flush written data to hard drive
 
-try
-{
-  var BufferFromFile = require( 'bufferfromfile' );
-}
-catch( err )
-{
-  var BufferFromFile = require( '..' );
-}
+var BufferFromFile = require( '..' );
 
 // mmap file
 
