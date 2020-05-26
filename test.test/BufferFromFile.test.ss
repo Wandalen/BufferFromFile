@@ -2,10 +2,12 @@
 
 'use strict';
 
+let BufferFromFile;
+
 if( typeof module !== 'undefined' )
 {
 
-  var BufferFromFile = require( '../js/Main.ss' );
+  BufferFromFile = require( '../js/Main.ss' );
 
   require( 'wTools' );
 
@@ -17,9 +19,7 @@ if( typeof module !== 'undefined' )
 
 }
 
-//
-
-let _ = wTools;
+let _ = _global_.wTools;
 
 //
 
