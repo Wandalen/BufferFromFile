@@ -6,8 +6,8 @@ consistency:
     hash: 08fd5d2ca7efa23fd57ae046fd63f7d4
     size: 2086
   ../.im.will.yml: &ref_1
-    hash: b6f89ca4ef932b535ddc0668aca09f5b
-    size: 5407
+    hash: 7eb827a2b3f2f657dbcd1d1ccbc90af9
+    size: 5983
 module:
   bufferFromFile.out:
     about:
@@ -88,6 +88,8 @@ module:
           - '{path::build}'
           - ../package-lock.json
           - ../node_modules
+          - ../build
+          - ../binding
       proto:
         path: ../js
       export:
@@ -195,6 +197,30 @@ module:
           development: 1
       wAppBasic:
         path: 'npm:///wappbasic'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          development: 1
+      willbe:
+        path: 'npm:///willbe'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          development: 1
+      node-pre-gyp:
+        path: 'npm:///node-pre-gyp'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          development: 1
+      node-pre-gyp-github:
+        path: 'npm:///node-pre-gyp-github'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          development: 1
+      eslint:
+        path: 'npm:///eslint'
         autoExporting: 0
         enabled: 0
         criterion:
@@ -496,14 +522,16 @@ module:
         criterion:
           content: prime
           debug: release
-      npm.install:
-        opts:
-          currentPath: 'path::in'
-          shell: npm i
       node-gyp.build:
         opts:
           currentPath: 'path::in'
           shell: npm run-script build
+      node-gyp.install:
+        opts:
+          currentPath: 'path::in'
+          shell: >-
+            node node_modules/.bin/node-pre-gyp install --update-binary
+            --fallback-to-build
       reflect.proto.debug.raw:
         opts:
           filePath: 'reflector::reflect.proto*'
@@ -637,13 +665,14 @@ module:
           export: 1
       debug:
         steps:
-          - clean.out.cpp
-          - reflect.cpp
-          - reflect.common
-          - npm.install
+          - submodules.update
           - node-gyp.build
         criterion:
           default: 1
+      install:
+        steps:
+          - submodules.update
+          - node-gyp.install
       compiled.debug:
         steps:
           - 'step::clean.out*=2'
@@ -762,6 +791,8 @@ module:
           - '{path::build}'
           - package-lock.json
           - node_modules
+          - build
+          - binding
       proto:
         path: js
       export:
@@ -855,6 +886,30 @@ module:
           development: 1
       wAppBasic:
         path: 'npm:///wappbasic'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          development: 1
+      willbe:
+        path: 'npm:///willbe'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          development: 1
+      node-pre-gyp:
+        path: 'npm:///node-pre-gyp'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          development: 1
+      node-pre-gyp-github:
+        path: 'npm:///node-pre-gyp-github'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          development: 1
+      eslint:
+        path: 'npm:///eslint'
         autoExporting: 0
         enabled: 0
         criterion:
@@ -1101,14 +1156,16 @@ module:
         criterion:
           content: prime
           debug: release
-      npm.install:
-        opts:
-          currentPath: 'path::in'
-          shell: npm i
       node-gyp.build:
         opts:
           currentPath: 'path::in'
           shell: npm run-script build
+      node-gyp.install:
+        opts:
+          currentPath: 'path::in'
+          shell: >-
+            node node_modules/.bin/node-pre-gyp install --update-binary
+            --fallback-to-build
       reflect.proto.debug.raw:
         opts:
           filePath: 'reflector::reflect.proto*'
@@ -1242,13 +1299,14 @@ module:
           export: 1
       debug:
         steps:
-          - clean.out.cpp
-          - reflect.cpp
-          - reflect.common
-          - npm.install
+          - submodules.update
           - node-gyp.build
         criterion:
           default: 1
+      install:
+        steps:
+          - submodules.update
+          - node-gyp.install
       compiled.debug:
         steps:
           - 'step::clean.out*=2'
@@ -1294,5 +1352,5 @@ module:
         hash: 08fd5d2ca7efa23fd57ae046fd63f7d4
         size: 2086
       ../.im.will.yml:
-        hash: b6f89ca4ef932b535ddc0668aca09f5b
-        size: 5407
+        hash: 7eb827a2b3f2f657dbcd1d1ccbc90af9
+        size: 5983

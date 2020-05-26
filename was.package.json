@@ -1,6 +1,6 @@
 {
   "name" : "bufferfromfile",
-  "version" : "0.4.152",
+  "version" : "0.4.153",
   "engine" : "node >= 6.0.0",
   "enabled" : true,
   "license" : "MIT",
@@ -15,19 +15,20 @@
   "main" : "js/Main.ss",
   "scripts" :
   {
-    "install": "node node_modules/.bin/will .build install",
-    "node-pre-gyp-build": "node-pre-gyp configure && node-pre-gyp rebuild",
-    "node-pre-gyp-package": "node-pre-gyp package",
-    "node-pre-gyp-github-release": "node-pre-gyp-github publish --release",
-    "test": "wtest test.test",
-    "make_doc": "./doc.sh",
-    "clean": "rm -rf build node_modules"
+    "install" : "node node_modules/.bin/will .build install",
+    "node-pre-gyp-build" : "node-pre-gyp configure && node-pre-gyp rebuild",
+    "node-pre-gyp-package" : "node-pre-gyp package",
+    "node-pre-gyp-github-release" : "node-pre-gyp-github publish --release",
+    "test" : "wtest test.test",
+    "make_doc" : "./doc.sh",
+    "clean" : "rm -rf build node_modules"
   },
-  "binary": {
-    "module_name": "bufferfromfile",
-    "module_path": "./binding/",
-    "host": "https://github.com/Wandalen/BufferFromFile/releases/download/",
-    "remote_path": "{version}"
+  "binary" :
+  {
+    "module_name" : "bufferfromfile",
+    "module_path" : "./binding/",
+    "host" : "https://github.com/Wandalen/BufferFromFile/releases/download/",
+    "remote_path" : "{version}"
   },
   "repository" :
   {
@@ -45,8 +46,8 @@
     "wTesting" : "",
     "wappbasic" : "",
     "willbe" : "",
-    "node-pre-gyp": "",
-    "node-pre-gyp-github": "",
+    "node-pre-gyp" : "",
+    "node-pre-gyp-github" : "",
     "eslint" : ""
   },
   "gypfile" : false,
