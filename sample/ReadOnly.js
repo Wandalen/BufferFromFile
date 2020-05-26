@@ -5,7 +5,7 @@ var BufferFromFile = require( 'bufferfromfile' );
 // mmap file
 
 var filePath = __dirname + '/TestFile.txt';
-var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.Protection.read }).Uint8Array();
+var buffer = BufferFromFile( { filePath, protection : BufferFromFile.Protection.read } ).Uint8Array();
 
 // attempt to write data would give error
 
@@ -13,8 +13,8 @@ var buffer = BufferFromFile({ filePath : filePath, protection : BufferFromFile.P
 
 // read data and status
 
-console.log( 'buffer.toString :',buffer.toString() );
-console.log( 'status',BufferFromFile.status( buffer ) );
+console.log( 'buffer.toString :', buffer.toString() );
+console.log( 'status', BufferFromFile.status( buffer ) );
 
 // unmap file
 

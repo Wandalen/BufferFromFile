@@ -215,14 +215,14 @@ step :
     criterion :
       content : prime
       debug : release
-  
+    
   node-gyp.build :
     currentPath : path::in
-    shell : 'npm run-script build'
+    shell : 'npm run-script node-pre-gyp-build'
     
   node-gyp.install :
     currentPath : path::in
-    shell : 'node node_modules/.bin/node-pre-gyp install --update-binary --fallback-to-build'
+    shell : 'npm run-script node-pre-gyp-install'
 
 build :
 

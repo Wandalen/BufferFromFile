@@ -1,13 +1,6 @@
 // Sample flush written data to hard drive
 
-try
-{
-  var BufferFromFile = require( 'bufferfromfile' );
-}
-catch( err )
-{
-  var BufferFromFile = require( '..' );
-}
+var BufferFromFile = require( 'bufferfromfile' );
 
 // mmap file
 
@@ -19,12 +12,12 @@ buffer[ 0 ] = 48 + Math.round( Math.random()*9 );
 
 BufferFromFile.flush( buffer );
 
-console.log( "OK" );
+console.log( 'OK' );
 
 buffer[ 0 ] = 48 + Math.round( Math.random()*9 );
 
-BufferFromFile.flush({ buffer : buffer } );
+BufferFromFile.flush( { buffer } );
 
-console.log( "OK" );
+console.log( 'OK' );
 
 BufferFromFile.unmap( buffer );

@@ -704,6 +704,73 @@ function unmap( test )
 
 //
 
+function readOnlyBuffer( test )
+{
+  let context = this;
+  let a = test.assetFor( false );
+  
+  let _BufferFromFilePath_ = a.path.nativize( require.resolve( '../js/Main.ss' ) );
+  
+  let program1Path = a.program({ routine : program1, locals : { _BufferFromFilePath_, _FilePath_ : context.filePath } });
+  let program2Path = a.program({ routine : program2, locals : { _BufferFromFilePath_, _FilePath_ : context.filePath } });
+  
+  _.fileProvider.fileWrite( context.filePath, context.testData );
+  
+  /* */
+  
+  a.appStartNonThrowing({ execPath : program1Path })
+  .then( ( op ) =>
+  {
+    test.identical( op.exitCode, 0 );
+    test.identical( op.exitSignal, null );
+    test.is( _.strHas( op.output, '49' ) );
+    return null;
+  });
+  
+  /* */
+  
+  a.appStartNonThrowing({ execPath : program2Path })
+  .then( ( op ) =>
+  {
+    test.notIdentical( op.exitCode, 0 );
+    if( process.platform === 'win32' )
+    test.identical( op.exitSignal, null );
+    else if( process.platform === 'linux' )
+    test.identical( op.exitSignal, 'SIGSEGV' );
+    else if( process.platform === 'darwin' )
+    test.identical( op.exitSignal, 'SIGBUS' );
+    
+    test.is( !_.strHas( op.output, 'Buffer changed' ) );
+    return null;
+  });
+
+  
+  /* */
+  
+  return a.ready;
+  
+  function program1()
+  {
+    let BufferFromFile = require( _BufferFromFilePath_ )
+    var buffer = BufferFromFile({ filePath : _FilePath_, protection : BufferFromFile.Protection.read }).Uint8Array();
+    console.log( buffer[ 0 ].toString() )
+    BufferFromFile.unmap( buffer );
+  }
+  
+  function program2()
+  {
+    let BufferFromFile = require( _BufferFromFilePath_ )
+    var buffer = BufferFromFile({ filePath : _FilePath_, protection : BufferFromFile.Protection.read }).Uint8Array();
+    buffer[ 0 ] = 1;
+    console.log( 'Buffer changed' )
+    BufferFromFile.unmap( buffer );
+  }
+}
+
+readOnlyBuffer.timeOut = 30000;
+
+//
+
 function ipc( test )
 {
   let context = this;
@@ -834,6 +901,8 @@ var Proto =
     advise,
     status,
     unmap,
+    
+    readOnlyBuffer,
     
     ipc,
 
