@@ -47,6 +47,7 @@
     "wTesting" : "",
     "wappbasic" : "",
     "willbe" : "",
+    "bufferfromfile" : "file:.",
     "node-pre-gyp" : "",
     "node-pre-gyp-github" : "",
     "eslint" : ""
