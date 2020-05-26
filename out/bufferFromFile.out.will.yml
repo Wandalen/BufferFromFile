@@ -6,8 +6,8 @@ consistency:
     hash: 08fd5d2ca7efa23fd57ae046fd63f7d4
     size: 2086
   ../.im.will.yml: &ref_1
-    hash: 7eb827a2b3f2f657dbcd1d1ccbc90af9
-    size: 5983
+    hash: af3e2fd78446ea8fcaa719da7ae3e7b7
+    size: 5954
 module:
   bufferFromFile.out:
     about:
@@ -525,13 +525,11 @@ module:
       node-gyp.build:
         opts:
           currentPath: 'path::in'
-          shell: npm run-script build
+          shell: npm run-script node-pre-gyp-build
       node-gyp.install:
         opts:
           currentPath: 'path::in'
-          shell: >-
-            node node_modules/.bin/node-pre-gyp install --update-binary
-            --fallback-to-build
+          shell: npm run-script node-pre-gyp-install
       reflect.proto.debug.raw:
         opts:
           filePath: 'reflector::reflect.proto*'
@@ -1159,13 +1157,11 @@ module:
       node-gyp.build:
         opts:
           currentPath: 'path::in'
-          shell: npm run-script build
+          shell: npm run-script node-pre-gyp-build
       node-gyp.install:
         opts:
           currentPath: 'path::in'
-          shell: >-
-            node node_modules/.bin/node-pre-gyp install --update-binary
-            --fallback-to-build
+          shell: npm run-script node-pre-gyp-install
       reflect.proto.debug.raw:
         opts:
           filePath: 'reflector::reflect.proto*'
@@ -1352,5 +1348,5 @@ module:
         hash: 08fd5d2ca7efa23fd57ae046fd63f7d4
         size: 2086
       ../.im.will.yml:
-        hash: 7eb827a2b3f2f657dbcd1d1ccbc90af9
-        size: 5983
+        hash: af3e2fd78446ea8fcaa719da7ae3e7b7
+        size: 5954

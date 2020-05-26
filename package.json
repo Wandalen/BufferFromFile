@@ -1,6 +1,6 @@
 {
   "name" : "bufferfromfile",
-  "version" : "0.4.153",
+  "version" : "0.4.154",
   "engine" : "node >= 6.0.0",
   "enabled" : true,
   "license" : "MIT",
@@ -16,6 +16,7 @@
   "scripts" :
   {
     "install" : "node node_modules/.bin/will .build install",
+    "node-pre-gyp-install" : "node-pre-gyp install --update-binary --fallback-to-build",
     "node-pre-gyp-build" : "node-pre-gyp configure && node-pre-gyp rebuild",
     "node-pre-gyp-package" : "node-pre-gyp package",
     "node-pre-gyp-github-release" : "node-pre-gyp-github publish --release",
@@ -42,6 +43,7 @@
   "dependencies" : {},
   "devDependencies" :
   {
+    "bufferfromfile" : "file:.",
     "wTools" : "alpha",
     "wTesting" : "alpha",
     "wappbasic" : "alpha",
