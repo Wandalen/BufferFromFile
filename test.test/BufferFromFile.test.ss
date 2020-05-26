@@ -732,8 +732,14 @@ function readOnlyBuffer( test )
   a.appStartNonThrowing({ execPath : program2Path })
   .then( ( op ) =>
   {
-    test.identical( op.exitCode, null );
+    test.notIdentical( op.exitCode, 0 );
+    if( process.platform === 'win32' )
+    test.identical( op.exitSignal, null );
+    else if( process.platform === 'linux' )
+    test.identical( op.exitSignal, 'SIGSEGV' );
+    else if( process.platform === 'darwin' )
     test.identical( op.exitSignal, 'SIGBUS' );
+    
     test.is( !_.strHas( op.output, 'Buffer changed' ) );
     return null;
   });
