@@ -25,5 +25,6 @@ jobs :
         node-version : ${{ matrix.node-version }}
     - run : npm i --ignore-scripts
     - run : npm -g i willbe@alpha
+    - run : npm -g i node-gyp@5.0.3
     - run : will .build
     - run : npm test
