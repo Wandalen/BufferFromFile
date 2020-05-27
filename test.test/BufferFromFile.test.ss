@@ -27,7 +27,7 @@ function onSuiteBegin()
 {
   let context = this;
 
-  context.suiteTempPath = _.path.pathDirTempOpen( _.path.join( __dirname, '..'  ), 'BufferFromFile' );
+  context.suiteTempPath = _.path.pathDirTempOpen( _.path.join( __dirname, '..' ), 'BufferFromFile' );
   context.assetsOriginalSuitePath = _.path.join( __dirname, '_asset' );
   context.filePath = _.fileProvider.path.nativize( _.path.join( context.suiteTempPath, 'testFile.txt' ) );
   context.testData = '1 - is a random digit set from JS though mapped into memory file with help of BufferFromFile open source package.'

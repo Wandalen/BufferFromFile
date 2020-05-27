@@ -1,18 +1,20 @@
-( function _BufferFromFile_js_( ) { //
+( function _BufferFromFile_js_()
+{ //
 
 let _BufferFromFile = require( __dirname + '/../binding/bufferfromfile.node' );
-let Self = function BufferFromFile()
+let Self = BufferFromFile;
+function BufferFromFile()
 {
   if( this instanceof Self )
-  return;
-  let buffer = _BufferFromFile.mmap.apply( this,arguments );
+  return this;
+  let buffer = _BufferFromFile.mmap.apply( this, arguments );
   let result = new Self();
   result._buffer = buffer;
   return result;
 }
 
 Self.prototype = Object.create( _BufferFromFile );
-Object.assign( Self,_BufferFromFile );
+Object.assign( Self, _BufferFromFile );
 
 //
 
@@ -39,27 +41,27 @@ function _NodeBuffer()
 
 let bufferMap =
 {
-  'Int8Array' : Int8Array,
-  'Uint8Array' : Uint8Array,
-  'Uint8ClampedArray' : Uint8ClampedArray,
-  'Int16Array' : Int16Array,
-  'Uint16Array' : Uint16Array,
-  'Int32Array' : Int32Array,
-  'Uint32Array' : Uint32Array,
-  'Float32Array' : Float32Array,
-  'Float64Array' : Float64Array,
+  Int8Array,
+  Uint8Array,
+  Uint8ClampedArray,
+  Int16Array,
+  Uint16Array,
+  Int32Array,
+  Uint32Array,
+  Float32Array,
+  Float64Array,
 }
 
 //
 
-for( let b in bufferMap ) (function()
+for( let b in bufferMap ) ( function()
 {
   let TypedBuffer = bufferMap[ b ];
   Self.prototype[ b ] = function make()
   {
     return new TypedBuffer( this._buffer );
   }
-})();
+} )();
 
 //
 
@@ -69,4 +71,4 @@ Self.prototype.NodeBuffer = _NodeBuffer;
 
 module.exports = Self;
 
-})(); //
+} )(); //

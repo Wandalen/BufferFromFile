@@ -120,7 +120,11 @@ void fileUnmap( Memory& memory )
     Isolate* isolate = Isolate::GetCurrent();
     Local< ArrayBuffer > arrayBuffer = memory.arrayBuffer.Get( isolate );
     arrayBuffer->SetAlignedPointerInInternalField( 0,NULL );
+    #if NODE_VERSION_AT_LEAST( 12, 0, 0 )
     arrayBuffer->Detach();
+    #else
+    arrayBuffer->Neuter();
+    #endif
     memory.arrayBuffer.Reset();
   }
 
@@ -269,7 +273,7 @@ memoryOf( Local< Object > src, LocalString name )
 
   Memory& memory = *(Memory*)buffer->GetAlignedPointerFromInternalField( 0 );
 
-  src->Set( ::wTools::v8::Isolate::GetCurrent()->GetCurrentContext(), name, srcBuf );
+  ( void )src->Set( ::wTools::v8::Isolate::GetCurrent()->GetCurrentContext(), name, srcBuf );
 
   // cout << "memoryOf : " << &memory << endl;
 
