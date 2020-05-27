@@ -219,7 +219,7 @@ step :
   node-gyp.build :
     currentPath : path::in
     # shell : 'npm run-script node-pre-gyp-build'
-    shell : node-pre-gyp configure && node-pre-gyp rebuild
+    shell : "node node_modules/node-pre-gyp/bin/node-pre-gyp configure && node node_modules/node-pre-gyp/bin/node-pre-gyp rebuild"
 
   node-gyp.install :
     currentPath : path::in
