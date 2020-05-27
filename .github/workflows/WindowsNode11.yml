@@ -1,0 +1,23 @@
+name : Build & Test
+
+on :
+  push :
+    branches : [ master ]
+
+jobs :
+  build :
+    runs-on : windows-latest
+    strategy :
+      fail-fast  : false
+    steps :
+    - run : git config --global core.autocrlf input
+    - uses : actions/checkout@v2
+      uses : actions/setup-node@v1
+      with :
+        node-version : 11.x
+    - run : npm i --ignore-scripts
+    - run : npm -g i willbe@alpha
+    - run : npm -g i node-gyp
+    - run : will .submodules.download
+    - run : node-gyp configure && node-pre-gyp rebuild
+    - run : npm test
