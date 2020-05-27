@@ -8,14 +8,13 @@ on :
 
 jobs :
   build :
+    if : "!startsWith( github.event.head_commit.message, 'version' )"
     runs-on : ${{ matrix.os }}
-
     strategy :
       fail-fast  : false
       matrix :
         os : [ windows-2019, ubuntu-18.04, macos-10.15 ]
         node-version : [ 10.x, 11.x, 12.x, 13.x, 14.x ]
-
     steps :
     - run : git config --global core.autocrlf input
     - uses : actions/checkout@v2
