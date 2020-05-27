@@ -48,6 +48,7 @@
     "wTesting" : "alpha",
     "wappbasic" : "alpha",
     "willbe" : "alpha",
+    "node-gyp": "5.0.3",
     "node-pre-gyp" : "0.14.0",
     "node-pre-gyp-github" : "1.4.3",
     "eslint" : "7.1.0"
