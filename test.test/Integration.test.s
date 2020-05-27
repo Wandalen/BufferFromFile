@@ -173,7 +173,6 @@ function eslint( test )
 
 eslint.timeOut = 120000;
 
-
 // --
 // declare
 // --
@@ -200,4 +199,3 @@ if( typeof module !== 'undefined' && !module.parent )
 _global_.wTester.test( Self.name );
 
 } )();
-
