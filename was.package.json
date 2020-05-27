@@ -48,6 +48,7 @@
     "wappbasic" : "",
     "willbe" : "",
     "bufferfromfile" : "file:.",
+    "node-gyp" : "",
     "node-pre-gyp" : "",
     "node-pre-gyp-github" : "",
     "eslint" : ""
