@@ -17,6 +17,7 @@ jobs :
         node-version : 11.x
     - run : npm i --ignore-scripts
     - run : npm -g i willbe@alpha
+    - run : npm -g i node-gyp
     - run : npm -g i node-pre-gyp
     - run : will .submodules.download
     - run : node-pre-gyp configure && node-pre-gyp rebuild
