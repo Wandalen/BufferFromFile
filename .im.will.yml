@@ -28,6 +28,11 @@ submodule :
     enabled : 0 # submodule
     criterion :
       development : 1
+  node-gyp :
+    path : npm:///node-gyp
+    enabled : 0 # submodule
+    criterion :
+      development : 1
   node-pre-gyp :
     path : npm:///node-pre-gyp
     enabled : 0 # submodule
@@ -61,6 +66,7 @@ path :
   js : 'js'
   cpp : 'cpp'
   build : 'build'
+  node-pre-gyp : node_modules/node-pre-gyp/bin/node-pre-gyp
 
   out.raw.debug :
     path : '{path::out}/debug'
@@ -123,12 +129,12 @@ reflector :
       content : prime
     filePath :
       path::proto : '{path::out.*=1}/source'
-      
+
   reflect.cpp :
     inherit : predefined.*
     filePath :
       path::cpp : '{path::out}/cpp'
-      
+
   reflect.common :
     inherit : submodule::NjsCppBasic/exported::cpp.export/reflector::exported.files.cpp.export
     dst : '{path::out}/cpp'
@@ -215,11 +221,11 @@ step :
     criterion :
       content : prime
       debug : release
-    
+
   node-gyp.build :
     currentPath : path::in
-    shell : 'npm run-script node-pre-gyp-build'
-    
+    shell : "node {path::node-pre-gyp} configure && node {path::node-pre-gyp} rebuild"
+
   node-gyp.install :
     currentPath : path::in
     shell : 'npm run-script node-pre-gyp-install'
@@ -232,7 +238,7 @@ build :
     steps :
       - submodules.update
       - node-gyp.build
-      
+
   install :
     steps :
       - submodules.update
