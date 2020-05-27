@@ -23,7 +23,7 @@
         [ 'OS=="mac"',
           {
             "xcode_settings": {
-              
+
             'OTHER_CPLUSPLUSFLAGS' : [ '-std=c++1y','-stdlib=libc++','-mavx','-O3','-Wno-tautological-undefined-compare','-Wno-null-dereference','-Fno-delete-null-pointer-checks','-fno-delete-null-pointer-checks' ],
             'OTHER_LDFLAGS' : [ '-stdlib=libc++' ],
             'MACOSX_DEPLOYMENT_TARGET': '10.14',
@@ -33,17 +33,17 @@
         ]
       ]
     },
-    {
-      "target_name": "action_after_build",
-      "type": "none",
-      "dependencies": [ "<(module_name)" ],
-      "copies": 
-      [
-        {
-            "files": [ "<(PRODUCT_DIR)/<(module_name).node" ],
-            "destination": "<(module_path)"
-        }
-      ]
-    }
+    # {
+    #   "target_name": "action_after_build",
+    #   "type": "none",
+    #   "dependencies": [ "<(module_name)" ],
+    #   "copies":
+    #   [
+    #     {
+    #         "files": [ "<(PRODUCT_DIR)/<(module_name).node" ],
+    #         "destination": "<(module_path)"
+    #     }
+    #   ]
+    # }
   ]
 }
