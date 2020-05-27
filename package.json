@@ -17,7 +17,7 @@
   {
     "install" : "node node_modules/.bin/will .build install",
     "node-pre-gyp-install" : "node-pre-gyp install --update-binary --fallback-to-build",
-    "node-pre-gyp-build" : "node-pre-gyp configure && node-pre-gyp rebuild",
+    "node-pre-gyp-build" : "node-pre-gyp configure --msvs_version=2019 && node-pre-gyp rebuild",
     "node-pre-gyp-package" : "node-pre-gyp package",
     "node-pre-gyp-github-release" : "node-pre-gyp-github publish --release",
     "test" : "wtest test.test",
