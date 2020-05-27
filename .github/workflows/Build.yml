@@ -13,8 +13,7 @@ jobs :
     strategy :
       fail-fast  : false
       matrix :
-        # os : [ windows-latest, ubuntu-latest, macos-latest ]
-        os : [ windows-latest ]
+        os : [ windows-latest, ubuntu-latest, macos-latest ]
         node-version : [ 10.x, 11.x, 12.x, 13.x, 14.x ]
 
     steps :
@@ -26,6 +25,5 @@ jobs :
         node-version : ${{ matrix.node-version }}
     - run : npm i --ignore-scripts
     - run : npm -g i willbe@alpha
-    - run : npm install -g node-gyp
     - run : will .build
     - run : npm test
