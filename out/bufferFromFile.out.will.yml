@@ -2,15 +2,12 @@ format: outwillfile-2.0
 root:
   - bufferFromFile.out
 consistency:
-  bufferFromFile.out.will.yml: &ref_0
-    hash: 2fe7ba4ae5d68f0d871647dab0c9de61
-    size: 34779
-  ../.ex.will.yml: &ref_1
+  ../.ex.will.yml: &ref_0
     hash: 08fd5d2ca7efa23fd57ae046fd63f7d4
     size: 2086
-  ../.im.will.yml: &ref_2
-    hash: af3e2fd78446ea8fcaa719da7ae3e7b7
-    size: 5954
+  ../.im.will.yml: &ref_1
+    hash: 0ad7c09c89f23d3bb9cdda8607b0bb15
+    size: 6133
 module:
   bufferFromFile.out:
     about:
@@ -21,11 +18,11 @@ module:
         standard ArrayBuffer making mmap behind the scene.
       enabled: 1
       version: 0.5.0
-      interpreters:
+      interpreters: &ref_2
         - njs >= 8.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords:
+      keywords: &ref_3
         - wTools
         - ArrayBuffer
         - Buffer from file
@@ -37,11 +34,11 @@ module:
         - zero copy
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
+      contributors: &ref_4
         - Kostiantyn Wandalen <wanalen@01.school>
         - Volodymyr M. <volodymyr.migdal@gmail.com>
       npm.name: bufferfromfile
-      npm.scripts:
+      npm.scripts: &ref_5
         install: node-gyp configure && node-gyp rebuild --msvs_version=auto
         test: wtest .run test.test/**
         clean: rm -rf build node_modules
@@ -105,6 +102,8 @@ module:
         path: ../cpp
       build:
         path: ../build
+      node-pre-gyp:
+        path: ../node_modules/node-pre-gyp/bin/node-pre-gyp
       out.raw.debug:
         criterion:
           debug: debug
@@ -206,6 +205,12 @@ module:
           development: 1
       willbe:
         path: 'npm:///willbe'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          development: 1
+      node-gyp:
+        path: 'npm:///node-gyp'
         autoExporting: 0
         enabled: 0
         criterion:
@@ -528,7 +533,9 @@ module:
       node-gyp.build:
         opts:
           currentPath: 'path::in'
-          shell: npm run-script node-pre-gyp-build
+          shell: >-
+            node {path::node-pre-gyp} configure && node {path::node-pre-gyp}
+            rebuild
       node-gyp.install:
         opts:
           currentPath: 'path::in'
@@ -639,24 +646,6 @@ module:
           content: prime
         inherit:
           - files.transpile
-      exported.proto.export:
-        opts:
-          filePath: 'reflector::exported.proto.export*'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
-      exported.files.proto.export:
-        opts:
-          filePath: 'reflector::exported.files.proto.export*'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
     build:
       proto.export:
         steps:
@@ -746,9 +735,8 @@ module:
           content: proto
           export: 1
     consistency:
-      bufferFromFile.out.will.yml: *ref_0
-      ../.ex.will.yml: *ref_1
-      ../.im.will.yml: *ref_2
+      ../.ex.will.yml: *ref_0
+      ../.im.will.yml: *ref_1
   ../:
     about:
       name: bufferFromFile
@@ -758,30 +746,13 @@ module:
         standard ArrayBuffer making mmap behind the scene.
       enabled: 1
       version: 0.5.0
-      interpreters:
-        - njs >= 8.0.0
-        - chrome >= 60.0.0
-        - firefox >= 60.0.0
-      keywords:
-        - wTools
-        - ArrayBuffer
-        - Buffer from file
-        - ArrayBuffer from file
-        - TypedBuffer from file
-        - Nodejs buffer from file
-        - mmap
-        - mmap file
-        - zero copy
+      interpreters: *ref_2
+      keywords: *ref_3
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
-        - Kostiantyn Wandalen <wanalen@01.school>
-        - Volodymyr M. <volodymyr.migdal@gmail.com>
+      contributors: *ref_4
       npm.name: bufferfromfile
-      npm.scripts:
-        install: node-gyp configure && node-gyp rebuild --msvs_version=auto
-        test: wtest .run test.test/**
-        clean: rm -rf build node_modules
+      npm.scripts: *ref_5
     path:
       module.willfiles:
         criterion:
@@ -842,6 +813,8 @@ module:
         path: cpp
       build:
         path: build
+      node-pre-gyp:
+        path: node_modules/node-pre-gyp/bin/node-pre-gyp
       out.raw.debug:
         criterion:
           debug: debug
@@ -929,6 +902,12 @@ module:
           development: 1
       willbe:
         path: 'npm:///willbe'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          development: 1
+      node-gyp:
+        path: 'npm:///node-gyp'
         autoExporting: 0
         enabled: 0
         criterion:
@@ -1196,7 +1175,9 @@ module:
       node-gyp.build:
         opts:
           currentPath: 'path::in'
-          shell: npm run-script node-pre-gyp-build
+          shell: >-
+            node {path::node-pre-gyp} configure && node {path::node-pre-gyp}
+            rebuild
       node-gyp.install:
         opts:
           currentPath: 'path::in'
@@ -1387,6 +1368,5 @@ module:
         hash: 08fd5d2ca7efa23fd57ae046fd63f7d4
         size: 2086
       ../.im.will.yml:
-        hash: af3e2fd78446ea8fcaa719da7ae3e7b7
-        size: 5954
-      bufferFromFile.out.will.yml: *ref_0
+        hash: 0ad7c09c89f23d3bb9cdda8607b0bb15
+        size: 6133
