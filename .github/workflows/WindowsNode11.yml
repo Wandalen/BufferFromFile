@@ -19,5 +19,5 @@ jobs :
     - run : npm -g i willbe@alpha
     - run : npm -g i node-gyp
     - run : will .submodules.download
-    - run : node-gyp configure && node-pre-gyp rebuild
+    - run : node-gyp configure && node-gyp rebuild
     - run : npm test
