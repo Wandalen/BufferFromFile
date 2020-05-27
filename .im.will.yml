@@ -123,12 +123,12 @@ reflector :
       content : prime
     filePath :
       path::proto : '{path::out.*=1}/source'
-      
+
   reflect.cpp :
     inherit : predefined.*
     filePath :
       path::cpp : '{path::out}/cpp'
-      
+
   reflect.common :
     inherit : submodule::NjsCppBasic/exported::cpp.export/reflector::exported.files.cpp.export
     dst : '{path::out}/cpp'
@@ -215,11 +215,12 @@ step :
     criterion :
       content : prime
       debug : release
-    
+
   node-gyp.build :
     currentPath : path::in
-    shell : 'npm run-script node-pre-gyp-build'
-    
+    # shell : 'npm run-script node-pre-gyp-build'
+    shell : node-pre-gyp configure && node-pre-gyp rebuild
+
   node-gyp.install :
     currentPath : path::in
     shell : 'npm run-script node-pre-gyp-install'
@@ -232,7 +233,7 @@ build :
     steps :
       - submodules.update
       - node-gyp.build
-      
+
   install :
     steps :
       - submodules.update
