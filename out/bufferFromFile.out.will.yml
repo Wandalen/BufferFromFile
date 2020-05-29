@@ -12,14 +12,14 @@ consistency:
     hash: 0ad7c09c89f23d3bb9cdda8607b0bb15
     size: 6133
   ../.module/NjsCppBasic/.ex.will.yml: &ref_3
-    hash: 47495d4485cc6feef19f4851f5b3a3a3
-    size: 1968
+    hash: 6a7c3c1570e30438a437b7c8912fcb94
+    size: 2004
   ../.module/NjsCppBasic/.im.will.yml: &ref_4
     hash: e5a603bf5f396244d7cc3638de090d27
     size: 4860
   ../.module/NjsCppBasic/out/wNjsCppBasic.out.will.yml: &ref_5
-    hash: 969a884cd469e7633c4fe0ff5c2370e1
-    size: 38783
+    hash: a43f68b2cc7707086d135e6a9ecd6f17
+    size: 38879
 module:
   bufferFromFile.out:
     about:
@@ -1423,7 +1423,7 @@ module:
     about:
       name: wNjsCppBasic
       org: noorg
-      description: ___
+      description: Collection of tools to write native NodeJs modules.
       enabled: 1
       version: 0.4.0
       interpreters:
@@ -1632,8 +1632,8 @@ module:
       transpile.proto.no.tests.compiled.debug:
         src:
           filePath:
-            '**.test*': false
-            '**.test/**': false
+            '**.test*': 0
+            '**.test/**': 0
             'path::proto': '{path::out.*=1}/Main.s'
         mandatory: 1
         dstRewritingOnlyPreserving: 1
@@ -1647,8 +1647,8 @@ module:
       transpile.proto.no.tests.compiled.release:
         src:
           filePath:
-            '**.test*': false
-            '**.test/**': false
+            '**.test*': 0
+            '**.test/**': 0
             'path::proto': '{path::out.*=1}/Main.s'
         mandatory: 1
         dstRewritingOnlyPreserving: 1
@@ -1662,7 +1662,7 @@ module:
       transpile.proto.only.tests.compiled.debug:
         src:
           filePath:
-            '**.test*': true
+            '**.test*': 1
             'path::proto': '{path::out.*=1}/Tests.test.s'
         mandatory: 1
         dstRewritingOnlyPreserving: 1
@@ -1676,7 +1676,7 @@ module:
       transpile.proto.only.tests.compiled.release:
         src:
           filePath:
-            '**.test*': true
+            '**.test*': 1
             'path::proto': '{path::out.*=1}/Tests.test.s'
         mandatory: 1
         dstRewritingOnlyPreserving: 1
@@ -2135,7 +2135,7 @@ module:
     about:
       name: wNjsCppBasic
       org: noorg
-      description: ___
+      description: Collection of tools to write native NodeJs modules.
       enabled: 1
       version: 0.4.0
       interpreters:
@@ -3047,5 +3047,9 @@ module:
           export: 1
     consistency:
       ../.module/NjsCppBasic/out/wNjsCppBasic.out.will.yml: *ref_5
-      ../.module/NjsCppBasic/.ex.will.yml: *ref_3
-      ../.module/NjsCppBasic/.im.will.yml: *ref_4
+      ../.module/NjsCppBasic/.ex.will.yml:
+        hash: 6a7c3c1570e30438a437b7c8912fcb94
+        size: 2004
+      ../.module/NjsCppBasic/.im.will.yml:
+        hash: e5a603bf5f396244d7cc3638de090d27
+        size: 4860
