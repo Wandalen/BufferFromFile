@@ -15,7 +15,7 @@
   "main" : "js/Main.ss",
   "scripts" :
   {
-    "install" : "node node_modules/.bin/will .build install",
+    "install" : "node node_modules/.bin/will .build",
     "node-pre-gyp-install" : "node-pre-gyp install --update-binary --fallback-to-build",
     "node-pre-gyp-build" : "node-pre-gyp configure && node-pre-gyp rebuild",
     "node-pre-gyp-package" : "node-pre-gyp package",
