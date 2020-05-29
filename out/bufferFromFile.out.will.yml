@@ -1632,8 +1632,8 @@ module:
       transpile.proto.no.tests.compiled.debug:
         src:
           filePath:
-            '**.test*': 0
-            '**.test/**': 0
+            '**.test*': false
+            '**.test/**': false
             'path::proto': '{path::out.*=1}/Main.s'
         mandatory: 1
         dstRewritingOnlyPreserving: 1
@@ -1647,8 +1647,8 @@ module:
       transpile.proto.no.tests.compiled.release:
         src:
           filePath:
-            '**.test*': 0
-            '**.test/**': 0
+            '**.test*': false
+            '**.test/**': false
             'path::proto': '{path::out.*=1}/Main.s'
         mandatory: 1
         dstRewritingOnlyPreserving: 1
@@ -1662,7 +1662,7 @@ module:
       transpile.proto.only.tests.compiled.debug:
         src:
           filePath:
-            '**.test*': 1
+            '**.test*': true
             'path::proto': '{path::out.*=1}/Tests.test.s'
         mandatory: 1
         dstRewritingOnlyPreserving: 1
@@ -1676,7 +1676,7 @@ module:
       transpile.proto.only.tests.compiled.release:
         src:
           filePath:
-            '**.test*': 1
+            '**.test*': true
             'path::proto': '{path::out.*=1}/Tests.test.s'
         mandatory: 1
         dstRewritingOnlyPreserving: 1
@@ -3047,9 +3047,5 @@ module:
           export: 1
     consistency:
       ../.module/NjsCppBasic/out/wNjsCppBasic.out.will.yml: *ref_5
-      ../.module/NjsCppBasic/.ex.will.yml:
-        hash: 47495d4485cc6feef19f4851f5b3a3a3
-        size: 1968
-      ../.module/NjsCppBasic/.im.will.yml:
-        hash: e5a603bf5f396244d7cc3638de090d27
-        size: 4860
+      ../.module/NjsCppBasic/.ex.will.yml: *ref_3
+      ../.module/NjsCppBasic/.im.will.yml: *ref_4

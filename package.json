@@ -1,6 +1,6 @@
 {
   "name" : "bufferfromfile",
-  "version" : "0.4.163",
+  "version" : "0.4.164",
   "engine" : "node >= 6.0.0",
   "enabled" : true,
   "license" : "MIT",
@@ -43,11 +43,11 @@
   "dependencies" : {},
   "devDependencies" :
   {
-    "bufferfromfile" : "file:.",
     "wTools" : "alpha",
     "wTesting" : "alpha",
     "wappbasic" : "alpha",
     "willbe" : "alpha",
+    "bufferfromfile" : "file:.",
     "node-gyp" : "5.1.1",
     "node-pre-gyp" : "0.14.0",
     "node-pre-gyp-github" : "1.4.3",
