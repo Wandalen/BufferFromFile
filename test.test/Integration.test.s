@@ -7,19 +7,14 @@
 
 if( typeof module !== 'undefined' )
 {
-
   let _ = require( 'wTools' );
-
   _.include( 'wTesting' );
-  _.include( 'wFiles' );
-  _.include( 'wAppBasic' );
-
 }
 
 //
 
-let _ = _global_.wTools;
-let fileProvider = _testerGlobal_.wTools.fileProvider;
+let _ = _testerGlobal_.wTools;
+let fileProvider = _.fileProvider;
 let path = fileProvider.path;
 
 // --
@@ -126,19 +121,6 @@ function eslint( test )
     // stdio : 'ignore',
     args : [ '-c', '.eslintrc.yml', '--ext', '.js,.s,.ss', '--ignore-pattern', '*.html', '--ignore-pattern', '*.txt' ],
     throwingExitCode : 0
-  } )
-
-  //
-
-  ready.then( () =>
-  {
-    test.case = 'eslint proto';
-    return start( 'proto/**' );
-  } )
-  .then( ( got ) =>
-  {
-    test.identical( got.exitCode, 0 );
-    return null;
   } )
 
   //
