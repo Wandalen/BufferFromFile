@@ -2,7 +2,8 @@ name : Prebuild
 
 on :
   push :
-    branches : [ master ]
+    branches-ignore
+     - '**'
 
 jobs :
   release :
