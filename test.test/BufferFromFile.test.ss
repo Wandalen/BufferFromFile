@@ -21,7 +21,9 @@ if( typeof module !== 'undefined' )
 
 let _ = _global_.wTools;
 
+// --
 //
+// --
 
 function onSuiteBegin()
 {
@@ -590,7 +592,7 @@ function status( test )
   _.fileProvider.fileWrite( context.filePath, context.testData );
   var stats = _.fileProvider.statRead( context.filePath );
 
-  //
+  /**/
 
   test.description = 'get status';
   var buffer = BufferFromFile( context.filePath ).ArrayBuffer();
@@ -603,7 +605,7 @@ function status( test )
   test.identical( status.advise, BufferFromFile.Advise.normal );
   BufferFromFile.unmap( buffer );
 
-  //
+  /**/
 
   test.description = 'get status, buffer with options';
   var buffer = BufferFromFile
@@ -625,21 +627,21 @@ function status( test )
   test.identical( status.advise, BufferFromFile.Advise.random );
   BufferFromFile.unmap( buffer );
 
-  //
+  /**/
 
   test.description = 'some random buffer passed';
   var got = BufferFromFile.status( new ArrayBuffer(5) );
   var expected = undefined;
   test.identical( got, expected );
 
-  //
+  /**/
 
   test.description = 'some random value passed';
   var got = BufferFromFile.status( 2 );
   var expected = undefined;
   test.identical( got, expected );
 
-  //
+  /**/
 
   test.description = 'status, no args'
   test.shouldThrowErrorSync( function ()
@@ -647,7 +649,7 @@ function status( test )
     BufferFromFile.status();
   })
 
-  //
+  /**/
 
   test.description = 'too many args'
   var buffer = BufferFromFile( context.filePath ).NodeBuffer();
@@ -708,9 +710,7 @@ function readOnlyBuffer( test )
 {
   let context = this;
   let a = test.assetFor( false );
-
   let _BufferFromFilePath_ = a.path.nativize( require.resolve( '../js/Main.ss' ) );
-
   let program1Path = a.program({ routine : program1, locals : { _BufferFromFilePath_, _FilePath_ : context.filePath } });
   let program2Path = a.program({ routine : program2, locals : { _BufferFromFilePath_, _FilePath_ : context.filePath } });
 
@@ -774,18 +774,20 @@ readOnlyBuffer.timeOut = 30000;
 function ipc( test )
 {
   let context = this;
+  let a = context.assetFor( test, false );
+  let _BufferFromFilePath_ = a.path.nativize( require.resolve( '../js/Main.ss' ) );
+  let _TestingPath_ = _.module.resolve( 'wTesting' );
+  let program1Path = a.program({ routine : program1, locals : { _BufferFromFilePath_, _TestingPath_, _FilePath_ : context.filePath } });
 
-  let a = context.assetFor( test, 'ipc' );
-
-  a.reflect();
-
+  // a.reflect();
   _.fileProvider.fileWrite( _.path.join( a.routinePath, 'File.txt' ), 'abc' );
 
   var buffer = BufferFromFile( _.path.nativize( _.path.join( a.routinePath, 'File.txt' ) ) ).NodeBuffer();
   buffer.fill( 'a' );
   BufferFromFile.flush( buffer );
 
-  let childProgramPath = _.path.join( a.routinePath, 'Child.js' );
+  // let childProgramPath = _.path.join( a.routinePath, 'Child.js' );
+  let childProgramPath = program1Path;
 
   var o =
   {
@@ -835,6 +837,35 @@ function ipc( test )
   /* */
 
   return ready;
+
+  function program1()
+  {
+    // require( 'wTesting' );
+    require( _TestingPath_ );
+    let _ = _testerGlobal_.wTools;
+    // var BufferFromFile = require( 'bufferFromFile' );
+    var BufferFromFile = require( _BufferFromFilePath_ );
+    var buffer = BufferFromFile( _.path.nativize( _.path.join( __dirname, 'File.txt' ) ) ).NodeBuffer();
+
+    process.send( { ready : 1 } );
+
+    process.on( 'message', () =>
+    {
+      process.send( { childBuffer : buffer.toString() } )
+      buffer.fill( 'b' );
+      BufferFromFile.flush( buffer );
+      process.send( { ready : 2 } )
+      BufferFromFile.unmap( buffer );
+      process.exit( 0 )
+    })
+
+    _.time.out( 10000, () =>
+    {
+      BufferFromFile.unmap( buffer );
+      process.exit( -1 )
+    })
+  }
+
 }
 
 ipc.description =
