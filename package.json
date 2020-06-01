@@ -1,6 +1,6 @@
 {
   "name" : "bufferfromfile",
-  "version" : "0.4.168",
+  "version" : "0.4.169",
   "engine" : "node >= 6.0.0",
   "enabled" : true,
   "license" : "MIT",
@@ -49,7 +49,7 @@
     "willbe" : "alpha",
     "bufferfromfile" : "file:.",
     "node-gyp" : "5.1.1",
-    "node-pre-gyp" : "0.14.0",
+    "node-pre-gyp" : "0.15.0",
     "node-pre-gyp-github" : "1.4.3",
     "eslint" : "7.1.0"
   },
