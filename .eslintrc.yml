@@ -129,9 +129,9 @@ rules :
     - max : 3
   max-len :
     - error
-    -
-      code : 130
+    - code : 130
       comments : 130
+      ignoreComments : true
       ignoreUrls : true
       ignoreStrings : true
       ignoreRegExpLiterals : true
