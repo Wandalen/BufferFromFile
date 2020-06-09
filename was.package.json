@@ -1,6 +1,6 @@
 {
   "name" : "bufferfromfile",
-  "version" : "0.4.172",
+  "version" : "0.4.173",
   "engine" : "node >= 6.0.0",
   "enabled" : true,
   "license" : "MIT",
@@ -45,7 +45,7 @@
   {
     "wTools" : "alpha",
     "wTesting" : "alpha",
-    "wappbasic" : "alpha",
+    "wprocess" : "alpha",
     "willbe" : "alpha",
     "bufferfromfile" : "file:.",
     "node-gyp" : "",

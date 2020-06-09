@@ -1,6 +1,6 @@
 {
   "name" : "bufferfromfile",
-  "version" : "0.4.172",
+  "version" : "0.4.173",
   "engine" : "node >= 6.0.0",
   "enabled" : true,
   "license" : "MIT",
@@ -45,13 +45,13 @@
   {
     "wTools" : "alpha",
     "wTesting" : "alpha",
-    "wappbasic" : "alpha",
+    "wprocess" : "alpha",
     "willbe" : "alpha",
     "bufferfromfile" : "file:.",
-    "node-gyp" : "7.0.0",
-    "node-pre-gyp" : "0.15.0",
-    "node-pre-gyp-github" : "1.4.3",
-    "eslint" : "7.2.0"
+    "node-gyp" : "",
+    "node-pre-gyp" : "",
+    "node-pre-gyp-github" : "",
+    "eslint" : ""
   },
   "gypfile" : false,
   "keywords" :

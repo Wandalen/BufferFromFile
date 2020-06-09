@@ -18,8 +18,8 @@ submodule :
     enabled : 0 # submodule
     criterion :
       development : 1
-  wAppBasic :
-    path : npm:///wappbasic
+  wProcess :
+    path : npm:///wprocess
     enabled : 0 # submodule
     criterion :
       development : 1

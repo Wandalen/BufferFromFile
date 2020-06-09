@@ -209,8 +209,8 @@ module:
         enabled: 0
         criterion:
           development: 1
-      wAppBasic:
-        path: 'npm:///wappbasic'
+      wProcess:
+        path: 'npm:///wprocess'
         autoExporting: 0
         enabled: 0
         criterion:
@@ -955,8 +955,8 @@ module:
         enabled: 0
         criterion:
           development: 1
-      wAppBasic:
-        path: 'npm:///wappbasic'
+      wProcess:
+        path: 'npm:///wprocess'
         autoExporting: 0
         enabled: 0
         criterion:
