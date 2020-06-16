@@ -196,7 +196,6 @@ rules :
         Property : true
         VariableDeclarator : true
         ImportDeclaration : true
-
   no-multi-str : error
   no-multiple-empty-lines : error
   no-native-reassign : error
