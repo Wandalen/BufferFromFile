@@ -2,19 +2,22 @@ format: outwillfile-2.0
 root:
   - bufferFromFile.out
 consistency:
-  ../.ex.will.yml: &ref_0
+  bufferFromFile.out.will.yml: &ref_0
+    hash: 074ad5f6014ee56625a949694430354a
+    size: 76906
+  ../.ex.will.yml: &ref_1
     hash: 5ade3238a460d54ebb53c63e6e87e4c3
     size: 2087
-  ../.im.will.yml: &ref_1
+  ../.im.will.yml: &ref_2
     hash: d4e695b951a3343d70f76bc1aaee734b
     size: 6131
-  ../.module/NjsCppBasic/.ex.will.yml: &ref_6
+  ../.module/NjsCppBasic/.ex.will.yml: &ref_3
     hash: 6b03474d0b15c7fee63fdadc4aa2b6b3
     size: 1969
-  ../.module/NjsCppBasic/.im.will.yml: &ref_7
+  ../.module/NjsCppBasic/.im.will.yml: &ref_4
     hash: e5a603bf5f396244d7cc3638de090d27
     size: 4860
-  ../.module/NjsCppBasic/out/wNjsCppBasic.out.will.yml: &ref_8
+  ../.module/NjsCppBasic/out/wNjsCppBasic.out.will.yml: &ref_5
     hash: 9ce2017b4ab28f29f1c153470f104c84
     size: 39231
 module:
@@ -27,11 +30,11 @@ module:
         standard ArrayBuffer making mmap behind the scene.
       enabled: 1
       version: 0.5.0
-      interpreters: &ref_2
+      interpreters:
         - njs >= 10.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords: &ref_3
+      keywords:
         - wTools
         - ArrayBuffer
         - Buffer from file
@@ -43,11 +46,11 @@ module:
         - zero copy
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: &ref_4
+      contributors:
         - Kostiantyn Wandalen <wanalen@01.school>
         - Volodymyr M. <volodymyr.migdal@gmail.com>
       npm.name: bufferfromfile
-      npm.scripts: &ref_5
+      npm.scripts:
         install: node-gyp configure && node-gyp rebuild --msvs_version=auto
         test: wtest .run test.test/**
         clean: rm -rf build node_modules
@@ -632,6 +635,24 @@ module:
           content: prime
         inherit:
           - files.transpile
+      exported.proto.export:
+        opts:
+          filePath: 'reflector::exported.proto.export'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
+      exported.files.proto.export:
+        opts:
+          filePath: 'reflector::exported.files.proto.export'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
     build:
       proto.export:
         steps:
@@ -721,8 +742,9 @@ module:
           content: proto
           export: 1
     consistency:
-      ../.ex.will.yml: *ref_0
-      ../.im.will.yml: *ref_1
+      bufferFromFile.out.will.yml: *ref_0
+      ../.ex.will.yml: *ref_1
+      ../.im.will.yml: *ref_2
   ../:
     about:
       name: bufferFromFile
@@ -732,13 +754,30 @@ module:
         standard ArrayBuffer making mmap behind the scene.
       enabled: 1
       version: 0.5.0
-      interpreters: *ref_2
-      keywords: *ref_3
+      interpreters:
+        - njs >= 10.0.0
+        - chrome >= 60.0.0
+        - firefox >= 60.0.0
+      keywords:
+        - wTools
+        - ArrayBuffer
+        - Buffer from file
+        - ArrayBuffer from file
+        - TypedBuffer from file
+        - Nodejs buffer from file
+        - mmap
+        - mmap file
+        - zero copy
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: *ref_4
+      contributors:
+        - Kostiantyn Wandalen <wanalen@01.school>
+        - Volodymyr M. <volodymyr.migdal@gmail.com>
       npm.name: bufferfromfile
-      npm.scripts: *ref_5
+      npm.scripts:
+        install: node-gyp configure && node-gyp rebuild --msvs_version=auto
+        test: wtest .run test.test/**
+        clean: rm -rf build node_modules
     path:
       module.willfiles:
         criterion:
@@ -1148,7 +1187,7 @@ module:
           shell: npm run-script node-pre-gyp-install
       reflect.proto.debug.raw:
         opts:
-          filePath: 'reflector::reflect.proto*'
+          filePath: 'reflector::reflect.proto.debug.raw'
         criterion:
           tests: no.tests
           debug: debug
@@ -1158,7 +1197,7 @@ module:
           - files.reflect
       reflect.proto.release.raw:
         opts:
-          filePath: 'reflector::reflect.proto*'
+          filePath: 'reflector::reflect.proto.release.raw'
         criterion:
           tests: no.tests
           debug: release
@@ -1168,7 +1207,7 @@ module:
           - files.reflect
       reflect.proto.debug.compiled:
         opts:
-          filePath: 'reflector::reflect.proto*'
+          filePath: 'reflector::reflect.proto.debug.compiled'
         criterion:
           tests: no.tests
           debug: debug
@@ -1178,7 +1217,7 @@ module:
           - files.reflect
       reflect.proto.release.compiled:
         opts:
-          filePath: 'reflector::reflect.proto*'
+          filePath: 'reflector::reflect.proto.release.compiled'
         criterion:
           tests: no.tests
           debug: release
@@ -1188,18 +1227,18 @@ module:
           - files.reflect
       reflect.cpp:
         opts:
-          filePath: 'reflector::reflect.cpp*'
+          filePath: 'reflector::reflect.cpp'
         inherit:
           - files.reflect
       reflect.common:
         opts:
-          filePath: 'reflector::reflect.common*'
+          filePath: 'reflector::reflect.common'
         inherit:
           - files.reflect
       transpile.proto.raw:
         opts:
           entry: 'path::entry.proto.no.tests'
-          filePath: 'reflector::transpile.proto.raw*'
+          filePath: 'reflector::transpile.proto.raw'
         criterion:
           raw: raw
           debug: release
@@ -1209,7 +1248,7 @@ module:
       transpile.proto.no.tests.compiled.debug:
         opts:
           entry: 'path::entry.proto.*=1'
-          filePath: 'reflector::transpile.proto.no.tests.compiled*'
+          filePath: 'reflector::transpile.proto.no.tests.compiled.debug'
         criterion:
           tests: no.tests
           raw: compiled
@@ -1220,7 +1259,7 @@ module:
       transpile.proto.no.tests.compiled.release:
         opts:
           entry: 'path::entry.proto.*=1'
-          filePath: 'reflector::transpile.proto.no.tests.compiled*'
+          filePath: 'reflector::transpile.proto.no.tests.compiled.release'
         criterion:
           tests: no.tests
           raw: compiled
@@ -1232,7 +1271,7 @@ module:
         opts:
           entry: 'path::entry.proto.*=1'
           external.before: '{path::out.*=1}/Main.s'
-          filePath: 'reflector::transpile.proto.only.tests.compiled*'
+          filePath: 'reflector::transpile.proto.only.tests.compiled.debug'
         criterion:
           tests: only.tests
           raw: compiled
@@ -1244,7 +1283,7 @@ module:
         opts:
           entry: 'path::entry.proto.*=1'
           external.before: '{path::out.*=1}/Main.s'
-          filePath: 'reflector::transpile.proto.only.tests.compiled*'
+          filePath: 'reflector::transpile.proto.only.tests.compiled.release'
         criterion:
           tests: only.tests
           raw: compiled
@@ -1334,6 +1373,9 @@ module:
       ../.im.will.yml:
         hash: d4e695b951a3343d70f76bc1aaee734b
         size: 6131
+      bufferFromFile.out.will.yml:
+        hash: 074ad5f6014ee56625a949694430354a
+        size: 76906
   ../.module/NjsCppBasic/:
     about:
       name: wNjsCppBasic
@@ -1536,8 +1578,8 @@ module:
       transpile.proto.no.tests.compiled.debug:
         src:
           filePath:
-            '**.test*': 0
-            '**.test/**': 0
+            '**.test*': false
+            '**.test/**': false
             'path::proto': '{path::out.*=1}/Main.s'
         criterion:
           tests: no.tests
@@ -1549,8 +1591,8 @@ module:
       transpile.proto.no.tests.compiled.release:
         src:
           filePath:
-            '**.test*': 0
-            '**.test/**': 0
+            '**.test*': false
+            '**.test/**': false
             'path::proto': '{path::out.*=1}/Main.s'
         criterion:
           tests: no.tests
@@ -1562,7 +1604,7 @@ module:
       transpile.proto.only.tests.compiled.debug:
         src:
           filePath:
-            '**.test*': 1
+            '**.test*': true
             'path::proto': '{path::out.*=1}/Tests.test.s'
         criterion:
           tests: only.tests
@@ -1574,7 +1616,7 @@ module:
       transpile.proto.only.tests.compiled.release:
         src:
           filePath:
-            '**.test*': 1
+            '**.test*': true
             'path::proto': '{path::out.*=1}/Tests.test.s'
         criterion:
           tests: only.tests
@@ -2024,9 +2066,9 @@ module:
           - 'build::release'
           - 'build::npm'
     consistency:
-      ../.module/NjsCppBasic/.ex.will.yml: *ref_6
-      ../.module/NjsCppBasic/.im.will.yml: *ref_7
-      ../.module/NjsCppBasic/out/wNjsCppBasic.out.will.yml: *ref_8
+      ../.module/NjsCppBasic/.ex.will.yml: *ref_3
+      ../.module/NjsCppBasic/.im.will.yml: *ref_4
+      ../.module/NjsCppBasic/out/wNjsCppBasic.out.will.yml: *ref_5
   ../.module/NjsCppBasic/out/wNjsCppBasic.out:
     about:
       name: wNjsCppBasic
@@ -2953,10 +2995,6 @@ module:
           content: proto
           export: 1
     consistency:
-      ../.module/NjsCppBasic/out/wNjsCppBasic.out.will.yml: *ref_8
-      ../.module/NjsCppBasic/.ex.will.yml:
-        hash: 6b03474d0b15c7fee63fdadc4aa2b6b3
-        size: 1969
-      ../.module/NjsCppBasic/.im.will.yml:
-        hash: e5a603bf5f396244d7cc3638de090d27
-        size: 4860
+      ../.module/NjsCppBasic/out/wNjsCppBasic.out.will.yml: *ref_5
+      ../.module/NjsCppBasic/.ex.will.yml: *ref_3
+      ../.module/NjsCppBasic/.im.will.yml: *ref_4
