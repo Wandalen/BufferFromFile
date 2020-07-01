@@ -189,7 +189,7 @@ rules :
   no-mixed-requires : error
   no-multi-assign : off
   no-multi-spaces :
-    - error
+    - warn
     -
       ignoreEOLComments : true
       exceptions :
