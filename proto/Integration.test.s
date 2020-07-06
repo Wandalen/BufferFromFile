@@ -1,4 +1,4 @@
-( function _Integration_test_s_()
+( function _Integration_test_ss_()
 {
 
 'use strict';

@@ -1,0 +1,21 @@
+
+version: 2.1
+orbs :
+  node : circleci/node@3.0.0
+jobs :
+  test :
+    executor :
+      name : node/default
+    steps :
+      - checkout
+      - run : git config --global user.email "testing@testing.com"
+      - run : git config --global user.name "Testing"
+      - run : node -v
+      - node/install-packages:
+          with-cache: false
+          override-ci-command : npm install
+      - run : npm test
+workflows :
+    test :
+      jobs :
+        - test
