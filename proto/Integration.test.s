@@ -40,7 +40,8 @@ function samples( test )
 
   let found = fileProvider.filesFind
   ({
-    filePath : path.join( sampleDir, '**/*.(s|js|ss)' ),
+    // filePath : path.join( sampleDir, '**/*.(s|js|ss)' ),
+    filePath : path.join( sampleDir, '**/*.(s|ss)' ),
     withStem : 0,
     withDirs : 0,
     mode : 'distinct',
