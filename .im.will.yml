@@ -1,7 +1,7 @@
 
 submodule :
 
-  NjsCppBasic : git+https:///github.com/Wandalen/wNjsCppBasic.git@master
+  NjsCppBasic : git+https:///github.com/Wandalen/wNjsCppBasic.git!master
 
   bufferfromfile :
     path : hd://.
