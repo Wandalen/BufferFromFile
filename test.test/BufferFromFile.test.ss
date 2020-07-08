@@ -34,7 +34,7 @@ function onSuiteBegin()
   context.filePath = _.fileProvider.path.nativize( _.path.join( context.suiteTempPath, 'testFile.txt' ) );
   context.testData = '1 - is a random digit set from JS though mapped into memory file with help of BufferFromFile open source package.'
   context.bufferFromFilePath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), '../js/Main.ss' ) );
-  context.toolsPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), '../proto/dwtools/Tools.s' ) );
+  context.toolsPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), '../proto/wtools/Tools.s' ) );
   _.fileProvider.fieldPush( 'UsingBigIntForStat', 0 );
 }
 

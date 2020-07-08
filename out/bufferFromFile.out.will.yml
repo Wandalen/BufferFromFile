@@ -1472,7 +1472,7 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: proto/dwtools/amid/___
+        path: proto/wtools/amid/___
       entry.proto.only.tests:
         criterion:
           tests: only.tests
@@ -1482,13 +1482,13 @@ module:
           debug: debug
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/___'
+        path: '{path::out.*=1}/source/wtools/amid/___'
       entry.out.raw.debug.release:
         criterion:
           debug: release
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/___'
+        path: '{path::out.*=1}/source/wtools/amid/___'
       entry.out.compiled.debug.debug:
         criterion:
           debug: debug
@@ -2165,7 +2165,7 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: ../proto/dwtools/amid/___
+        path: ../proto/wtools/amid/___
       entry.proto.only.tests:
         criterion:
           tests: only.tests
@@ -2175,13 +2175,13 @@ module:
           debug: debug
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/___'
+        path: '{path::out.*=1}/source/wtools/amid/___'
       entry.out.raw.debug.release:
         criterion:
           debug: release
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/___'
+        path: '{path::out.*=1}/source/wtools/amid/___'
       entry.out.compiled.debug.debug:
         criterion:
           debug: debug
@@ -2207,8 +2207,8 @@ module:
           export: 1
         path:
           - ../proto
-          - ../proto/dwtools
-          - ../proto/dwtools/Tools.s
+          - ../proto/wtools
+          - ../proto/wtools/Tools.s
       exported.dir.cpp.export:
         criterion:
           generated: 1
