@@ -42,7 +42,7 @@ function onSuiteEnd()
 {
   let context = this;
   _.assert( _.strHas( context.suiteTempPath, 'BufferFromFile' ), context.suiteTempPath );
-  _.fileProvider.path.pathDirTempClose( context.suiteTempPath );
+  _.fileProvider.path.tempClose( context.suiteTempPath );
   _.fileProvider.fieldPop( 'UsingBigIntForStat', 0 );
 }
 

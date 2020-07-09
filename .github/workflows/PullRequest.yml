@@ -1,0 +1,60 @@
+
+name : PullRequest
+
+on :
+  # push :
+  #   branches : [ master ]
+  pull_request :
+    branches : [ master ]
+  pull_request_review :
+    branches : [ master ]
+
+jobs :
+
+  # Cancel:
+  #   name : 'Cancel Previous Runs'
+  #   runs-on : ubuntu-latest
+  #   timeout-minutes : 1
+  #   steps :
+  #     - uses : styfle/cancel-workflow-action@0.4.0
+  #       with :
+  #         access_token : ${{ github.token }}
+  #         # workflow_id : ${{ github.workflow }}
+
+  # Fast :
+  #   if : "!startsWith( github.event.head_commit.message, 'version' )"
+  #   runs-on : ${{ matrix.os }}
+  #   strategy :
+  #     fail-fast  : false
+  #     matrix :
+  #       os : [ ubuntu-latest, windows-latest, macos-latest ]
+  #       node-version : [ 14.x ]
+  #   steps :
+  #   - uses : actions/checkout@v2
+  #   - run : git config --global user.email "testing@testing.com"
+  #   - run : git config --global user.name "Testing"
+  #   - name : ${{ matrix.node-version }}
+  #     uses : actions/setup-node@v1
+  #     with :
+  #       node-version : ${{ matrix.node-version }}
+  #   - run : npm i
+  #   - run : npm test
+
+  Full :
+    if : "startsWith( github.event.head_commit.message, 'version' )"
+    runs-on : ${{ matrix.os }}
+    strategy :
+      fail-fast  : false
+      matrix :
+        os : [ ubuntu-latest, windows-latest, macos-latest ]
+        node-version : [ 10.x, 12.x, 13.x, 14.x ]
+    steps :
+    - uses : actions/checkout@v2
+    - run : git config --global user.email "testing@testing.com"
+    - run : git config --global user.name "Testing"
+    - name : ${{ matrix.node-version }}
+      uses : actions/setup-node@v1
+      with :
+        node-version : ${{ matrix.node-version }}
+    - run : npm i
+    - run : npm test
