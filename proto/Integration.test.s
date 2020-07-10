@@ -172,7 +172,7 @@ var Self =
 {
 
   name : 'Integration',
-  routineTimeOut : 500000,
+  routineTimeOut : 1500000,
   silencing : 0,
 
   tests :

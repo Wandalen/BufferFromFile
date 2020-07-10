@@ -1,5 +1,5 @@
 
-name : Publication
+name : Publish
 
 on :
   push :
