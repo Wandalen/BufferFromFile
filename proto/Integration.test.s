@@ -102,6 +102,8 @@ function samples( test )
   return ready;
 }
 
+samples.rapidity = -1;
+
 //
 
 function eslint( test )
@@ -162,7 +164,7 @@ function eslint( test )
   return ready;
 }
 
-eslint.rapidity = -1;
+eslint.rapidity = -2;
 
 // --
 // declare
