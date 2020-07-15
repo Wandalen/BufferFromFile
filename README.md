@@ -15,7 +15,7 @@ The module can convert a file to standard ArrayBuffer or any kind of TypedBuffer
 
 ```
 npm install
-node sample/Sample.js
+node sample/Sample.s
 ```
 
 
