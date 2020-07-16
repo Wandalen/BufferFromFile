@@ -1,6 +1,6 @@
 var BufferFromFile = require( 'bufferfromfile' );
 // var File = require( 'fs' );
-var _ = require( 'wTools' );
+let _ = require( 'wTools' );
 
 console.log( 'BufferFromFile' );
 console.log( BufferFromFile );

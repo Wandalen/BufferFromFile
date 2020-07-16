@@ -51,7 +51,7 @@
     "node-gyp" : "",
     "node-pre-gyp" : "",
     "node-pre-gyp-github" : "",
-    "eslint" : ""
+    "eslint" : "7.1.0"
   },
   "gypfile" : false,
   "keywords" :

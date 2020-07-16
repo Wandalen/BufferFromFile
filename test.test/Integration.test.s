@@ -155,7 +155,7 @@ function eslint( test )
 // declare
 // --
 
-var Self =
+let Self =
 {
 
   name : 'Tools.Math.Integration',

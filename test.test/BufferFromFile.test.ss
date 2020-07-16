@@ -943,7 +943,7 @@ var Proto =
 }
 
 
-var Self = new wTestSuite( Proto )
+let Self = new wTestSuite( Proto )
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 
