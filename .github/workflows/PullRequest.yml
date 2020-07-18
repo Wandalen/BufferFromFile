@@ -1,5 +1,5 @@
 
-name : PullRequest
+name : pr
 
 on :
   # push :
@@ -11,15 +11,15 @@ on :
 
 jobs :
 
-  # Cancel:
-  #   name : 'Cancel Previous Runs'
-  #   runs-on : ubuntu-latest
-  #   timeout-minutes : 1
-  #   steps :
-  #     - uses : styfle/cancel-workflow-action@0.4.0
-  #       with :
-  #         access_token : ${{ github.token }}
-  #         # workflow_id : ${{ github.workflow }}
+  Cancel:
+    name : 'Cancel Previous Runs'
+    runs-on : ubuntu-latest
+    timeout-minutes : 1
+    steps :
+      - uses : styfle/cancel-workflow-action@0.4.0
+        with :
+          access_token : ${{ github.token }}
+          # workflow_id : ${{ github.workflow }}
 
   Fast :
     # if : "!startsWith( github.event.head_commit.message, 'version' )"

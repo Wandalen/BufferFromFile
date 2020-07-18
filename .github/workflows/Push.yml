@@ -1,25 +1,22 @@
 
-name : Push
+name : push
 
 on :
   push :
     branches : [ master ]
-  # pull_request :
-  #   branches : [ master ]
-  # pull_request_review :
-  #   branches : [ master ]
 
 jobs :
 
-  # Cancel:
-  #   name : 'Cancel Previous Runs'
-  #   runs-on : ubuntu-latest
-  #   timeout-minutes : 1
-  #   steps :
-  #     - uses : styfle/cancel-workflow-action@0.4.0
-  #       with :
-  #         access_token : ${{ github.token }}
-  #         # workflow_id : ${{ github.workflow }}
+  Cancel:
+    if : "!startsWith( github.event.head_commit.message, 'version' )"
+    name : 'Cancel Previous Runs'
+    runs-on : ubuntu-latest
+    timeout-minutes : 1
+    steps :
+      - uses : styfle/cancel-workflow-action@0.4.0
+        with :
+          access_token : ${{ github.token }}
+          # workflow_id : ${{ github.workflow }}
 
   Fast :
     if : "!startsWith( github.event.head_commit.message, 'version' )"
