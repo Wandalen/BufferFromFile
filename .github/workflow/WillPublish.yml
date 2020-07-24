@@ -18,43 +18,43 @@ jobs :
     - run : npm i
     - run : npm test
 
-  # Full :
-  #   if : "startsWith( github.event.head_commit.message, 'version' )"
-  #   runs-on : ${{ matrix.os }}
-  #   strategy :
-  #     fail-fast : false
-  #     matrix :
-  #       os : [ ubuntu-latest, windows-latest, macos-latest ]
-  #       node-version : [ 10.x, 12.x, 13.x, 14.x ]
-  #   steps :
-  #   - uses : actions/checkout@v2
-  #   - name : ${{ matrix.node-version }}
-  #     uses : actions/setup-node@v1
-  #     with :
-  #       node-version : ${{ matrix.node-version }}
-  #   - run : git config --global core.autocrlf input
-  #   - run : git config --global user.email "testing@testing.com"
-  #   - run : git config --global user.name "Testing"
-  #   - run : npm i --ignore-scripts
-  #   - run : npm -g i willbe@alpha
-  #   - run : will .build
-  #   - run : npm test
-
-  Fast :
-    if : "!startsWith( github.event.head_commit.message, 'version' )"
+  Full :
+    if : "startsWith( github.event.head_commit.message, 'version' )"
     runs-on : ${{ matrix.os }}
     strategy :
-      fail-fast  : false
+      fail-fast : false
       matrix :
         os : [ ubuntu-latest, windows-latest, macos-latest ]
-        node-version : [ 14.x ]
+        node-version : [ 10.x, 12.x, 13.x, 14.x ]
     steps :
-    - uses : actions/checkout@v2
+    - run : git config --global core.autocrlf input
     - run : git config --global user.email "testing@testing.com"
     - run : git config --global user.name "Testing"
+    - uses : actions/checkout@v2
     - name : ${{ matrix.node-version }}
       uses : actions/setup-node@v1
       with :
         node-version : ${{ matrix.node-version }}
-    - run : npm i
+    - run : npm i --ignore-scripts
+    - run : npm -g i willbe@alpha
+    - run : will .build
     - run : npm test
+
+  # Fast :
+  #   if : "!startsWith( github.event.head_commit.message, 'version' )"
+  #   runs-on : ${{ matrix.os }}
+  #   strategy :
+  #     fail-fast  : false
+  #     matrix :
+  #       os : [ ubuntu-latest, windows-latest, macos-latest ]
+  #       node-version : [ 14.x ]
+  #   steps :
+  #   - uses : actions/checkout@v2
+  #   - run : git config --global user.email "testing@testing.com"
+  #   - run : git config --global user.name "Testing"
+  #   - name : ${{ matrix.node-version }}
+  #     uses : actions/setup-node@v1
+  #     with :
+  #       node-version : ${{ matrix.node-version }}
+  #   - run : npm i
+  #   - run : npm test
