@@ -1,0 +1,39 @@
+
+name : push
+
+on :
+  push :
+    branches : [ master ]
+
+jobs :
+
+  Cancel:
+    if : "!startsWith( github.event.head_commit.message, 'version' )"
+    name : 'Cancel Previous Runs'
+    runs-on : ubuntu-latest
+    timeout-minutes : 1
+    steps :
+      - uses : styfle/cancel-workflow-action@0.4.0
+        with :
+          access_token : ${{ github.token }}
+          # workflow_id : ${{ github.workflow }}
+
+  Fast :
+    if : "!startsWith( github.event.head_commit.message, 'version' )"
+    runs-on : ${{ matrix.os }}
+    strategy :
+      fail-fast  : false
+      matrix :
+        os : [ ubuntu-latest, windows-latest, macos-latest ]
+        node-version : [ 14.x ]
+    steps :
+    - run : git config --global core.autocrlf input
+    - run : git config --global user.email "testing@testing.com"
+    - run : git config --global user.name "Testing"
+    - uses : actions/checkout@v2
+    - name : ${{ matrix.node-version }}
+      uses : actions/setup-node@v1
+      with :
+        node-version : ${{ matrix.node-version }}
+    - run : npm i
+    - run : npm test

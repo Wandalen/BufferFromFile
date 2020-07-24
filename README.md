@@ -1,5 +1,5 @@
 
-# BufferFromFile [![Build Status](https://github.com/Wandalen/BufferFromFile/workflows/Build%20&%20Test/badge.svg)](https://github.com/Wandalen/BufferFromFile/actions?query=workflow%3A%22Build+%26+Test%22)
+# BufferFromFile [![status](https://github.com/Wandalen/BufferFromFile/workflows/publish/badge.svg)](https://github.com/Wandalen/BufferFromFile/actions?query=workflow%3A%22publish) [![stable](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/emersion/stability-badges#stable)
 
 Native module for Nodejs providing convenient means for using files as standard ArrayBuffer making mmap behind the scene.
 BufferFromFile uses mmap to map file from hard drive to memory returning ArrayBuffer or TypedBuffer which can be manipulated just like ordinary buffer.
@@ -22,8 +22,6 @@ node sample/Sample.s
 ```
 npm add 'bufferfromfile@alpha'
 ```
-
-
 
 ### Sample
 
