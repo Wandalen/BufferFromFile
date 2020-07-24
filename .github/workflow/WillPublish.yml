@@ -7,17 +7,6 @@ on :
 
 jobs :
 
-    steps :
-    - uses : actions/checkout@v2
-    - run : git config --global user.email "testing@testing.com"
-    - run : git config --global user.name "Testing"
-    - name : ${{ matrix.node-version }}
-      uses : actions/setup-node@v1
-      with :
-        node-version : ${{ matrix.node-version }}
-    - run : npm i
-    - run : npm test
-
   Full :
     if : "startsWith( github.event.head_commit.message, 'version' )"
     runs-on : ${{ matrix.os }}
