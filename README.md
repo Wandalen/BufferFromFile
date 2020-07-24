@@ -1,5 +1,5 @@
 
-# BufferFromFile [![status](https://github.com/Wandalen/BufferFromFile/workflows/publish/badge.svg)](https://github.com/Wandalen/BufferFromFile/actions?query=workflow%3A%22publish) [![stable](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/emersion/stability-badges#stable)
+# BufferFromFile [![status](https://github.com/Wandalen/BufferFromFile/workflows/publish/badge.svg)](https://github.com/Wandalen/BufferFromFile/actions?query=workflow%3Apublish) [![stable](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/emersion/stability-badges#stable)
 
 Native module for Nodejs providing convenient means for using files as standard ArrayBuffer making mmap behind the scene.
 BufferFromFile uses mmap to map file from hard drive to memory returning ArrayBuffer or TypedBuffer which can be manipulated just like ordinary buffer.
@@ -8,19 +8,20 @@ During mmap operation all performance issues addressed operation system, so it's
 Just like [native](http://man7.org/linux/man-pages/man2/mmap.2.html) version of the routine BufferFromFile accept ( protection ), ( flags ), ( offset ), ( size ) and even ( advise ) parameters each of which has default value so no need to pass the implicitly.
 
 BufferFromFIle works on Windows, OSX, Linux and other Unix-like systems.
-The module doesn't depend of module nan and does not support deprecated versions of Nodejs.
+The module doesn't depend of module nan and does not support deprecated versions of Nodejs ( under v10 ).
 The module can convert a file to standard ArrayBuffer or any kind of TypedBuffer. Nonstandard Nodejs Buffer is supported also.
 
-### Usage:
-
+### Try out from the repository
 ```
+git clone https://github.com/Wandalen/BufferFromFile
+cd BufferFromFile
 npm install
 node sample/Sample.s
 ```
 
 ## To add to your project
 ```
-npm add 'bufferfromfile@alpha'
+npm add bufferfromfile@alpha
 ```
 
 ### Sample
