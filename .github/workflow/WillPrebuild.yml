@@ -1,11 +1,13 @@
-name : Prebuild
+
+name : prebuild
 
 on :
   push :
     branches : [ master ]
 
 jobs :
-  release :
+
+  prebuild :
     if : "startsWith( github.event.head_commit.message, 'version' )"
     runs-on : ${{ matrix.os }}
     strategy :
@@ -15,6 +17,8 @@ jobs :
         node-version : [ 10.x, 11.x, 12.x, 13.x, 14.x ]
     steps :
     - run : git config --global core.autocrlf input
+    - run : git config --global user.email "testing@testing.com"
+    - run : git config --global user.name "Testing"
     - uses : actions/checkout@v2
     - name : ${{ matrix.node-version }}
       uses : actions/setup-node@v1

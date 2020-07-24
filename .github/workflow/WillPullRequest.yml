@@ -27,9 +27,10 @@ jobs :
         os : [ ubuntu-latest, windows-latest, macos-latest ]
         node-version : [ 14.x ]
     steps :
-    - uses : actions/checkout@v2
+    - run : git config --global core.autocrlf input
     - run : git config --global user.email "testing@testing.com"
     - run : git config --global user.name "Testing"
+    - uses : actions/checkout@v2
     - name : ${{ matrix.node-version }}
       uses : actions/setup-node@v1
       with :
