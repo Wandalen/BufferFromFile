@@ -6,17 +6,13 @@ let BufferFromFile;
 
 if( typeof module !== 'undefined' )
 {
-
-  BufferFromFile = require( '../js/Main.ss' );
-
-  require( 'wTools' );
-
-  let _ = _global_.wTools;
+  let _ = require( 'wTools' );
 
   _.include( 'wTesting' );
   _.include( 'wFiles' );
   _.include( 'wProcess' );
 
+  BufferFromFile = require( '../js/Main.ss' );
 }
 
 let _ = _global_.wTools;
@@ -38,6 +34,8 @@ function onSuiteBegin()
   _.fileProvider.fieldPush( 'UsingBigIntForStat', 0 );
 }
 
+//
+
 function onSuiteEnd()
 {
   let context = this;
@@ -45,6 +43,8 @@ function onSuiteEnd()
   _.fileProvider.path.tempClose( context.suiteTempPath );
   _.fileProvider.fieldPop( 'UsingBigIntForStat', 0 );
 }
+
+//
 
 function assetFor( test, asset )
 {
@@ -209,7 +209,7 @@ function bufferFromFile( test )
   test.identical( descriptor.NodeBuffer().toString(), '11111' );
   BufferFromFile.unmap( descriptor.Buffer() );
 
-  //
+  /* */
 
   var size = 100;
   var data = '';
@@ -251,7 +251,7 @@ function bufferFromFile( test )
   })
   BufferFromFile.unmap( buffer );
 
-  //
+  /* */
 
   test.description = 'protection readWrite'
 
@@ -267,7 +267,7 @@ function bufferFromFile( test )
   })
   BufferFromFile.unmap( buffer );
 
-  //
+  /* */
 
   test.description = 'protection readWrite'
 
@@ -284,10 +284,10 @@ function bufferFromFile( test )
   })
   BufferFromFile.unmap( buffer );
 
-  //
+  /* */
 
   // test.description = 'protection none'
-  //
+  /* */
   // var buffer = BufferFromFile({ filePath : context.filePath, protection : BufferFromFile.Protection.none }).NodeBuffer();
   // test.shouldThrowErrorSync( function()
   // {
@@ -299,7 +299,7 @@ function bufferFromFile( test )
   // })
   // BufferFromFile.unmap( buffer );
 
-  //
+  /* */
 
   test.description = 'flags';
 
@@ -449,7 +449,7 @@ function flush( test )
     BufferFromFile.unmap( buffer );
   }
 
-  //
+  /* */
 
   test.description = 'BufferFromFile.flush buffer is NodeBuffer';
 
@@ -478,7 +478,7 @@ function flush( test )
 
   BufferFromFile.unmap( buffer );
 
-  //
+  /* */
 
   test.description = 'BufferFromFile.flush buffer is ArrayBuffer';
   _.fileProvider.fileWrite( context.filePath, context.testData );
@@ -507,7 +507,7 @@ function flush( test )
 
   BufferFromFile.unmap( buffer );
 
-  //
+  /* */
 
   test.description = 'buffer is mandatory argument';
   test.shouldThrowErrorSync( function ()
@@ -515,7 +515,7 @@ function flush( test )
     BufferFromFile.flush();
   });
 
-  //
+  /* */
 
   test.description = 'buffer is mandatory option';
   test.shouldThrowErrorSync( function ()
@@ -523,7 +523,7 @@ function flush( test )
     BufferFromFile.flush({ sync : BufferFromFile.Sync.sync });
   });
 
-  //
+  /* */
 
   test.description = 'random buffer';
   test.shouldThrowErrorSync( function ()
@@ -554,7 +554,7 @@ function advise( test )
 
   BufferFromFile.unmap( buffer );
 
-  //
+  /* */
 
   test.description = 'invalid advise';
   var buffer = BufferFromFile( context.filePath ).ArrayBuffer();
@@ -564,7 +564,7 @@ function advise( test )
   test.identical( got, expected );
   BufferFromFile.unmap( buffer );
 
-  //
+  /* */
 
   test.description = 'advise with no arguments';
   test.shouldThrowErrorSync( function ()
@@ -572,7 +572,7 @@ function advise( test )
     BufferFromFile.advise();
   });
 
-  //
+  /* */
 
   test.description = 'first argument is no a buffer';
   test.shouldThrowErrorSync( function ()
@@ -580,7 +580,7 @@ function advise( test )
     BufferFromFile.advise( 1, 1 );
   })
 
-  //
+  /* */
 }
 
 //
@@ -677,7 +677,7 @@ function unmap( test )
   var got = _.fileProvider.fileRead({ filePath : context.filePath, encoding : 'buffer.node' });
   test.identical( got, expected );
 
-  //
+  /* */
 
   test.description = 'unmap, no args'
   test.shouldThrowErrorSync( function ()
@@ -685,7 +685,7 @@ function unmap( test )
     BufferFromFile.unmap();
   })
 
-  //
+  /* */
 
   test.description = 'some random buffer passed';
   test.shouldThrowErrorSync( function ()
@@ -693,7 +693,7 @@ function unmap( test )
     BufferFromFile.unmap( new ArrayBuffer(5) );
   })
 
-  //
+  /* */
 
   test.description = 'too many args'
   var buffer = BufferFromFile( context.filePath ).NodeBuffer();
@@ -779,19 +779,18 @@ function ipc( test )
   let _TestingPath_ = _.module.resolve( 'wTesting' );
   let program1Path = a.program({ routine : program1, locals : { _BufferFromFilePath_, _TestingPath_, _FilePath_ : context.filePath } });
 
-  // a.reflect();
-  _.fileProvider.fileWrite( _.path.join( a.routinePath, 'File.txt' ), 'abc' );
+  // a.reflect(); /* qqq : why not used? */
+  _.fileProvider.fileWrite( _.path.join( a.routinePath, 'File.txt' ), 'ab' );
 
   var buffer = BufferFromFile( _.path.nativize( _.path.join( a.routinePath, 'File.txt' ) ) ).NodeBuffer();
   buffer.fill( 'a' );
   BufferFromFile.flush( buffer );
 
-  // let childProgramPath = _.path.join( a.routinePath, 'Child.js' );
   let childProgramPath = program1Path;
 
   var o =
   {
-    execPath : 'node ' + childProgramPath,
+    execPath : 'node ' + _.path.nativize( childProgramPath ),
     currentPath : context.suiteTempPath,
     ipc : 1,
     mode : 'spawn'
@@ -829,8 +828,8 @@ function ipc( test )
     throw err;
 
     test.identical( op.exitCode, 0 );
-    test.identical( childBuffer, 'aaa' )
-    test.identical( finalBuffer, 'bbb' )
+    test.identical( childBuffer, 'aa' )
+    test.identical( finalBuffer, 'bb' )
     return null;
   })
 
@@ -840,10 +839,8 @@ function ipc( test )
 
   function program1()
   {
-    // require( 'wTesting' );
     require( _TestingPath_ );
     let _ = _testerGlobal_.wTools;
-    // var BufferFromFile = require( 'bufferFromFile' );
     var BufferFromFile = require( _BufferFromFilePath_ );
     var buffer = BufferFromFile( _.path.nativize( _.path.join( __dirname, 'File.txt' ) ) ).NodeBuffer();
 
@@ -906,8 +903,8 @@ var Proto =
 {
 
   name : 'BufferFromFile',
-
   silencing : 1,
+  routineTimeOut : 30000,
 
   onSuiteBegin,
   onSuiteEnd,
