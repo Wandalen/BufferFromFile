@@ -44,6 +44,10 @@ function samples( test )
     filePath : path.join( sampleDir, '**/*.(s|ss)' ),
     withStem : 0,
     withDirs : 0,
+    filter :
+    {
+      maskTransientDirectory : { excludeAny : /asset/ }
+    },
     mode : 'distinct',
     mandatory : 0,
   });
