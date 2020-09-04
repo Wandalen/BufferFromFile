@@ -46,7 +46,7 @@ function samples( test )
     withDirs : 0,
     filter :
     {
-      maskTransientDirectory : { excludeAny : /asset/ }
+      maskTransientDirectory : { excludeAny : [ /asset/, /out/ ] }
     },
     mode : 'distinct',
     mandatory : 0,
@@ -187,7 +187,7 @@ let Self =
   tests :
   {
     samples,
-    eslint,
+    // eslint,
   },
 
 }
