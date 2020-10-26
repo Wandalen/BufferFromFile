@@ -27,17 +27,17 @@ submodule :
     path : npm:///willbe
     enabled : 0 # submodule
     criterion :
-      development : 1
+      development : 0
   node-gyp :
     path : npm:///node-gyp
     enabled : 0 # submodule
     criterion :
-      development : 1
+      development : 0
   node-pre-gyp :
     path : npm:///node-pre-gyp
     enabled : 0 # submodule
     criterion :
-      development : 1
+      development : 0
   node-pre-gyp-github :
     path : npm:///node-pre-gyp-github
     enabled : 0 # submodule

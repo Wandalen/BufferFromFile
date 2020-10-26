@@ -40,16 +40,18 @@
   {
     "url" : "https://github.com/Wandalen/BufferFromFile/issues"
   },
-  "dependencies" : {},
+  "dependencies" : 
+  {
+    "willbe" : "alpha",
+    "node-gyp" : "",
+    "node-pre-gyp" : ""
+  },
   "devDependencies" :
   {
     "wTools" : "alpha",
     "wTesting" : "alpha",
     "wprocess" : "alpha",
-    "willbe" : "alpha",
     "bufferfromfile" : "file:.",
-    "node-gyp" : "",
-    "node-pre-gyp" : "",
     "node-pre-gyp-github" : "",
     "eslint" : "7.1.0"
   },
