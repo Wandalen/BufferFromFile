@@ -1,6 +1,6 @@
 {
   "name" : "bufferfromfile",
-  "version" : "0.4.221",
+  "version" : "0.4.222",
   "engine" : "node >= 6.0.0",
   "enabled" : true,
   "license" : "MIT",
@@ -40,12 +40,7 @@
   {
     "url" : "https://github.com/Wandalen/BufferFromFile/issues"
   },
-  "dependencies" : 
-  {
-    "willbe" : "alpha",
-    "node-gyp" : "",
-    "node-pre-gyp" : ""
-  },
+  "dependencies" : { "willbe" : "alpha", "node-gyp" : "", "node-pre-gyp" : "" },
   "devDependencies" :
   {
     "wTools" : "alpha",
