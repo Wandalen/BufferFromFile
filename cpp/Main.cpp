@@ -130,9 +130,14 @@ void mmap_js( const FunctionCallbackInfo< Value >& info )
     return;
   }
 
-  /* */
-
+  #if NODE_VERSION_AT_LEAST( 14, 0, 0 )
+  std::unique_ptr< BackingStore > backing;
+  backing = ArrayBuffer::NewBackingStore( memory.buffer.data(), memory.buffer.length(), [](void*, size_t, void*){}, nullptr );
+  auto arrayBuffer = ArrayBuffer::New( isolate, std::move( backing ) );
+  #else
   auto arrayBuffer = ArrayBuffer::New( isolate,memory.buffer.data(),memory.buffer.length() );
+  #endif
+  
   // Persistent< ArrayBuffer > buffer( isolate,_buffer );
   // buffer.SetWeak( &memory,fileUnmap,::v8::WeakCallbackType::kParameter );
 
@@ -328,7 +333,11 @@ void flush_js( const FunctionCallbackInfo< Value >& info )
   /* */
 
   int flag = ( ( sync ? MS_SYNC : MS_ASYNC ) | ( invalidate ? MS_INVALIDATE : 0 ) );
+  #if NODE_VERSION_AT_LEAST( 14, 0, 0 )
+  int ret = msync( ( (char*)buffer->GetBackingStore()->Data() ) + offset, size, flag );
+  #else
   int ret = msync( ( (char*)buffer->GetContents().Data() ) + offset, size, flag );
+  #endif
 
   if( ret )
   return ::wTools::v8::errThrow

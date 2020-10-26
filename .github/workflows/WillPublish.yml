@@ -14,7 +14,7 @@ jobs :
       fail-fast : false
       matrix :
         os : [ ubuntu-latest, windows-latest, macos-latest ]
-        node-version : [ 10.x, 12.x, 13.x, 14.x ]
+        node-version : [ 10.x, 12.x, 13.x, 14.x, 15.x ]
     steps :
     - run : git config --global core.autocrlf input
     - run : git config --global user.email "testing@testing.com"
