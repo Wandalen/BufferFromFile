@@ -229,6 +229,10 @@ step :
   node-gyp.install :
     currentPath : path::in
     shell : 'npm run-script node-pre-gyp-install'
+    
+  postinstall : 
+    currentPath : path::in
+    shell : 'node postinstall.ss'
 
 build :
 
@@ -242,7 +246,7 @@ build :
   install :
     steps :
       - submodules.update
-      - node-gyp.install
+      - postinstall
 
   compiled.debug :
     criterion :

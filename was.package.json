@@ -11,7 +11,7 @@
     { "name" : "Kostiantyn Wandalen", "email" : "wanalen@01.school" },
     { "name" : "Volodymyr M.", "email" : "volodymyr.migdal@gmail.com" }
   ],
-  "files" : [ "cpp", "js", "binding.gyp", "Makefile", ".im.will.yml", ".ex.will.yml" ],
+  "files" : [ "cpp", "js", "binding.gyp", "Makefile", ".im.will.yml", ".ex.will.yml", "postinstall.ss", "quick-test.ss" ],
   "main" : "js/Main.ss",
   "scripts" :
   {
