@@ -4,11 +4,12 @@
   'use strict';
   
   let ChildProcess = require( 'child_process' );
+  let path = require( 'path' );
   
   let o = 
   { 
     stdio: 'inherit', 
-    cwd : __dirname 
+    cwd : path.join( __dirname, '..' ) 
   }
   
   install();
@@ -19,7 +20,7 @@
   {
     let pnd = ChildProcess.spawn( 'npm', [ 'run', 'node-pre-gyp-install' ], o );
     
-    pnd.on( 'exit', function( exitCode ) 
+    pnd.on( 'exit', ( exitCode ) =>
     {
       if( exitCode !== 0 )
       return process.exit( exitCode );
@@ -31,16 +32,16 @@
   
   function test()
   {
-    ChildProcess.execFile( process.execPath, [ 'quick-test.ss' ], ( err, stdout, stderr ) =>
+    let pnd = ChildProcess.fork( path.join( __dirname, 'quick-test.ss' ), [], o );
+    
+    pnd.on( 'exit', ( exitCode ) =>
     {
-      if ( err || stderr ) 
+      if( exitCode !== 0 )
       {
-        console.log( 'Problem with the binary; manual build incoming' );
-        console.log( 'stdout=' + stdout );
-        console.log( 'err=' + err );
+        console.error( `Problem with the binary; manual build incoming` );
         build();
       }
-      else 
+      else
       {
         console.log( 'Binary is fine; exiting' );
       }

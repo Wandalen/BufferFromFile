@@ -66,6 +66,7 @@ path :
   js : 'js'
   cpp : 'cpp'
   build : 'build'
+  step : 'step'
   node-pre-gyp : node_modules/node-pre-gyp/bin/node-pre-gyp
 
   out.raw.debug :
@@ -231,7 +232,7 @@ step :
     shell : 'npm run-script node-pre-gyp-install'
     
   postinstall : 
-    currentPath : path::in
+    currentPath : path::step
     shell : 'node postinstall.ss'
 
 build :
