@@ -9,8 +9,9 @@
   let o = 
   { 
     stdio: 'inherit', 
-    cwd : path.join( __dirname, '..' ) 
+    cwd : path.join( __dirname, '..' ),
   }
+  let npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
   
   install();
   
@@ -18,7 +19,7 @@
 
   function install()
   {
-    let pnd = ChildProcess.spawn( 'npm', [ 'run', 'node-pre-gyp-install' ], o );
+    let pnd = ChildProcess.spawn( npm, [ 'run', 'node-pre-gyp-install' ], o );
     
     pnd.on( 'exit', ( exitCode ) =>
     {
@@ -52,7 +53,7 @@
   
   function build() 
   {
-    let pnd = ChildProcess.spawn( 'npm', [ 'run', 'node-pre-gyp-build' ], o )
+    let pnd = ChildProcess.spawn( npm, [ 'run', 'node-pre-gyp-build' ], o )
     
     pnd.on( 'exit', function( exitCode ) 
     {
