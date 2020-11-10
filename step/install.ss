@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-( function _postinstall_() {
+( function _install_() {
   
   'use strict';
   
@@ -38,7 +38,7 @@
     {
       if( exitCode !== 0 )
       {
-        console.error( `Problem with the binary; manual build incoming` );
+        console.error( 'Problem with the binary; manual build incoming' );
         build();
       }
       else

@@ -233,7 +233,7 @@ step :
     
   postinstall : 
     currentPath : path::step
-    shell : 'node postinstall.ss'
+    shell : 'node install.ss'
 
 build :
 
