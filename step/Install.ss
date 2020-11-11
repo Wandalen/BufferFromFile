@@ -33,7 +33,7 @@
   
   function test()
   {
-    let pnd = ChildProcess.fork( path.join( __dirname, 'QuickTest.ss' ), [], o );
+    let pnd = ChildProcess.fork( path.join( __dirname, '../QuickTest.ss' ), [], o );
     
     pnd.on( 'exit', ( exitCode ) =>
     {
