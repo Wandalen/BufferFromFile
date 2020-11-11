@@ -142,6 +142,7 @@ function eslint( test )
       '--ignore-pattern', '*.yaml',
       '--ignore-pattern', '*.md',
       '--ignore-pattern', '*.xml',
+      '--ignore-pattern', '*.css',
       '--quiet'
     ],
     throwingExitCode : 0,
