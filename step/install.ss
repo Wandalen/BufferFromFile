@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-( function _install_() {
+( function _Install_() {
   
   'use strict';
   
