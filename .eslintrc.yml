@@ -109,6 +109,7 @@ rules :
       before : false
       after : false
       overrides :
+        of : { 'before' : true }
         return : { 'after' : true }
         let : { 'after' : true }
         const : { 'after' : true }
