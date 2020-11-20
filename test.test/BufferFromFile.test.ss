@@ -117,12 +117,12 @@ function buffersFromRaw( test )
 
     test.description = 'making raw buffer from file';
     var descriptor = BufferFromFile( context.filePath );
-    test.is( _.bufferRawIs( descriptor.ArrayBuffer() ) );
+    test.true( _.bufferRawIs( descriptor.ArrayBuffer() ) );
 
     test.description = 'making ' + type + 'from raw';
 
     var buffer = descriptor[ type ]();
-    test.is( _.bufferTypedIs( buffer ) );
+    test.true( _.bufferTypedIs( buffer ) );
     test.identical( buffer.constructor.name, type );
     test.identical( buffer.byteLength, descriptor.ArrayBuffer().byteLength );
 
@@ -143,7 +143,7 @@ function buffersFromRaw( test )
 
   _.fileProvider.fileWrite( context.filePath, context.testData );
   var buffer = BufferFromFile( context.filePath ).NodeBuffer();
-  test.is( _.bufferNodeIs( buffer ) );
+  test.true( _.bufferNodeIs( buffer ) );
   var expected = _.fileProvider.fileRead({ filePath : context.filePath, encoding : 'buffer.node' });
   test.identical( buffer, expected )
   BufferFromFile.unmap( buffer );
@@ -152,7 +152,7 @@ function buffersFromRaw( test )
 
   _.fileProvider.fileWrite( context.filePath, context.testData );
   var buffer = BufferFromFile( context.filePath ).ArrayBuffer();
-  test.is( _.bufferRawIs( buffer ) );
+  test.true( _.bufferRawIs( buffer ) );
   var expected = _.fileProvider.fileRead({ filePath : context.filePath, encoding : 'buffer.raw' });
   test.identical( buffer.byteLength, expected.byteLength );
   BufferFromFile.unmap( buffer );
@@ -168,10 +168,10 @@ function bufferFromFile( test )
   _.fileProvider.fileWrite( context.filePath, context.testData );
 
   var descriptor = BufferFromFile( context.filePath );
-  test.is( _.objectIs( descriptor ) );
-  test.is( _.bufferRawIs( descriptor.ArrayBuffer() ) );
+  test.true( _.objectIs( descriptor ) );
+  test.true( _.bufferRawIs( descriptor.ArrayBuffer() ) );
   var nodeBuffer = descriptor.NodeBuffer();
-  test.is( _.bufferNodeIs( nodeBuffer ) );
+  test.true( _.bufferNodeIs( nodeBuffer ) );
   test.identical( nodeBuffer.toString(), context.testData );
   BufferFromFile.unmap( nodeBuffer );
 
@@ -181,7 +181,7 @@ function bufferFromFile( test )
   /* by setting number of bytes to get from beginning of the file */
 
   var descriptor = BufferFromFile({ filePath : context.filePath, size : 10 });
-  test.is( _.bufferRawIs( descriptor.ArrayBuffer() ) );
+  test.true( _.bufferRawIs( descriptor.ArrayBuffer() ) );
   var buffer = descriptor.NodeBuffer();
   test.identical( buffer.byteLength, 10 );
   test.identical( buffer.toString(), context.testData.slice( 0, 10 ) );
@@ -204,7 +204,7 @@ function bufferFromFile( test )
 
   _.fileProvider.fileWrite( context.filePath, data );
   var descriptor = BufferFromFile({ filePath : context.filePath, size : 5, offset : blockSize });
-  test.is( _.bufferRawIs( descriptor.ArrayBuffer() ) );
+  test.true( _.bufferRawIs( descriptor.ArrayBuffer() ) );
   test.identical( descriptor.ArrayBuffer().byteLength, 5 );
   test.identical( descriptor.NodeBuffer().toString(), '11111' );
   BufferFromFile.unmap( descriptor.Buffer() );
@@ -310,7 +310,7 @@ function bufferFromFile( test )
   buffer[ 0 ] = 55;
   BufferFromFile.flush( buffer );
   var expected = _.fileProvider.fileRead({ filePath : context.filePath, encoding : 'buffer.node' });
-  test.is( buffer !== expected );
+  test.true( buffer !== expected );
   BufferFromFile.unmap( buffer );
 
   /* flags MAP_SHARED */
@@ -420,7 +420,7 @@ function flush( test )
 
     _.fileProvider.fileWrite( context.filePath, data );
     var buffer = BufferFromFile( context.filePath )[ type ]();
-    test.is( _.bufferTypedIs( buffer ) );
+    test.true( _.bufferTypedIs( buffer ) );
 
     /**/
 
@@ -457,7 +457,7 @@ function flush( test )
 
   _.fileProvider.fileWrite( context.filePath, context.testData );
   var buffer = BufferFromFile( context.filePath ).NodeBuffer();
-  test.is( _.bufferNodeIs( buffer ) )
+  test.true( _.bufferNodeIs( buffer ) )
   test.mustNotThrowError( function ()
   {
     buffer[ 0 ] = 59;
@@ -483,7 +483,7 @@ function flush( test )
   test.description = 'BufferFromFile.flush buffer is ArrayBuffer';
   _.fileProvider.fileWrite( context.filePath, context.testData );
   var buffer = BufferFromFile( context.filePath ).ArrayBuffer();
-  test.is( _.bufferRawIs( buffer ) );
+  test.true( _.bufferRawIs( buffer ) );
 
   /* as argument */
 
@@ -723,7 +723,7 @@ function readOnlyBuffer( test )
   {
     test.identical( op.exitCode, 0 );
     test.identical( op.exitSignal, null );
-    test.is( _.strHas( op.output, '49' ) );
+    test.true( _.strHas( op.output, '49' ) );
     return null;
   });
 
@@ -740,7 +740,7 @@ function readOnlyBuffer( test )
     else if( process.platform === 'darwin' )
     test.identical( op.exitSignal, 'SIGBUS' );
 
-    test.is( !_.strHas( op.output, 'Buffer changed' ) );
+    test.true( !_.strHas( op.output, 'Buffer changed' ) );
     return null;
   });
 
