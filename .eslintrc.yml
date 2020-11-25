@@ -387,6 +387,7 @@ rules :
   no-unused-vars :
     - warn
     - args : 'none'
+  no-ex-assign : warn
 
   # play with this later
 

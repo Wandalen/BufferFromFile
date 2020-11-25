@@ -802,13 +802,13 @@ function ipc( test )
   let childBuffer;
   let finalBuffer;
 
-  o.process.on( 'message', ( m ) =>
+  o.pnd.on( 'message', ( m ) =>
   {
     if( m.ready === 1 )
     {
       buffer.fill( 'a' );
       BufferFromFile.flush( buffer );
-      o.process.send( 'ready' );
+      o.pnd.send( 'ready' );
     }
     else if( m.childBuffer )
     {
