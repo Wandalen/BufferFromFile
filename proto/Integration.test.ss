@@ -134,6 +134,7 @@ function eslint( test )
     [
       '-c', '.eslintrc.yml',
       '--ext', '.js,.s,.ss',
+      '--ignore-pattern', '*.ts',
       '--ignore-pattern', '*.html',
       '--ignore-pattern', '*.txt',
       '--ignore-pattern', '*.png',
