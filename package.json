@@ -1,6 +1,6 @@
 {
   "name" : "bufferfromfile",
-  "version" : "0.4.240",
+  "version" : "0.4.241",
   "engine" : "node >= 6.0.0",
   "enabled" : true,
   "license" : "MIT",
@@ -30,7 +30,7 @@
     "node-pre-gyp-build" : "node-pre-gyp configure && node-pre-gyp rebuild",
     "node-pre-gyp-package" : "node-pre-gyp package",
     "node-pre-gyp-github-release" : "node-pre-gyp-github publish --release",
-    "test" : "wtest test.test",
+    "test" : "wtest .run proto rapidity:-3",
     "make_doc" : "./doc.sh",
     "clean" : "rm -rf build node_modules"
   },
