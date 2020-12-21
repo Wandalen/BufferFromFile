@@ -840,7 +840,7 @@ function ipc( test )
   function program1()
   {
     require( _TestingPath_ );
-    let _ = _testerGlobal_.wTools;
+    let _ = _globals_.testing.wTools;
     var BufferFromFile = require( _BufferFromFilePath_ );
     var buffer = BufferFromFile( _.path.nativize( _.path.join( __dirname, 'File.txt' ) ) ).NodeBuffer();
 
