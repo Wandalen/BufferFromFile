@@ -1,4 +1,5 @@
-( function _BufferFromFile_test_ss_( ) {
+( function _BufferFromFile_test_ss_()
+{
 
 'use strict';
 
@@ -54,7 +55,7 @@ function assetFor( test, asset )
   a.reflect = function reflect()
   {
 
-    let reflected = a.fileProvider.filesReflect({ reflectMap : { [ a.originalAssetPath ] : a.routinePath }, onUp : onUp });
+    let reflected = a.fileProvider.filesReflect({ reflectMap : { [ a.originalAssetPath ] : a.routinePath }, onUp });
 
     reflected.forEach( ( r ) =>
     {
@@ -90,15 +91,15 @@ function buffersFromRaw( test )
   let context = this;
   var bufferMap =
   {
-    'Int8Array' : Int8Array,
-    'Uint8Array' : Uint8Array,
-    'Uint8ClampedArray' : Uint8ClampedArray,
-    'Int16Array' : Int16Array,
-    'Uint16Array' : Uint16Array,
-    'Int32Array' : Int32Array,
-    'Uint32Array' : Uint32Array,
-    'Float32Array' : Float32Array,
-    'Float64Array' : Float64Array,
+    Int8Array,
+    Uint8Array,
+    Uint8ClampedArray,
+    Int16Array,
+    Uint16Array,
+    Int32Array,
+    Uint32Array,
+    Float32Array,
+    Float64Array,
   }
 
   var buffers = Object.keys( bufferMap );
@@ -110,8 +111,10 @@ function buffersFromRaw( test )
     var mod = _.strIsolateLeftOrNone( type, [ '8', '16', '32', '64' ] )[ 1 ] / 8;
 
     if( mod > 1 )
-    while( data.length % mod !== 0 )
-    data = data.slice( 0, -1 );
+    {
+      while( data.length % mod !== 0 )
+      data = data.slice( 0, -1 );
+    }
 
     _.fileProvider.fileWrite( context.filePath, data );
 
@@ -121,12 +124,12 @@ function buffersFromRaw( test )
 
     test.description = 'making ' + type + 'from raw';
 
-    var buffer = descriptor[ type ]();
+    let buffer = descriptor[ type ]();
     test.true( _.bufferTypedIs( buffer ) );
     test.identical( buffer.constructor.name, type );
     test.identical( buffer.byteLength, descriptor.ArrayBuffer().byteLength );
 
-    var expected = _.fileProvider.fileRead
+    let expected = _.fileProvider.fileRead
     ({
       filePath : context.filePath,
       encoding : 'buffer.raw'
@@ -213,19 +216,17 @@ function bufferFromFile( test )
 
   var size = 100;
   var data = '';
-  for( var i = 0; i < size; i++ )
-  {
-    data += i;
-  }
+  for( let i = 0; i < size; i++ )
+  data += i;
 
   _.fileProvider.fileWrite( context.filePath, data );
   var fileSize = _.fileProvider.statRead( context.filePath ).size;
-  for( var i = 0; i < fileSize; i+= 10  )
+  for( let i = 0; i < fileSize; i+= 10  )
   {
-    var offset = _.intRandom( [ 0, i ] );
-    var size = _.intRandom( [ 0, fileSize - offset ] );
+    let offset = _.intRandom( [ 0, i ] );
+    let size = _.intRandom( [ 0, fileSize - offset ] );
     test.description = 'create buffer with offset: ' + offset + ' and size: ' + size + ' ,fileSize: ' + fileSize;
-    var buffer = BufferFromFile({ filePath : context.filePath, offset : offset, size : size }).NodeBuffer();
+    let buffer = BufferFromFile({ filePath : context.filePath, offset, size }).NodeBuffer();
     test.identical( buffer.length, size );
     test.identical( buffer.toString(), data.slice( offset, offset + size ) );
     BufferFromFile.unmap( buffer );
@@ -355,7 +356,7 @@ function bufferFromFile( test )
     })
 
     _.fileProvider.fileWrite( context.filePath, context.testData );
-    var size = _.fileProvider.statRead( context.filePath ).size;
+    let size = _.fileProvider.statRead( context.filePath ).size;
     test.shouldThrowErrorSync( function()
     {
       BufferFromFile({ filePath : context.filePath, offset : size + 1 });
@@ -382,7 +383,7 @@ function bufferFromFile( test )
     test.shouldThrowErrorSync( function()
     {
       var size = _.fileProvider.statRead( context.filePath ).size;
-      BufferFromFile({ filePath : context.filePath, offset : Math.floor( size / 2 ), size : size });
+      BufferFromFile({ filePath : context.filePath, offset : Math.floor( size / 2 ), size });
     })
   }
 }
@@ -395,15 +396,15 @@ function flush( test )
 
   var buffersMap =
   {
-    'Int8Array' : Int8Array,
-    'Uint8Array' : Uint8Array,
-    'Uint8ClampedArray' : Uint8ClampedArray,
-    'Int16Array' : Int16Array,
-    'Uint16Array' : Uint16Array,
-    'Int32Array' : Int32Array,
-    'Uint32Array' : Uint32Array,
-    'Float32Array' : Float32Array,
-    'Float64Array' : Float64Array,
+    Int8Array,
+    Uint8Array,
+    Uint8ClampedArray,
+    Int16Array,
+    Uint16Array,
+    Int32Array,
+    Uint32Array,
+    Float32Array,
+    Float64Array,
   }
 
   var buffers = Object.keys( buffersMap );
@@ -415,11 +416,13 @@ function flush( test )
     var mod = _.strIsolateLeftOrNone( type, [ '8', '16', '32', '64' ] )[ 1 ] / 8;
 
     if( mod > 1 )
-    while( data.length % mod !== 0 )
-    data = data.slice( 0, -1 );
+    {
+      while( data.length % mod !== 0 )
+      data = data.slice( 0, -1 );
+    }
 
     _.fileProvider.fileWrite( context.filePath, data );
-    var buffer = BufferFromFile( context.filePath )[ type ]();
+    let buffer = BufferFromFile( context.filePath )[ type ]();
     test.true( _.bufferTypedIs( buffer ) );
 
     /**/
@@ -431,7 +434,7 @@ function flush( test )
     {
       BufferFromFile.flush( buffer );
     })
-    var expected = _.fileProvider.fileRead({ filePath : context.filePath, encoding : 'buffer.raw' });
+    let expected = _.fileProvider.fileRead({ filePath : context.filePath, encoding : 'buffer.raw' });
     expected = new buffersMap[ type ]( expected );
     test.identical( buffer, expected );
 
@@ -440,9 +443,9 @@ function flush( test )
     buffer[ 0 ] = 49 + Math.round( Math.random()*9 );
     test.mustNotThrowError( function ()
     {
-      BufferFromFile.flush( { buffer : buffer } );
+      BufferFromFile.flush( { buffer } );
     })
-    var expected = _.fileProvider.fileRead({ filePath : context.filePath, encoding : 'buffer.raw' });
+    expected = _.fileProvider.fileRead({ filePath : context.filePath, encoding : 'buffer.raw' });
     expected = new buffersMap[ type ]( expected );
     test.identical( buffer, expected );
 
@@ -471,7 +474,7 @@ function flush( test )
   test.mustNotThrowError( function ()
   {
     buffer[ 0 ] = 60;
-    BufferFromFile.flush({ buffer : buffer });
+    BufferFromFile.flush({ buffer });
   });
   var expected = _.fileProvider.fileRead({ filePath : context.filePath, encoding : 'buffer.node' });
   test.identical( buffer, expected );
@@ -500,7 +503,7 @@ function flush( test )
   test.mustNotThrowError( function ()
   {
     buffer[ 0 ] = 61;
-    BufferFromFile.flush({ buffer : buffer });
+    BufferFromFile.flush({ buffer });
   });
   var expected = _.fileProvider.fileRead({ filePath : context.filePath, encoding : 'buffer.raw' });
   test.identical( buffer, expected );
@@ -777,7 +780,8 @@ function ipc( test )
   let a = context.assetFor( test, false );
   let _BufferFromFilePath_ = a.path.nativize( require.resolve( '../js/Main.ss' ) );
   let _TestingPath_ = _.module.resolve( 'wTesting' );
-  let program1Path = a.program({ routine : program1, locals : { _BufferFromFilePath_, _TestingPath_, _FilePath_ : context.filePath } });
+  let locals = { _BufferFromFilePath_, _TestingPath_, _FilePath_ : context.filePath };
+  let program1Path = a.program({ routine : program1, locals });
 
   // a.reflect(); /* qqq : why not used? */
   _.fileProvider.fileWrite( _.path.join( a.routinePath, 'File.txt' ), 'ab' );
@@ -799,8 +803,7 @@ function ipc( test )
   /* */
 
   let ready = _.process.start( o );
-  let childBuffer;
-  let finalBuffer;
+  let childBuffer, finalBuffer;
 
   o.pnd.on( 'message', ( m ) =>
   {
@@ -882,13 +885,13 @@ function experiment( test )
 
   var buffer = BufferFromFile( filePath ).ArrayBuffer();
   BufferFromFile.unmap( buffer );
-  test.identical( 1,1 );
+  test.identical( 1, 1 );
 
   return _.timeOut( 1000, () =>
   {
     var buffer = BufferFromFile( filePath ).ArrayBuffer();
     BufferFromFile.unmap( buffer );
-    test.identical( 1,1 );
+    test.identical( 1, 1 );
   })
 
 }
