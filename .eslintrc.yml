@@ -207,7 +207,7 @@ rules :
   no-new-func : warn
   no-new-object : error
   no-new-require : error
-  no-new-wrappers : error
+  no-new-wrappers : warn
   no-octal-escape : error
   no-param-reassign : off
   no-path-concat : off
@@ -408,7 +408,7 @@ rules :
     - max : 100
   max-nested-callbacks :
     - error
-    - max : 5
+    - max : 3
   max-depth :
     - error
     - max : 5

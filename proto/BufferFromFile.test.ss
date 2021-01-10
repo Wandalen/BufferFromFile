@@ -541,7 +541,7 @@ function advise( test )
 {
   let context = this;
 
-  var advises = _.mapOwnKeys( BufferFromFile.Advise );
+  var advises = _.mapOnlyOwnKeys( BufferFromFile.Advise );
   _.fileProvider.fileWrite( context.filePath, context.testData );
 
   var buffer = BufferFromFile( context.filePath ).ArrayBuffer();
