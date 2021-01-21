@@ -18,6 +18,28 @@ let fileProvider = _.fileProvider;
 let path = fileProvider.path;
 
 // --
+// context
+// --
+
+function onSuiteBegin( test )
+{
+  let context = this;
+  context.provider = fileProvider;
+  let path = context.provider.path;
+  context.suiteTempPath = context.provider.path.tempOpen( path.join( __dirname, '../..'  ), 'moduleSuitability' );
+}
+
+//
+
+function onSuiteEnd( test )
+{
+  let context = this;
+  let path = context.provider.path;
+  _.assert( _.strHas( context.suiteTempPath, 'moduleSuitability' ), context.suiteTempPath );
+  path.tempClose( context.suiteTempPath );
+}
+
+// --
 // test
 // --
 
@@ -148,6 +170,8 @@ function eslint( test )
       '--ignore-pattern', '_asset',
       '--ignore-pattern', 'out',
       '--ignore-pattern', '*.tgs',
+      '--ignore-pattern', '*.bat',
+      '--ignore-pattern', '*.sh',
       '--quiet'
     ],
     throwingExitCode : 0,
@@ -192,6 +216,69 @@ function eslint( test )
 
 eslint.rapidity = -2;
 
+//
+
+function moduleSuitability( test )
+{
+  let context = this;
+  let a = test.assetFor( 'moduleSuitability' );
+
+  let ready = new _.Consequence().take( null );
+  let start = _.process.starter
+  ({
+    mode : 'shell',
+    currentPath : a.abs( '.' ),
+    throwingExitCode : 0,
+    outputCollecting : 1,
+    ready,
+  });
+
+  /* */
+
+  let sampleName = '';
+
+  ready.then( () =>
+  {
+    a.fileProvider.dirMake( a.abs( '.' ) );
+
+    let sampleDir = a.abs( __dirname, '../sample' );
+    let samplePath = a.find
+    ({
+      filePath : sampleDir,
+      filter : { filePath : { 'Sample.(s|js|ss)' : 1 } }
+    });
+    samplePath = a.abs( sampleDir, samplePath[ 0 ] ) ;
+    sampleName = a.path.fullName( samplePath );
+    a.fileProvider.filesReflect({ reflectMap : { [ samplePath ] : a.abs( sampleName ) } });
+
+    let packagePath = a.abs( __dirname, '../package.json' );
+    let config = a.fileProvider.fileRead({ filePath : packagePath, encoding : 'json' });
+    let data = { dependencies : { [ config.name ] : 'alpha' } };
+    a.fileProvider.fileWrite({ filePath : a.abs( 'package.json' ), data, encoding : 'json' });
+
+    return null;
+  });
+
+  start( `npm i` )
+  .then( ( op ) =>
+  {
+    test.case = 'install module';
+    test.identical( op.exitCode, 0 );
+    return null;
+  });
+
+  start( `node ${ sampleName }` )
+  .then( ( op ) =>
+  {
+    test.case = 'succefull running sample';
+    test.identical( op.exitCode, 0 );
+    test.ge( op.output.length, 3 );
+    return null;
+  });
+
+  return ready;
+}
+
 // --
 // declare
 // --
@@ -203,10 +290,20 @@ let Self =
   routineTimeOut : 1500000,
   silencing : 0,
 
+  onSuiteBegin,
+  onSuiteEnd,
+  context :
+  {
+    provider : null,
+    suiteTempPath : null,
+    appJsPath : null
+  },
+
   tests :
   {
     samples,
     eslint,
+    moduleSuitability,
   },
 
 }
@@ -218,3 +315,4 @@ if( typeof module !== 'undefined' && !module.parent )
 _global_.wTester.test( Self.name );
 
 })();
+
