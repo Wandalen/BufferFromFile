@@ -26,7 +26,7 @@ function onSuiteBegin( test )
   let context = this;
   context.provider = fileProvider;
   let path = context.provider.path;
-  context.suiteTempPath = context.provider.path.tempOpen( path.join( __dirname, '../..'  ), 'moduleSuitability' );
+  context.suiteTempPath = context.provider.path.tempOpen( path.join( __dirname, '../..'  ), 'productionSuitability' );
 }
 
 //
@@ -35,7 +35,7 @@ function onSuiteEnd( test )
 {
   let context = this;
   let path = context.provider.path;
-  _.assert( _.strHas( context.suiteTempPath, 'moduleSuitability' ), context.suiteTempPath );
+  _.assert( _.strHas( context.suiteTempPath, 'productionSuitability' ), context.suiteTempPath );
   path.tempClose( context.suiteTempPath );
 }
 
@@ -218,11 +218,12 @@ eslint.rapidity = -2;
 
 //
 
-function moduleSuitability( test )
+function productionSuitability( test )
 {
   let context = this;
-  let a = test.assetFor( 'moduleSuitability' );
+  let a = test.assetFor( 'productionSuitability' );
 
+  let con = new _.Consequence().take( null );
   let ready = new _.Consequence().take( null );
   let start = _.process.starter
   ({
@@ -237,46 +238,77 @@ function moduleSuitability( test )
 
   let sampleName = '';
 
-  ready.then( () =>
+  con.then( () =>
   {
-    a.fileProvider.dirMake( a.abs( '.' ) );
-
     let sampleDir = a.abs( __dirname, '../sample' );
     let samplePath = a.find
     ({
       filePath : sampleDir,
       filter : { filePath : { 'Sample.(s|js|ss)' : 1 } }
     });
-    samplePath = a.abs( sampleDir, samplePath[ 0 ] ) ;
-    sampleName = a.path.fullName( samplePath );
-    a.fileProvider.filesReflect({ reflectMap : { [ samplePath ] : a.abs( sampleName ) } });
 
-    let packagePath = a.abs( __dirname, '../package.json' );
-    let config = a.fileProvider.fileRead({ filePath : packagePath, encoding : 'json' });
-    let data = { dependencies : { [ config.name ] : 'alpha' } };
-    a.fileProvider.fileWrite({ filePath : a.abs( 'package.json' ), data, encoding : 'json' });
+    if( !samplePath.length )
+    throw _.err( `Sample with name "Sample.(s|ss|js)" does not exist in directory ${ sampleDir }` );
 
-    return null;
+    /* */
+
+    let ext = 'js';
+    samplePath = samplePath.filter( ( e ) =>
+    {
+      let current = a.path.ext( e );
+      if( current === 's' || current === 'ss' )
+      {
+        ext = current;
+        return true;
+      }
+      return false;
+    });
+
+    if( samplePath.length )
+    {
+      a.fileProvider.dirMake( a.abs( '.' ) );
+      samplePath = a.abs( sampleDir, samplePath[ 0 ] ) ;
+      sampleName = a.path.fullName( samplePath );
+      a.fileProvider.filesReflect({ reflectMap : { [ samplePath ] : a.abs( sampleName ) } });
+
+      let packagePath = a.abs( __dirname, '../package.json' );
+      let config = a.fileProvider.fileRead({ filePath : packagePath, encoding : 'json' });
+      let data = { dependencies : { [ config.name ] : 'alpha' } };
+      a.fileProvider.fileWrite({ filePath : a.abs( 'package.json' ), data, encoding : 'json' });
+    }
+
+    return ext;
   });
 
-  start( `npm i` )
-  .then( ( op ) =>
+  con.then( ( ext ) =>
   {
-    test.case = 'install module';
-    test.identical( op.exitCode, 0 );
-    return null;
+    if( ext === 'js' )
+    {
+      test.true( true );
+      return null;
+    }
+    else
+    {
+      start( `npm i --production` )
+      .then( ( op ) =>
+      {
+        test.case = 'install module';
+        test.identical( op.exitCode, 0 );
+        return null;
+      });
+      start( `node ${ sampleName }` )
+      .then( ( op ) =>
+      {
+        test.case = 'succefull running sample';
+        test.identical( op.exitCode, 0 );
+        test.ge( op.output.length, 3 );
+        return null;
+      });
+    }
+    return ready;
   });
 
-  start( `node ${ sampleName }` )
-  .then( ( op ) =>
-  {
-    test.case = 'succefull running sample';
-    test.identical( op.exitCode, 0 );
-    test.ge( op.output.length, 3 );
-    return null;
-  });
-
-  return ready;
+  return con;
 }
 
 // --
@@ -303,7 +335,7 @@ let Self =
   {
     samples,
     eslint,
-    moduleSuitability,
+    productionSuitability,
   },
 
 }
