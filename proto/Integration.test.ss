@@ -273,7 +273,8 @@ function productionSuitability( test )
 
       let packagePath = a.abs( __dirname, '../package.json' );
       let config = a.fileProvider.fileRead({ filePath : packagePath, encoding : 'json' });
-      let data = { dependencies : { [ config.name ] : 'alpha' } };
+      let version = _.npm.versionRemoteRetrive( `npm:///${ config.name }!alpha` ) === '' ? 'latest' : 'alpha';
+      let data = { dependencies : { [ config.name ] : version } };
       a.fileProvider.fileWrite({ filePath : a.abs( 'package.json' ), data, encoding : 'json' });
     }
 
