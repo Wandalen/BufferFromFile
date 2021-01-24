@@ -16,7 +16,7 @@ The module can convert a file to standard ArrayBuffer or any kind of TypedBuffer
 git clone https://github.com/Wandalen/BufferFromFile
 cd BufferFromFile
 npm install
-node sample/Sample.s
+node sample/trivial/Sample.s
 ```
 
 ### To add to your project
