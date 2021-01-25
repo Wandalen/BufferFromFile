@@ -20,4 +20,4 @@ BufferFromFile.flush( buffer );
 
 BufferFromFile.unmap( buffer );
 
-console.log( '\nTry : cat sample/TestFile.txt' );
+console.log( '\nTry : cat sample/trivial/TestFile.txt' );

@@ -4,7 +4,7 @@ var BufferFromFile = require( 'bufferfromfile' );
 
 // mmap file to buffer
 
-var filePath = __dirname + '/TestFile.txt';
+var filePath = __dirname + '/trivial/TestFile.txt';
 var buffer = BufferFromFile( filePath ).Uint8Array();
 
 // edit single byte
@@ -20,4 +20,4 @@ console.log( 'buffer.toString :', buffer.toString() );
 
 BufferFromFile.unmap( buffer );
 
-console.log( '\nTry : cat sample/TestFile.txt' );
+console.log( '\nTry : cat sample/trivial/TestFile.txt' );

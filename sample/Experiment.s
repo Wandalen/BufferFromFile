@@ -7,7 +7,7 @@ console.log( BufferFromFile );
 
 /* */
 
-var filePath = __dirname + '/TestFile.txt';
+var filePath = __dirname + '/trivial/TestFile.txt';
 var buffer = BufferFromFile( filePath ).Uint8Array();
 
 // var buffer = BufferFromFile.uint8Array

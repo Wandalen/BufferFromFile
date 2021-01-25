@@ -4,7 +4,7 @@ var BufferFromFile = require( 'bufferfromfile' );
 
 // mmap file
 
-var filePath = __dirname + '/TestFile.txt';
+var filePath = __dirname + '/trivial/TestFile.txt';
 var descriptor = BufferFromFile( filePath );
 var buffer = descriptor.Uint8Array();
 

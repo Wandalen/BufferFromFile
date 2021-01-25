@@ -66,6 +66,7 @@ path :
   js : 'js'
   cpp : 'cpp'
   build : 'build'
+  binding : 'binding'
   step : 'step'
   node-pre-gyp : node_modules/node-pre-gyp/bin/node-pre-gyp
 
@@ -206,6 +207,12 @@ step :
       tests : no.tests
       content : npm
 
+  clean.build.and.binding :
+    inherit : files.delete
+    filePath :
+      - '{path::build}'
+      - '{path::binding}'
+
   tst.proto :
     shell : 'tst {path::proto}'
     criterion :
@@ -230,8 +237,8 @@ step :
   node-gyp.install :
     currentPath : path::in
     shell : 'npm run-script node-pre-gyp-install'
-    
-  postinstall : 
+
+  postinstall :
     currentPath : path::step
     shell : 'node Install.ss'
 
@@ -241,6 +248,7 @@ build :
     criterion :
       default : 1
     steps :
+      - clean.build.and.binding
       - submodules.update
       - node-gyp.build
 

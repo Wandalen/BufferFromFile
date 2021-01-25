@@ -4,7 +4,7 @@ var BufferFromFile = require( 'bufferfromfile' );
 
 // mmap file
 
-var filePath = __dirname + '/TestFile.txt';
+var filePath = __dirname + '/trivial/TestFile.txt';
 var buffer = BufferFromFile( filePath ).Uint8Array();
 
 // write data
@@ -23,4 +23,4 @@ buffer[ 0 ] = 48 + Math.round( Math.random()*9 );
 
 BufferFromFile.unmap( buffer );
 
-console.log( '\nTry : cat sample/TestFile.txt' );
+console.log( '\nTry : cat sample/trivial/TestFile.txt' );

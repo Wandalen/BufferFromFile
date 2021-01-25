@@ -4,7 +4,7 @@ var BufferFromFile = require( 'bufferfromfile' );
 
 // mmap file
 
-var filePath = __dirname + '/TestFile.txt';
+var filePath = __dirname + '/trivial/TestFile.txt';
 var buffer = BufferFromFile( { filePath, protection : BufferFromFile.Protection.read } ).Uint8Array();
 
 // attempt to write data would give error
