@@ -2,7 +2,7 @@ var BufferFromFile = require( 'bufferfromfile' );
 
 // mmap file
 
-var filePath = __dirname + '/../TestFile.txt';
+var filePath = __dirname + '/TestFile.txt';
 var buffer = BufferFromFile( filePath ).NodeBuffer();
 
 console.log( 'buffer.length :', buffer.length );
@@ -20,4 +20,4 @@ BufferFromFile.flush( buffer );
 
 BufferFromFile.unmap( buffer );
 
-console.log( '\nTry : cat sample/TestFile.txt' );
+console.log( '\nTry : cat sample/trivial/TestFile.txt' );
