@@ -43,7 +43,7 @@ function onSuiteEnd( test )
 // test
 // --
 
-function production( test )
+async function production( test )
 {
   let context = this;
   let a = test.assetFor( 'production' );
@@ -66,7 +66,7 @@ function production( test )
   a.fileProvider.filesReflect({ reflectMap : { [ sampleDir ] : a.abs( 'sample/trivial' ) } });
   let mdlPath = a.abs( __dirname, '../package.json' );
   let mdl = a.fileProvider.fileRead({ filePath : mdlPath, encoding : 'json' });
-  let version = _.npm.versionRemoteRetrive( `npm:///${ mdl.name }!alpha` ) === '' ? 'latest' : 'alpha';
+  let version = await _.npm.versionRemoteRetrive({ remotePath : `npm:///${ mdl.name }!alpha`, sync : 0 }) === '' ? 'latest' : 'alpha';
   let data = { dependencies : { [ mdl.name ] : version } };
   a.fileProvider.fileWrite({ filePath : a.abs( 'package.json' ), data, encoding : 'json' });
 
