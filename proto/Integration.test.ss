@@ -274,6 +274,10 @@ function eslint( test )
       '--ignore-pattern', '*.tgs',
       '--ignore-pattern', '*.bat',
       '--ignore-pattern', '*.sh',
+      '--ignore-pattern', '*.jslike',
+      '--ignore-pattern', '*.less',
+      '--ignore-pattern', '*.hbs',
+      '--ignore-pattern', '*.noeslint',
       '--quiet'
     ],
     throwingExitCode : 0,
