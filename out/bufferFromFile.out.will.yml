@@ -1405,9 +1405,7 @@ module:
       ../.im.will.yml:
         hash: 0d7517972e6d85a720927548c1d5d579
         size: 6392
-      bufferFromFile.out.will.yml:
-        hash: 9678121d891a3d6eeeaf8096de9e30fd
-        size: 76702
+      bufferFromFile.out.will.yml: *ref_0
   ../.module/NjsCppBasic/:
     about:
       name: wNjsCppBasic
