@@ -94,6 +94,7 @@ rules :
     - 2
     - outerIIFEBody : 0
       MemberExpression : 0
+      SwitchCase : 1
       ignoredNodes : [ "IfStatement > IfStatement.consequent", "IfStatement > IfStatement.alternate", "IfStatement.body", "WhileStatement.body", "ForStatement.body", "ForInStatement.body", "ForOfStatement.body" ]
   indent-legacy : off
   init-declarations : off

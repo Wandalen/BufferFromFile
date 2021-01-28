@@ -49,6 +49,9 @@ function production( test )
   let a = test.assetFor( 'production' );
   let runList = [];
 
+  if( _.process.insideTestContainer() )
+  _.time.sleep( 60000 );
+
   if( process.env.GITHUB_EVENT_NAME === 'pull_request' )
   {
     test.true( true );
@@ -76,29 +79,26 @@ function production( test )
   let mdlPath = a.abs( __dirname, '../package.json' );
   let mdl = a.fileProvider.fileRead({ filePath : mdlPath, encoding : 'json' });
 
-  let version;
   let remotePath = null;
-  let localPath = null;
+  if( _.git.insideRepository( a.abs( __dirname, '..' ) ) )
+  remotePath = _.git.remotePathFromLocal( a.abs( __dirname, '..' ) );
 
-  if( _.git.insideRepository( _.path.join( __dirname, '..' ) ) )
-  {
-    remotePath = _.git.remotePathFromLocal( _.path.join( __dirname, '..' ) );
-    localPath = _.git.localPathFromInside( _.path.join( __dirname, '..' ) );
-  }
-
-  debugger;
-  let remotePathParsed1, remotePathParsed2;
+  let mdlRepoParsed, remotePathParsed;
   if( remotePath )
   {
-    remotePathParsed1 = _.git.pathParse( remotePath );
-    remotePathParsed2 = _.uri.parseFull( remotePath );
+    mdlRepoParsed = _.git.path.parse( mdl.repository.url );
+    remotePathParsed = _.git.path.parse( remotePath );
+
     /* qqq : should be no 2 parse */
   }
 
-  // if( mdl.repository.url === remotePath.full || remotePath === null )
-  // version = _.npm.versionRemoteRetrive( `npm:///${ mdl.name }!alpha` ) === '' ? 'latest' : 'alpha';
-  // else
-  version = remotePathParsed1.remoteVcsLongerPath;
+  let isFork = mdlRepoParsed.user !== remotePathParsed.user || mdlRepoParsed.repo !== remotePathParsed.repo;
+
+  let version;
+  if( !isFork )
+  version = _.npm.versionRemoteRetrive( `npm:///${ mdl.name }!alpha` ) === '' ? 'latest' : 'alpha';
+  else
+  version = _.git.path.nativize( remotePath );
 
   if( !version )
   throw _.err( 'Cannot obtain version to install' );
@@ -110,7 +110,8 @@ function production( test )
 
   /* */
 
-  a.shell( `npm i --production` )
+  a.ready.Try( () => a.shell( `npm i --production` ) )
+  .catch( handleDownloadingError )
   .then( ( op ) =>
   {
     test.case = 'install module';
@@ -144,7 +145,20 @@ function production( test )
 
   }
 
+  /* */
+
+  function handleDownloadingError( err )
+  {
+    if( _.strHas( err.message, 'npm ERR! ERROR: Repository not found' ) )
+    {
+      _.errAttend( err );
+      return a.shell( `npm i --production` );
+    }
+    throw _.err( err );
+  }
 }
+
+production.timeOut = 300000;
 
 //
 
