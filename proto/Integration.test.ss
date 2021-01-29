@@ -301,7 +301,7 @@ function eslint( test )
     outputCollecting : 1,
   })
 
-  /**/
+  /* */
 
   ready.then( () =>
   {
@@ -316,7 +316,7 @@ function eslint( test )
     return null;
   })
 
-  /**/
+  /* */
 
   if( fileProvider.fileExists( sampleDir ) )
   ready.then( () =>
