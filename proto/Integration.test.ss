@@ -55,6 +55,7 @@ function production( test )
     return;
   }
 
+  /* delay to let npm get updated */
   if( process.env.GITHUB_WORKFLOW === 'publish' )
   a.ready.delay( 60000 );
 
