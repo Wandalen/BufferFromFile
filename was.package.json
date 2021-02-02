@@ -1,6 +1,6 @@
 {
   "name" : "bufferfromfile",
-  "version" : "0.4.256",
+  "version" : "0.4.257",
   "engine" : "node >= 6.0.0",
   "enabled" : true,
   "license" : "MIT",
