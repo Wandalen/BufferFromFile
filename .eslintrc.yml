@@ -175,6 +175,7 @@ rules :
       allow :
         - '!!'
         - '+'
+  no-cond-assign : error
   no-implicit-globals : error
   no-implied-eval : error
   no-import-assign : error
@@ -201,7 +202,7 @@ rules :
   no-multi-str : error
   no-multiple-empty-lines : error
   no-native-reassign : error
-  no-negated-condition : off
+  no-negated-condition : error
   no-negated-in-lhs : error
   no-nested-ternary : error
   no-new : error
