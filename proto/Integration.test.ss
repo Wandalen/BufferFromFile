@@ -90,8 +90,6 @@ function production( test )
   {
     mdlRepoParsed = _.git.path.parse( mdl.repository.url );
     remotePathParsed = _.git.path.parse( remotePath );
-
-    /* aaa : should be no 2 parse */ /* Dmytro : 1 parse for each path */
   }
 
   let isFork = mdlRepoParsed.user !== remotePathParsed.user || mdlRepoParsed.repo !== remotePathParsed.repo;
@@ -100,7 +98,7 @@ function production( test )
   if( isFork )
   version = _.git.path.nativize( remotePath );
   else
-  version = _.npm.versionRemoteRetrive( `npm:///${ mdl.name }!alpha` ) === '' ? 'latest' : 'alpha';
+  version = _.npm.versionRemoteRetrive( `npm:///${ mdl.name }!alpha` ) === '' ? 'latest' : 'alpha'; /* qqq for Dmytro : ? */
 
   if( !version )
   throw _.err( 'Cannot obtain version to install' );
@@ -130,7 +128,7 @@ function production( test )
 
   /* */
 
-  function publishIs()
+  function publishIs() /* qqq for Dmytro : lets discuss */
   {
     if( process.env.GITHUB_WORKFLOW === 'publish' )
     return true;
@@ -205,7 +203,6 @@ function samples( test )
 
   let found = fileProvider.filesFind
   ({
-    // filePath : path.join( sampleDir, '**/*.(s|js|ss)' ),
     filePath : path.join( sampleDir, '**/*.(s|ss)' ),
     withStem : 0,
     withDirs : 0,
@@ -284,11 +281,16 @@ function eslint( test )
   let sampleDir = path.join( rootPath, 'sample' );
   let ready = _.take( null );
 
-  // if( _.process.insideTestContainer() && process.platform !== 'linux' )
-  // return test.true( true );
-
-  if( process.platform !== 'linux' )
-  return test.true( true );
+  if( _.process.insideTestContainer() )
+  {
+    let validPlatform = process.platform === 'linux';
+    let validVersion = process.versions.node.split( '.' )[ 0 ] === '14';
+    if( !validPlatform || !validVersion )
+    {
+      test.true( true );
+      return;
+    }
+  }
 
   let start = _.process.starter
   ({
