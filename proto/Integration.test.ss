@@ -48,9 +48,12 @@ function production( test )
   let context = this;
   let a = test.assetFor( 'production' );
   let runList = [];
-  let trigger = _.test.workflowTriggerGet();
 
-  if( trigger === 'pull_request' )
+  let mdlPath = a.abs( __dirname, '../package.json' );
+  let mdl = a.fileProvider.fileRead({ filePath : mdlPath, encoding : 'json' });
+  let trigger = _.test.workflowTriggerGet( a.abs( __dirname, '..' ) );
+
+  if( mdl.private || trigger === 'pull_request' )
   {
     test.true( true );
     return;
@@ -78,8 +81,7 @@ function production( test )
   /* */
 
   a.fileProvider.filesReflect({ reflectMap : { [ sampleDir ] : a.abs( 'sample/trivial' ) } });
-  let mdlPath = a.abs( __dirname, '../package.json' );
-  let mdl = a.fileProvider.fileRead({ filePath : mdlPath, encoding : 'json' });
+
 
   let remotePath = null;
   if( _.git.insideRepository( a.abs( __dirname, '..' ) ) )
@@ -166,13 +168,31 @@ function production( test )
     if( !a.fileProvider.fileExists( a.abs( filePath ) ) )
     return null;
     runList.push( filePath );
-    a.shell( `node ${ filePath }` )
+    a.shell
+    ({
+      execPath : `node ${ filePath }`,
+      throwingExitCode : 0
+    })
     .then( ( op ) =>
     {
       test.case = `running of sample ${filePath}`;
       test.identical( op.exitCode, 0 );
       test.ge( op.output.length, 3 );
+
+      if( op.exitCode === 0 || !isFork )
       return null;
+
+      test.case = 'fork is up to date with origin'
+      return _.git.isUpToDate
+      ({
+        localPath : a.abs( __dirname, '..' ),
+        remotePath : _.git.path.normalize( mdl.repository.url )
+      })
+      .then( ( isUpToDate ) =>
+      {
+        test.identical( isUpToDate, true );
+        return null;
+      })
     });
 
   }
@@ -375,6 +395,54 @@ function eslint( test )
 
 eslint.rapidity = -2;
 
+//
+
+function build( test )
+{
+  let context = this;
+  let a = test.assetFor( false );
+
+  let mdlPath = a.abs( __dirname, '../package.json' );
+  let mdl = a.fileProvider.fileRead({ filePath : mdlPath, encoding : 'json' });
+
+  if( !mdl.scripts.build )
+  {
+    test.true( true );
+    return;
+  }
+
+  let remotePath = _.git.remotePathFromLocal( a.abs( __dirname, '..' ) );
+
+  let ready = _.git.repositoryClone
+  ({
+    remotePath,
+    localPath : a.routinePath,
+    verbosity : 2,
+    sync : 0
+  })
+
+  _.process.start
+  ({
+    execPath : 'npm run build',
+    currentPath : a.routinePath,
+    throwingExitCode : 0,
+    mode : 'shell',
+    outputPiping : 1,
+    ready,
+  })
+
+  ready.then( ( got ) =>
+  {
+    test.identical( got.exitCode, 0 );
+    return null;
+  })
+
+  return ready;
+}
+
+build.rapidity = -1;
+build.timeOut = 900000;
+
 // --
 // declare
 // --
@@ -400,6 +468,7 @@ let Self =
     production,
     samples,
     eslint,
+    build
   },
 
 }

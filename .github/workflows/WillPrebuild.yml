@@ -28,6 +28,7 @@ jobs :
     - if : "startsWith( matrix.os, 'windows' ) && startsWith( matrix.node-version, '11' )"
       run : npm install -g npm@latest
     - run : npm i
+    - run : npm list
     - run : npm -g i willbe@alpha
     - run : will .build
     - run : npm run node-pre-gyp-package && npm run node-pre-gyp-github-release
