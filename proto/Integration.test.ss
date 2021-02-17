@@ -26,7 +26,7 @@ function onSuiteBegin( test )
   let context = this;
   context.provider = fileProvider;
   let path = context.provider.path;
-  context.suiteTempPath = context.provider.path.tempOpen( path.join( __dirname, '../..'  ), 'integration' );
+  context.suiteTempPath = context.provider.path.tempOpen( path.join( __dirname, '../..' ), 'integration' );
 }
 
 //

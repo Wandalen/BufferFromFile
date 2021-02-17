@@ -192,7 +192,7 @@ rules :
   no-mixed-requires : error
   no-multi-assign : off
   no-multi-spaces :
-    - warn
+    - error
     -
       ignoreEOLComments : true
       exceptions :
