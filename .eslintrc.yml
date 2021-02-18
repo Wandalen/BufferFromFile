@@ -99,14 +99,15 @@ rules :
       ignoredNodes :
         - "IfStatement > IfStatement.consequent"
         - "IfStatement > IfStatement.alternate"
-        - "IfStatement.body"
         - "IfStatement > ForStatement"
         - "IfStatement > ForInStatement"
         - "IfStatement > ForOfStatement"
+        - "IfStatement.body"
         - "WhileStatement.body"
         - "ForStatement.body"
         - "ForInStatement.body"
         - "ForOfStatement.body"
+        - "CallExpression > ObjectExpression"
   indent-legacy : off
   init-declarations : off
   key-spacing :
