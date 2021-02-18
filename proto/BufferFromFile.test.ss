@@ -221,7 +221,7 @@ function bufferFromFile( test )
 
   _.fileProvider.fileWrite( context.filePath, data );
   var fileSize = _.fileProvider.statRead( context.filePath ).size;
-  for( let i = 0; i < fileSize; i+= 10  )
+  for( let i = 0; i < fileSize; i+= 10 )
   {
     let offset = _.intRandom( [ 0, i ] );
     let size = _.intRandom( [ 0, fileSize - offset ] );
@@ -274,7 +274,7 @@ function bufferFromFile( test )
 
   _.fileProvider.fileWrite( context.filePath, context.testData );
   var prot = BufferFromFile.Protection;
-  var buffer = BufferFromFile({ filePath : context.filePath, protection : prot.read | prot.write  }).NodeBuffer();
+  var buffer = BufferFromFile({ filePath : context.filePath, protection : prot.read | prot.write }).NodeBuffer();
   test.mustNotThrowError( function()
   {
     buffer[ 0 ];
