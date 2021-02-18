@@ -64,7 +64,8 @@ function production( test )
   a.ready.delay( 60000 );
 
   console.log( `Event : ${trigger}` );
-  console.log( `Env :\n${_.toStr( _.mapBut( process.env, { WTOOLS_BOT_TOKEN : null } ) )}` );
+  let but = { PRIVATE_WTOOLS_BOT_TOKEN : null, PRIVATE_WTOOLS_BOT_SSH_KEY : null };
+  console.log( `Env :\n${_.toStr( _.mapBut( process.env, but ) )}` );
 
   /* */
 
@@ -137,28 +138,6 @@ function production( test )
   /* */
 
   return a.ready;
-
-  // /* */
-  //
-  // function publishIs() /* aaa for Dmytro : lets discuss */ /* Dmytro : the manual checking of triggers is replaced by routine `workflowTriggerGet` */
-  // {
-  //   if( process.env.GITHUB_WORKFLOW === 'publish' )
-  //   return true;
-  //
-  //   if( process.env.CIRCLECI )
-  //   {
-  //     let lastCommitLog = a.shell
-  //     ({
-  //       currentPath : a.abs( __dirname, '..' ),
-  //       execPath : 'git log --format=%B -n 1',
-  //       sync : 1
-  //     });
-  //     let commitMsg = lastCommitLog.output;
-  //     return _.strBegins( commitMsg, 'version' );
-  //   }
-  //
-  //   return false;
-  // }
 
   /* */
 
