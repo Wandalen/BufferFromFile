@@ -99,24 +99,7 @@ function production( test )
 
   let version;
   if( isFork )
-  {
-    if( process.platform === 'win32' )
-    {
-      version = _.git.path.nativize( remotePath );
-    }
-    else
-    {
-      _.git.repositoryClone
-      ({
-        remotePath,
-        localPath : a.abs( 'clone' ),
-        verbosity : 2,
-        sync : 1
-      })
-      version = `file:./clone`;
-    }
-    /* Vova: git dependency fails to install on linux using npm@7 due to a bug, clone + local git dependency fixes the problem, behaviour is same as before */
-  }
+  version = _.git.path.nativize( remotePath );
   else
   version = _.npm.versionRemoteRetrive( `npm:///${ mdl.name }!alpha` ) === '' ? 'latest' : 'alpha'; /* aaa for Dmytro : ? */
   /*

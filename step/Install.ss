@@ -8,17 +8,10 @@
   
   let o = 
   { 
-    stdio: 'inherit',
+    stdio: 'inherit', 
     cwd : path.join( __dirname, '..' ),
-    shell : true
   }
-
-  let isWin32 = process.platform === 'win32';
-  let nodePreGyp = path.resolve( __dirname, '../node_modules/@mapbox/node-pre-gyp/bin/node-pre-gyp' );
-  if( isWin32 )
-  nodePreGyp = `${nodePreGyp}.cmd`;
-
-  nodePreGyp = strQuote( nodePreGyp );
+  let npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
   
   install();
   
@@ -26,7 +19,7 @@
 
   function install()
   {
-    let pnd = ChildProcess.spawn( nodePreGyp, [ 'install', '--update-binary', '--fallback-to-build' ], o );
+    let pnd = ChildProcess.spawn( npm, [ 'run', 'node-pre-gyp-install' ], o );
     
     pnd.on( 'exit', ( exitCode ) =>
     {
@@ -60,7 +53,7 @@
   
   function build() 
   {
-    let pnd = ChildProcess.spawn( `${nodePreGyp} configure && ${nodePreGyp} rebuild`, [], o )
+    let pnd = ChildProcess.spawn( npm, [ 'run', 'node-pre-gyp-build' ], o )
     
     pnd.on( 'exit', function( exitCode ) 
     {
@@ -70,10 +63,4 @@
       return process.exit( exitCode );
     });
   }
-
-  function strQuote( src )
-  {
-    return `"${src}"`;
-  }
-
 })();
