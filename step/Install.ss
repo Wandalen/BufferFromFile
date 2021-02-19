@@ -14,9 +14,11 @@
   }
 
   let isWin32 = process.platform === 'win32';
-  let nodePreGyp = `"node_modules/@mapbox/node-pre-gyp/bin/node-pre-gyp"`;
+  let nodePreGyp = path.resolve( __dirname, '../node_modules/@mapbox/node-pre-gyp/bin/node-pre-gyp' );
   if( isWin32 )
-  nodePreGyp = `${nodePreGyp}.cmd`
+  nodePreGyp = `${nodePreGyp}.cmd`;
+
+  nodePreGyp = strQuote( nodePreGyp );
   
   install();
   
@@ -68,4 +70,10 @@
       return process.exit( exitCode );
     });
   }
+
+  function strQuote( src )
+  {
+    return `"${src}"`;
+  }
+
 })();
