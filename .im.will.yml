@@ -29,17 +29,17 @@ submodule :
     criterion :
       development : 0
   node-gyp :
-    path : npm:///node-gyp
+    path : npm:///node-gyp#7.1.2
     enabled : 0 # submodule
     criterion :
       development : 0
   node-pre-gyp :
-    path : npm:///@mapbox/node-pre-gyp
+    path : npm:///node-pre-gyp#0.17.0
     enabled : 0 # submodule
     criterion :
       development : 0
   node-pre-gyp-github :
-    path : npm:///node-pre-gyp-github
+    path : npm:///node-pre-gyp-github#1.4.3
     enabled : 0 # submodule
     criterion :
       development : 1
@@ -68,7 +68,7 @@ path :
   build : 'build'
   binding : 'binding'
   step : 'step'
-  node-pre-gyp : node_modules/@mapbox/node-pre-gyp/bin/node-pre-gyp
+  node-pre-gyp : node_modules/node-pre-gyp/bin/node-pre-gyp
 
   out.raw.debug :
     path : '{path::out}/debug'
