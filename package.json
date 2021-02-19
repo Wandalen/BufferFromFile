@@ -51,17 +51,17 @@
     "url": "https://github.com/Wandalen/BufferFromFile/issues"
   },
   "dependencies": {
-    "willbe": "alpha",
+    "node-pre-gyp" : "",
     "node-gyp": "7.1.2",
-    "@mapbox/node-pre-gyp": "1.0.0"
+    "willbe": "alpha"
   },
   "devDependencies": {
     "bufferfromfile": "file:.",
     "eslint": "7.1.0",
     "node-pre-gyp-github": "1.4.3",
+    "wprocess": "alpha",
     "wTesting": "alpha",
-    "wTools": "alpha",
-    "wprocess": "alpha"
+    "wTools": "alpha"
   },
   "gypfile": false,
   "keywords": [
