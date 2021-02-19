@@ -2,22 +2,19 @@ format: outwillfile-2.0
 root:
   - bufferFromFile.out
 consistency:
-  bufferFromFile.out.will.yml: &ref_0
-    hash: da3529de7a8d9fc33f98208e4682997f
-    size: 76734
-  ../.ex.will.yml: &ref_1
+  ../.ex.will.yml: &ref_0
     hash: cc00174176818576ca6e94fd6a99143f
     size: 2092
-  ../.im.will.yml: &ref_2
-    hash: 03cbac8eb2960511eca6f51a284b178c
-    size: 6408
-  ../.module/NjsCppBasic/.ex.will.yml: &ref_3
+  ../.im.will.yml: &ref_1
+    hash: 7f0d4d844b36214760ac0974fad18c2d
+    size: 6411
+  ../.module/NjsCppBasic/.ex.will.yml: &ref_6
     hash: 6b03474d0b15c7fee63fdadc4aa2b6b3
     size: 1969
-  ../.module/NjsCppBasic/.im.will.yml: &ref_4
+  ../.module/NjsCppBasic/.im.will.yml: &ref_7
     hash: 092122e235d80265eb42d4ab975ddbce
     size: 4857
-  ../.module/NjsCppBasic/out/wNjsCppBasic.out.will.yml: &ref_5
+  ../.module/NjsCppBasic/out/wNjsCppBasic.out.will.yml: &ref_8
     hash: d51c915b74fb3c5dee5bcd8ac8b9a7dd
     size: 37931
 module:
@@ -30,11 +27,11 @@ module:
         standard ArrayBuffer making mmap behind the scene.
       enabled: 1
       version: 0.5.0
-      interpreters:
+      interpreters: &ref_2
         - njs >= 10.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords:
+      keywords: &ref_3
         - wTools
         - ArrayBuffer
         - Buffer from file
@@ -46,11 +43,11 @@ module:
         - zero copy
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
+      contributors: &ref_4
         - Kostiantyn Wandalen <wanalen@01.school>
         - Volodymyr M. <volodymyr.migdal@gmail.com>
       npm.name: bufferfromfile
-      npm.scripts:
+      npm.scripts: &ref_5
         install: node-gyp configure && node-gyp rebuild --msvs_version=auto
         test: wtest .run proto rapidity:-3
         clean: rm -rf build node_modules
@@ -119,7 +116,7 @@ module:
       step:
         path: ../step
       node-pre-gyp:
-        path: ../node_modules/@mapbox/node-pre-gyp/bin/node-pre-gyp
+        path: ../node_modules/node-pre-gyp/bin/node-pre-gyp
       out.raw.debug:
         criterion:
           debug: debug
@@ -226,19 +223,19 @@ module:
         criterion:
           development: 0
       node-gyp:
-        path: npm:///node-gyp
+        path: npm:///node-gyp#7.1.2
         autoExporting: 0
         enabled: 0
         criterion:
           development: 0
       node-pre-gyp:
-        path: npm:///@mapbox/node-pre-gyp
+        path: npm:///node-pre-gyp#0.17.0
         autoExporting: 0
         enabled: 0
         criterion:
           development: 0
       node-pre-gyp-github:
-        path: npm:///node-pre-gyp-github
+        path: npm:///node-pre-gyp-github#1.4.3
         autoExporting: 0
         enabled: 0
         criterion:
@@ -650,24 +647,6 @@ module:
           content: prime
         inherit:
           - files.transpile
-      exported.proto.export:
-        opts:
-          filePath: reflector::exported.proto.export
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
-      exported.files.proto.export:
-        opts:
-          filePath: reflector::exported.files.proto.export
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
     build:
       proto.export:
         steps:
@@ -758,9 +737,8 @@ module:
           content: proto
           export: 1
     consistency:
-      bufferFromFile.out.will.yml: *ref_0
-      ../.ex.will.yml: *ref_1
-      ../.im.will.yml: *ref_2
+      ../.ex.will.yml: *ref_0
+      ../.im.will.yml: *ref_1
   ../:
     about:
       name: bufferFromFile
@@ -770,30 +748,13 @@ module:
         standard ArrayBuffer making mmap behind the scene.
       enabled: 1
       version: 0.5.0
-      interpreters:
-        - njs >= 10.0.0
-        - chrome >= 60.0.0
-        - firefox >= 60.0.0
-      keywords:
-        - wTools
-        - ArrayBuffer
-        - Buffer from file
-        - ArrayBuffer from file
-        - TypedBuffer from file
-        - Nodejs buffer from file
-        - mmap
-        - mmap file
-        - zero copy
+      interpreters: *ref_2
+      keywords: *ref_3
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
-        - Kostiantyn Wandalen <wanalen@01.school>
-        - Volodymyr M. <volodymyr.migdal@gmail.com>
+      contributors: *ref_4
       npm.name: bufferfromfile
-      npm.scripts:
-        install: node-gyp configure && node-gyp rebuild --msvs_version=auto
-        test: wtest .run proto rapidity:-3
-        clean: rm -rf build node_modules
+      npm.scripts: *ref_5
     path:
       module.willfiles:
         criterion:
@@ -859,7 +820,7 @@ module:
       step:
         path: step
       node-pre-gyp:
-        path: node_modules/@mapbox/node-pre-gyp/bin/node-pre-gyp
+        path: node_modules/node-pre-gyp/bin/node-pre-gyp
       out.raw.debug:
         criterion:
           debug: debug
@@ -952,19 +913,19 @@ module:
         criterion:
           development: 0
       node-gyp:
-        path: npm:///node-gyp
+        path: npm:///node-gyp#7.1.2
         autoExporting: 0
         enabled: 0
         criterion:
           development: 0
       node-pre-gyp:
-        path: npm:///@mapbox/node-pre-gyp
+        path: npm:///node-pre-gyp#0.17.0
         autoExporting: 0
         enabled: 0
         criterion:
           development: 0
       node-pre-gyp-github:
-        path: npm:///node-pre-gyp-github
+        path: npm:///node-pre-gyp-github#1.4.3
         autoExporting: 0
         enabled: 0
         criterion:
@@ -1403,9 +1364,8 @@ module:
         hash: cc00174176818576ca6e94fd6a99143f
         size: 2092
       ../.im.will.yml:
-        hash: 03cbac8eb2960511eca6f51a284b178c
-        size: 6408
-      bufferFromFile.out.will.yml: *ref_0
+        hash: 7f0d4d844b36214760ac0974fad18c2d
+        size: 6411
   ../.module/NjsCppBasic/:
     about:
       name: wNjsCppBasic
@@ -1608,8 +1568,8 @@ module:
       transpile.proto.no.tests.compiled.debug:
         src:
           filePath:
-            '**.test*': false
-            '**.test/**': false
+            '**.test*': 0
+            '**.test/**': 0
             path::proto: '{path::out.*=1}/Main.s'
         criterion:
           tests: no.tests
@@ -1621,8 +1581,8 @@ module:
       transpile.proto.no.tests.compiled.release:
         src:
           filePath:
-            '**.test*': false
-            '**.test/**': false
+            '**.test*': 0
+            '**.test/**': 0
             path::proto: '{path::out.*=1}/Main.s'
         criterion:
           tests: no.tests
@@ -1634,7 +1594,7 @@ module:
       transpile.proto.only.tests.compiled.debug:
         src:
           filePath:
-            '**.test*': true
+            '**.test*': 1
             path::proto: '{path::out.*=1}/Tests.test.s'
         criterion:
           tests: only.tests
@@ -1646,7 +1606,7 @@ module:
       transpile.proto.only.tests.compiled.release:
         src:
           filePath:
-            '**.test*': true
+            '**.test*': 1
             path::proto: '{path::out.*=1}/Tests.test.s'
         criterion:
           tests: only.tests
@@ -2096,9 +2056,9 @@ module:
           - build::release
           - build::npm
     consistency:
-      ../.module/NjsCppBasic/.ex.will.yml: *ref_3
-      ../.module/NjsCppBasic/.im.will.yml: *ref_4
-      ../.module/NjsCppBasic/out/wNjsCppBasic.out.will.yml: *ref_5
+      ../.module/NjsCppBasic/.ex.will.yml: *ref_6
+      ../.module/NjsCppBasic/.im.will.yml: *ref_7
+      ../.module/NjsCppBasic/out/wNjsCppBasic.out.will.yml: *ref_8
   ../.module/NjsCppBasic/out/wNjsCppBasic.out:
     about:
       name: wNjsCppBasic
@@ -2994,6 +2954,10 @@ module:
           content: proto
           export: 1
     consistency:
-      ../.module/NjsCppBasic/out/wNjsCppBasic.out.will.yml: *ref_5
-      ../.module/NjsCppBasic/.ex.will.yml: *ref_3
-      ../.module/NjsCppBasic/.im.will.yml: *ref_4
+      ../.module/NjsCppBasic/out/wNjsCppBasic.out.will.yml: *ref_8
+      ../.module/NjsCppBasic/.ex.will.yml:
+        hash: 6b03474d0b15c7fee63fdadc4aa2b6b3
+        size: 1969
+      ../.module/NjsCppBasic/.im.will.yml:
+        hash: 092122e235d80265eb42d4ab975ddbce
+        size: 4857

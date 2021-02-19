@@ -1,6 +1,6 @@
 {
   "name": "bufferfromfile",
-  "version": "0.4.267",
+  "version": "0.4.268",
   "engine": "node >= 6.0.0",
   "enabled": true,
   "license": "MIT",
@@ -53,7 +53,7 @@
   "dependencies": {
     "willbe": "alpha",
     "node-gyp": "7.1.2",
-    "@mapbox/node-pre-gyp": "1.0.0"
+    "node-pre-gyp": "0.17.0"
   },
   "devDependencies": {
     "bufferfromfile": "file:.",
