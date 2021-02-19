@@ -8,8 +8,8 @@
       "include_dirs":
       [
         "cpp",
-        ".module/NjsCppBasic/cpp",
-        ".module/NjsCppBasic/cpp/wTools/meta",
+        "<!(node -e \"require('wbasenodejscpp')\")",
+        "<!(node -e \"require('wbasenodejscpp')\")/wTools/meta",
       ],
       "cflags!": [ '-fno-exceptions' ],
       "cflags_cc!": [ '-fno-exceptions' ],

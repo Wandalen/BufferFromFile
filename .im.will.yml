@@ -1,8 +1,6 @@
 
 submodule :
 
-  NjsCppBasic : git+https:///github.com/Wandalen/wNjsCppBasic.git!master
-
   bufferfromfile :
     path : hd://.
     enabled : 0 # submodule
@@ -38,6 +36,11 @@ submodule :
     enabled : 0 # submodule
     criterion :
       development : 0
+  wbasenodejscpp :
+    path : npm:///wbasenodejscpp
+    enabled : 0 # submodule
+    criterion :
+      development : 0
   node-pre-gyp-github :
     path : npm:///node-pre-gyp-github#1.4.3
     enabled : 0 # submodule
@@ -67,8 +70,6 @@ path :
   cpp : 'cpp'
   build : 'build'
   binding : 'binding'
-  step : 'step'
-  node-pre-gyp : node_modules/node-pre-gyp/bin/node-pre-gyp
 
   out.raw.debug :
     path : '{path::out}/debug'
@@ -131,15 +132,6 @@ reflector :
       content : prime
     filePath :
       path::proto : '{path::out.*=1}/source'
-
-  reflect.cpp :
-    inherit : predefined.*
-    filePath :
-      path::cpp : '{path::out}/cpp'
-
-  reflect.common :
-    inherit : submodule::NjsCppBasic/exported::cpp.export/reflector::exported.files.cpp.export
-    dst : '{path::out}/cpp'
 
   transpile.proto.raw :
     inherit : predefined.*
@@ -232,15 +224,11 @@ step :
 
   node-gyp.build :
     currentPath : path::in
-    shell : "node {path::node-pre-gyp} configure && node {path::node-pre-gyp} rebuild"
+    shell : "npm run-script node-pre-gyp-build"
 
   node-gyp.install :
     currentPath : path::in
     shell : 'npm run-script node-pre-gyp-install'
-
-  postinstall :
-    currentPath : path::step
-    shell : 'node Install.ss'
 
 build :
 
@@ -249,13 +237,12 @@ build :
       default : 1
     steps :
       - clean.build.and.binding
-      - submodules.update
       - node-gyp.build
 
   install :
     steps :
       - submodules.update
-      - postinstall
+      - node-gyp.install
 
   compiled.debug :
     criterion :

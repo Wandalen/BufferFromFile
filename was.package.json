@@ -25,7 +25,7 @@
   "main" : "js/Main.ss",
   "scripts" :
   {
-    "install" : "will .build install",
+    "install" : "npm run node-pre-gyp-install",
     "node-pre-gyp-install" : "node-pre-gyp install --update-binary --fallback-to-build",
     "node-pre-gyp-build" : "node-pre-gyp configure && node-pre-gyp rebuild",
     "node-pre-gyp-package" : "node-pre-gyp package",
@@ -50,7 +50,7 @@
   {
     "url" : "https://github.com/Wandalen/BufferFromFile/issues"
   },
-  "dependencies" : { "willbe" : "alpha", "node-gyp" : "7.1.2", "node-pre-gyp" : "0.17.0" },
+  "dependencies" : { "node-gyp" : "7.1.2", "node-pre-gyp" : "0.17.0", "wbasenodejscpp" : "alpha" },
   "devDependencies" :
   {
     "wTools" : "alpha",
