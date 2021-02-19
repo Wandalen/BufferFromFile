@@ -26,6 +26,9 @@ jobs :
       matrix :
         os : [ ubuntu-latest, windows-latest, macos-latest ]
         node-version : [ 14.x ]
+    env :
+      PRIVATE_WTOOLS_BOT_TOKEN : ${{ secrets.PRIVATE_WTOOLS_BOT_TOKEN }}
+      PRIVATE_WTOOLS_BOT_SSH_KEY : ${{ secrets.PRIVATE_WTOOLS_BOT_SSH_KEY }}
     steps :
     - name : git config
       run : |

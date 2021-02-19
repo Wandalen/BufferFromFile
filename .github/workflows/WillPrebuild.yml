@@ -15,6 +15,10 @@ jobs :
       matrix :
         os : [ ubuntu-latest, windows-latest, macos-latest ]
         node-version : [ 10.x, 11.x, 12.x, 13.x, 14.x, 15.x ]
+    env :
+      PRIVATE_WTOOLS_BOT_TOKEN : ${{ secrets.PRIVATE_WTOOLS_BOT_TOKEN }}
+      PRIVATE_WTOOLS_BOT_SSH_KEY : ${{ secrets.PRIVATE_WTOOLS_BOT_SSH_KEY }}
+      NODE_PRE_GYP_GITHUB_TOKEN : ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
     steps :
     - name : git config
       run : |
@@ -41,5 +45,3 @@ jobs :
     - run : npm -g i willbe@alpha
     - run : will .build
     - run : npm run node-pre-gyp-package && npm run node-pre-gyp-github-release
-      env :
-        NODE_PRE_GYP_GITHUB_TOKEN : ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}

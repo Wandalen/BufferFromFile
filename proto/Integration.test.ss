@@ -100,17 +100,7 @@ function production( test )
   if( isFork )
   version = _.git.path.nativize( remotePath );
   else
-  version = _.npm.versionRemoteRetrive( `npm:///${ mdl.name }!alpha` ) === '' ? 'latest' : 'alpha'; /* aaa for Dmytro : ? */
-  /*
-    Dmytro : it is correct code, the first branch nativizes Git repository path ( forks should use Git path )
-    The second branch checks if the npmjs has some defined version of package ( origin should use version on npmjs )
-
-    The routine versionRemoteRetrive returns version of module if it exists, otherwise, the routine returns empty string
-    _.npm.versionRemoteRetrive({ remotePath : 'npm:///wTools!alpha' })
-    // returns : '0.8.858'
-    _.npm.versionRemoteRetrive({ remotePath : 'npm:///wTools!delta' })
-    // returns : ''
-  */
+  version = _.npm.versionRemoteRetrive( `npm:///${ mdl.name }!alpha` ) === '' ? 'latest' : 'alpha';
 
   if( !version )
   throw _.err( 'Cannot obtain version to install' );
@@ -142,10 +132,13 @@ function production( test )
 
   function environmentsGet()
   {
-    /* Dmytro : the map process.env is not an auxiliary element ( new implemented check ) */
-    return _.filter_( _.mapExtend( null, process.env ), ( element, key ) =>
+    /* object process.env is not an auxiliary element ( new implemented check ) */
+    return _.filter_( _.mapExtend( null, process.env ), ( element, key ) => /* xxx */
     {
-      if( !_.strBegins( key, 'PRIVATE_' ) )
+      if( _.strBegins( key, 'PRIVATE_' ) )
+      return;
+      if( key === 'NODE_PRE_GYP_GITHUB_TOKEN' )
+      return;
       return key;
     });
   }
