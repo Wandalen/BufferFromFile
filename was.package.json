@@ -50,7 +50,7 @@
   {
     "url" : "https://github.com/Wandalen/BufferFromFile/issues"
   },
-  "dependencies" : { "willbe" : "alpha", "node-gyp" : "", "@mapbox/node-pre-gyp" : "" },
+  "dependencies" : { "willbe" : "alpha", "node-gyp" : "", "node-pre-gyp" : "" },
   "devDependencies" :
   {
     "wTools" : "alpha",
