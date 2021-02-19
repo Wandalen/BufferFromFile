@@ -64,8 +64,7 @@ function production( test )
   a.ready.delay( 60000 );
 
   console.log( `Event : ${trigger}` );
-  let but = { PRIVATE_WTOOLS_BOT_TOKEN : null, PRIVATE_WTOOLS_BOT_SSH_KEY : null };
-  console.log( `Env :\n${_.toStr( _.mapBut( process.env, but ) )}` );
+  console.log( `Env :\n${_.toStr( environmentsGet() )}` );
 
   /* */
 
@@ -138,6 +137,18 @@ function production( test )
   /* */
 
   return a.ready;
+
+  /* */
+
+  function environmentsGet()
+  {
+    /* Dmytro : the map process.env is not an auxiliary element ( new implemented check ) */
+    return _.filter_( _.mapExtend( null, process.env ), ( element, key ) =>
+    {
+      if( !_.strBegins( key, 'PRIVATE_' ) )
+      return key;
+    });
+  }
 
   /* */
 
