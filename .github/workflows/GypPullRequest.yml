@@ -26,6 +26,9 @@ jobs :
       matrix :
         os : [ ubuntu-latest, windows-latest, macos-latest ]
         node-version : [ 14.x ]
+    env :
+      PRIVATE_WTOOLS_BOT_TOKEN : ${{ secrets.PRIVATE_WTOOLS_BOT_TOKEN }}
+      PRIVATE_WTOOLS_BOT_SSH_KEY : ${{ secrets.PRIVATE_WTOOLS_BOT_SSH_KEY }}
     steps :
     - name : git config
       run : |
@@ -44,8 +47,7 @@ jobs :
     - name : Update npm if current version is 6
       if : "startsWith( steps.getnpmver.outputs.npmver, '6.' )"
       run : npm install -g npm@latest-6
-    - run : npm i
+    - run : npm i --ignore-scripts
     - run : npm list
-    - run : npm -g i willbe@alpha
-    - run : will .build
+    - run : npm run node-pre-gyp-build
     - run : npm test
