@@ -64,7 +64,7 @@ function production( test )
   a.ready.delay( 60000 );
 
   console.log( `Event : ${trigger}` );
-  console.log( `Env :\n${_.toStr( environmentsGet() )}` );
+  console.log( `Env :\n${_.entity.exportToString( environmentsGet() )}` );
 
   /* */
 
