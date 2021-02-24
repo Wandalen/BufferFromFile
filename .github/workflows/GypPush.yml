@@ -49,6 +49,5 @@ jobs :
       run : npm install -g npm@latest-6
     - run : npm i
     - run : npm list
-    - run : npm -g i willbe@alpha
-    - run : will .build
+    - run : npm run node-pre-gyp-build
     - run : npm test

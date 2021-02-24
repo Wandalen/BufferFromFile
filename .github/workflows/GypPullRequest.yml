@@ -1,20 +1,31 @@
 
-name : publish
+name : pr
 
 on :
-  push :
+  pull_request :
+    branches : [ master ]
+  pull_request_review :
     branches : [ master ]
 
 jobs :
 
-  Full :
-    if : "startsWith( github.event.head_commit.message, 'version' )"
+  Cancel:
+    name : 'Cancel Previous Runs'
+    runs-on : ubuntu-latest
+    timeout-minutes : 1
+    steps :
+      - uses : styfle/cancel-workflow-action@0.4.0
+        with :
+          access_token : ${{ github.token }}
+          # workflow_id : ${{ github.workflow }}
+
+  Fast :
     runs-on : ${{ matrix.os }}
     strategy :
       fail-fast : false
       matrix :
         os : [ ubuntu-latest, windows-latest, macos-latest ]
-        node-version : [ 10.x, 12.x, 13.x, 14.x, 15.x ]
+        node-version : [ 14.x ]
     env :
       PRIVATE_WTOOLS_BOT_TOKEN : ${{ secrets.PRIVATE_WTOOLS_BOT_TOKEN }}
       PRIVATE_WTOOLS_BOT_SSH_KEY : ${{ secrets.PRIVATE_WTOOLS_BOT_SSH_KEY }}
@@ -38,6 +49,5 @@ jobs :
       run : npm install -g npm@latest-6
     - run : npm i
     - run : npm list
-    - run : npm -g i willbe@alpha
-    - run : will .build
+    - run : npm run node-pre-gyp-build
     - run : npm test

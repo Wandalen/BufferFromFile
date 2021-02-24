@@ -3,7 +3,7 @@
 #include <errno.h>
 #include <string>
 #include <future>
-#include "../.module/NjsCppBasic/cpp/IncludeNode.hpp"
+#include "IncludeNode.hpp"
 
 #ifdef _WIN32
   #include <windows.h>
@@ -15,11 +15,11 @@
 
 #include <iostream>
 
-#include "../.module/NjsCppBasic/cpp/Tools.hpp"
-#include "../.module/NjsCppBasic/cpp/wTools/OptionalTuple.hpp"
-#include "../.module/NjsCppBasic/cpp/wTools/OptionalTuple.test.hpp"
+#include "Tools.hpp"
+#include "wTools/OptionalTuple.hpp"
+#include "wTools/OptionalTuple.test.hpp"
 
-#include "../.module/NjsCppBasic/cpp/Body.begin.cpp"
+#include "Body.begin.cpp"
 
 using namespace ::std;
 using namespace ::wTools;
@@ -282,4 +282,4 @@ memoryOf( Local< Object > src, LocalString name )
 
 //
 
-#include "../.module/NjsCppBasic/cpp/Body.end.cpp"
+#include "Body.end.cpp"

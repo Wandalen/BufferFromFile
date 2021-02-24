@@ -1,34 +1,24 @@
 
-name : pr
+name : prebuild
 
 on :
-  pull_request :
-    branches : [ master ]
-  pull_request_review :
+  push :
     branches : [ master ]
 
 jobs :
 
-  Cancel:
-    name : 'Cancel Previous Runs'
-    runs-on : ubuntu-latest
-    timeout-minutes : 1
-    steps :
-      - uses : styfle/cancel-workflow-action@0.4.0
-        with :
-          access_token : ${{ github.token }}
-          # workflow_id : ${{ github.workflow }}
-
-  Fast :
+  prebuild :
+    if : "startsWith( github.event.head_commit.message, 'version' )"
     runs-on : ${{ matrix.os }}
     strategy :
       fail-fast : false
       matrix :
         os : [ ubuntu-latest, windows-latest, macos-latest ]
-        node-version : [ 14.x ]
+        node-version : [ 10.x, 11.x, 12.x, 13.x, 14.x, 15.x ]
     env :
       PRIVATE_WTOOLS_BOT_TOKEN : ${{ secrets.PRIVATE_WTOOLS_BOT_TOKEN }}
       PRIVATE_WTOOLS_BOT_SSH_KEY : ${{ secrets.PRIVATE_WTOOLS_BOT_SSH_KEY }}
+      NODE_PRE_GYP_GITHUB_TOKEN : ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
     steps :
     - name : git config
       run : |
@@ -40,6 +30,9 @@ jobs :
       uses : actions/setup-node@v1
       with :
         node-version : ${{ matrix.node-version }}
+    # workaround for node-gyp problem on windows with Microsoft Visual Studio 2019 and 11 version of node
+    # - if : "startsWith( matrix.os, 'windows' ) && startsWith( matrix.node-version, '11' )"
+    #   run : npm install -g npm@latest
     - name : Save npm version
       id : getnpmver
       run : |
@@ -47,8 +40,7 @@ jobs :
     - name : Update npm if current version is 6
       if : "startsWith( steps.getnpmver.outputs.npmver, '6.' )"
       run : npm install -g npm@latest-6
-    - run : npm i
+    - run : npm i --ignore-scripts
     - run : npm list
-    - run : npm -g i willbe@alpha
-    - run : will .build
-    - run : npm test
+    - run : npm run node-pre-gyp-build
+    - run : npm run node-pre-gyp-package && npm run node-pre-gyp-github-release

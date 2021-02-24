@@ -3,7 +3,7 @@
 
 #include "Details.cpp"
 
-#include "../.module/NjsCppBasic/cpp/Body.begin.cpp"
+#include "Body.begin.cpp"
 
 //
 
@@ -435,6 +435,6 @@ NODE_MODULE( ArrayBufferFile, Init )
 
 //
 
-#include "../.module/NjsCppBasic/cpp/Body.end.cpp"
+#include "Body.end.cpp"
 
 #endif // _Main_cpp_ //
