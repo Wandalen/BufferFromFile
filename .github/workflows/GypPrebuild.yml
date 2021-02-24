@@ -18,6 +18,7 @@ jobs :
     env :
       PRIVATE_WTOOLS_BOT_TOKEN : ${{ secrets.PRIVATE_WTOOLS_BOT_TOKEN }}
       PRIVATE_WTOOLS_BOT_SSH_KEY : ${{ secrets.PRIVATE_WTOOLS_BOT_SSH_KEY }}
+      NODE_PRE_GYP_GITHUB_TOKEN : ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
     steps :
     - name : git config
       run : |
@@ -43,5 +44,3 @@ jobs :
     - run : npm list
     - run : npm run node-pre-gyp-build
     - run : npm run node-pre-gyp-package && npm run node-pre-gyp-github-release
-      env :
-        NODE_PRE_GYP_GITHUB_TOKEN : ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
