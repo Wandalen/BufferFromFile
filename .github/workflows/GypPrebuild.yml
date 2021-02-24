@@ -30,7 +30,7 @@ jobs :
       uses : actions/setup-node@v1
       with :
         node-version : ${{ matrix.node-version }}
-      # workaround for node-gyp problem on windows with Microsoft Visual Studio 2019 and 11 version of node
+    # workaround for node-gyp problem on windows with Microsoft Visual Studio 2019 and 11 version of node
     # - if : "startsWith( matrix.os, 'windows' ) && startsWith( matrix.node-version, '11' )"
     #   run : npm install -g npm@latest
     - name : Save npm version
