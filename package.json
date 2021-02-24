@@ -1,6 +1,6 @@
 {
   "name": "bufferfromfile",
-  "version": "0.4.271",
+  "version": "0.4.272",
   "engine": "node >= 6.0.0",
   "enabled": true,
   "license": "MIT",
@@ -28,7 +28,7 @@
   ],
   "main": "js/Main.ss",
   "scripts": {
-    "install": "will .build install",
+    "install": "node step/Install.ss",
     "node-pre-gyp-install": "node-pre-gyp install --update-binary --fallback-to-build",
     "node-pre-gyp-build": "node-pre-gyp configure && node-pre-gyp rebuild",
     "node-pre-gyp-package": "node-pre-gyp package",
@@ -51,9 +51,9 @@
     "url": "https://github.com/Wandalen/BufferFromFile/issues"
   },
   "dependencies": {
-    "willbe": "alpha",
     "node-gyp": "7.1.2",
-    "node-pre-gyp": "0.17.0"
+    "node-pre-gyp": "0.17.0",
+    "wbasenodejscpp": "alpha"
   },
   "devDependencies": {
     "bufferfromfile": "file:.",
