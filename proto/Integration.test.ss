@@ -82,7 +82,6 @@ function production( test )
 
   a.fileProvider.filesReflect({ reflectMap : { [ sampleDir ] : a.abs( 'sample/trivial' ) } });
 
-
   let remotePath = null;
   if( _.git.insideRepository( a.abs( __dirname, '..' ) ) )
   remotePath = _.git.remotePathFromLocal( a.abs( __dirname, '..' ) );
@@ -118,6 +117,11 @@ function production( test )
   {
     test.case = 'install module';
     test.identical( op.exitCode, 0 );
+
+    test.case = 'no test files';
+    let moduleDir = _.path.join( a.routinePath, 'node_modules', mdl.name );
+    let testFiles = a.fileProvider.filesFind({ filePath : _.path.join( moduleDir, '**.test*' ), outputFormat : 'relative' });
+    test.identical( testFiles, [] );
     return null;
   });
 
