@@ -250,7 +250,7 @@ function samples( test )
 
     if( _.longHas( found[ i ].exts, 'throwing' ) )
     {
-      appStartNonThrowing({ execPath : found[ i ].relative })
+      appStartNonThrowing({ execPath : found[ i ].relative, outputPiping : 0 })
       .then( ( op ) =>
       {
         console.log( _.time.spent( startTime ) );

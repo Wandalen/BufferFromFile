@@ -352,7 +352,7 @@ rules :
   wrap-regex : off
   yield-star-spacing : error
   no-undef : off
-  no-debugger : off
+  no-debugger : error
   new-cap : off
   no-mixed-spaces-and-tabs : error
 
