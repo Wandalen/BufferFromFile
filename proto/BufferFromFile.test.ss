@@ -16,7 +16,7 @@ if( typeof module !== 'undefined' )
   BufferFromFile = require( '../js/Main.ss' );
 }
 
-let _ = _global_.wTools;
+const _ = _global_.wTools;
 
 // --
 //

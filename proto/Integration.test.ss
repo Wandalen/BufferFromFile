@@ -190,7 +190,7 @@ function production( test )
   {
     if( _.strHas( err.message, 'npm ERR! ERROR: Repository not found' ) )
     {
-      _.errAttend( err );
+      _.error.attend( err );
       return a.shell( `npm i --production` );
     }
     throw _.err( err );
@@ -435,7 +435,7 @@ build.timeOut = 900000;
 // declare
 // --
 
-let Self =
+const Proto =
 {
 
   name : 'Integration',
@@ -463,7 +463,7 @@ let Self =
 
 //
 
-Self = wTestSuite( Self );
+const Self = wTestSuite( Proto );
 if( typeof module !== 'undefined' && !module.parent )
 _global_.wTester.test( Self.name );
 
