@@ -902,7 +902,7 @@ experiment.experimental = 1;
 // proto
 // --
 
-var Proto =
+const Proto =
 {
 
   name : 'BufferFromFile',
