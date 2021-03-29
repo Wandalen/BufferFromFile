@@ -14,8 +14,8 @@ if( typeof module !== 'undefined' )
 //
 
 let _ = _globals_.testing.wTools;
-let fileProvider = _.fileProvider;
-let path = fileProvider.path;
+const fileProvider = _.fileProvider;
+const path = fileProvider.path;
 
 // --
 // context
