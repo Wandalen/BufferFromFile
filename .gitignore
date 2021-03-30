@@ -1,13 +1,15 @@
 
 /_*
-.*
+/build
+/builder
+/binding
+/node_modules
+/package-lock.json
+
 -*
+.module
+.warchive*
 *.log
 *.db
 *.tmp
-*.out
-node_modules
-package-lock.json
-out/cpp
-build
-binding
+*.build
