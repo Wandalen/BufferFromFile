@@ -24,6 +24,7 @@ about :
   contributors :
   - 'Kostiantyn Wandalen <wanalen@01.school>'
   - 'Volodymyr M. <volodymyr.migdal@gmail.com>'
+  native : 1
   npm.name : 'bufferfromfile'
   npm.scripts :
     install : 'node-gyp configure && node-gyp rebuild --msvs_version=auto'
