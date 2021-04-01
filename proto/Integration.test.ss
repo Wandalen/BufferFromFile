@@ -13,8 +13,9 @@ if( typeof module !== 'undefined' )
 
 //
 
-let _ = _globals_.testing.wTools;
-const fileProvider = _.fileProvider;
+const _ = _global_.wTools;
+const __ = _globals_.testing.wTools;
+const fileProvider = __.fileProvider;
 const path = fileProvider.path;
 
 // --
@@ -35,7 +36,7 @@ function onSuiteEnd( test )
 {
   let context = this;
   let path = context.provider.path;
-  _.assert( _.strHas( context.suiteTempPath, 'integration' ), context.suiteTempPath );
+  __.assert( __.strHas( context.suiteTempPath, 'integration' ), context.suiteTempPath );
   path.tempClose( context.suiteTempPath );
 }
 
@@ -51,7 +52,7 @@ function production( test )
 
   let mdlPath = a.abs( __dirname, '../package.json' );
   let mdl = a.fileProvider.fileRead({ filePath : mdlPath, encoding : 'json' });
-  let trigger = _.test.workflowTriggerGet( a.abs( __dirname, '..' ) );
+  let trigger = __.test.workflowTriggerGet( a.abs( __dirname, '..' ) );
 
   if( mdl.private || trigger === 'pull_request' )
   {
@@ -64,7 +65,7 @@ function production( test )
   a.ready.delay( 60000 );
 
   console.log( `Event : ${trigger}` );
-  console.log( `Env :\n${_.entity.exportString( environmentsGet() )}` );
+  console.log( `Env :\n${__.entity.exportString( environmentsGet() )}` );
 
   /* */
 
@@ -76,33 +77,33 @@ function production( test )
   });
 
   if( !samplePath.length )
-  throw _.err( `Sample with name "Sample.(s|ss|js)" does not exist in directory ${ sampleDir }` );
+  throw __.err( `Sample with name "Sample.(s|ss|js)" does not exist in directory ${ sampleDir }` );
 
   /* */
 
   a.fileProvider.filesReflect({ reflectMap : { [ sampleDir ] : a.abs( 'sample/trivial' ) } });
 
   let remotePath = null;
-  if( _.git.insideRepository( a.abs( __dirname, '..' ) ) )
-  remotePath = _.git.remotePathFromLocal( a.abs( __dirname, '..' ) );
+  if( __.git.insideRepository( a.abs( __dirname, '..' ) ) )
+  remotePath = __.git.remotePathFromLocal( a.abs( __dirname, '..' ) );
 
   let mdlRepoParsed, remotePathParsed;
   if( remotePath )
   {
-    mdlRepoParsed = _.git.path.parse( mdl.repository.url );
-    remotePathParsed = _.git.path.parse( remotePath );
+    mdlRepoParsed = __.git.path.parse( mdl.repository.url );
+    remotePathParsed = __.git.path.parse( remotePath );
   }
 
   let isFork = mdlRepoParsed.user !== remotePathParsed.user || mdlRepoParsed.repo !== remotePathParsed.repo;
 
   let version;
   if( isFork )
-  version = _.git.path.nativize( remotePath );
+  version = __.git.path.nativize( remotePath );
   else
   version = mdl.version;
 
   if( !version )
-  throw _.err( 'Cannot obtain version to install' );
+  throw __.err( 'Cannot obtain version to install' );
 
   let structure = { dependencies : { [ mdl.name ] : version } };
   a.fileProvider.fileWrite({ filePath : a.abs( 'package.json' ), data : structure, encoding : 'json' });
@@ -119,8 +120,8 @@ function production( test )
     test.identical( op.exitCode, 0 );
 
     test.case = 'no test files';
-    let moduleDir = _.path.join( a.routinePath, 'node_modules', mdl.name );
-    let testFiles = a.fileProvider.filesFind({ filePath : _.path.join( moduleDir, '**.test*' ), outputFormat : 'relative' });
+    let moduleDir = __.path.join( a.routinePath, 'node_modules', mdl.name );
+    let testFiles = a.fileProvider.filesFind({ filePath : __.path.join( moduleDir, '**.test*' ), outputFormat : 'relative' });
     test.identical( testFiles, [] );
     return null;
   });
@@ -137,9 +138,9 @@ function production( test )
   function environmentsGet()
   {
     /* object process.env is not an auxiliary element ( new implemented check ) */
-    return _.filter_( _.mapExtend( null, process.env ), ( element, key ) => /* xxx */
+    return __.filter_( __.mapExtend( null, process.env ), ( element, key ) => /* xxx */
     {
-      if( _.strBegins( key, 'PRIVATE_' ) )
+      if( __.strBegins( key, 'PRIVATE_' ) )
       return;
       if( key === 'NODE_PRE_GYP_GITHUB_TOKEN' )
       return;
@@ -170,10 +171,10 @@ function production( test )
       return null;
 
       test.case = 'fork is up to date with origin'
-      return _.git.isUpToDate
+      return __.git.isUpToDate
       ({
         localPath : a.abs( __dirname, '..' ),
-        remotePath : _.git.path.normalize( mdl.repository.url )
+        remotePath : __.git.path.normalize( mdl.repository.url )
       })
       .then( ( isUpToDate ) =>
       {
@@ -188,12 +189,12 @@ function production( test )
 
   function handleDownloadingError( err )
   {
-    if( _.strHas( err.message, 'npm ERR! ERROR: Repository not found' ) )
+    if( __.strHas( err.message, 'npm ERR! ERROR: Repository not found' ) )
     {
-      _.error.attend( err );
+      __.error.attend( err );
       return a.shell( `npm i --production` );
     }
-    throw _.err( err );
+    throw __.err( err );
   }
 }
 
@@ -204,11 +205,11 @@ production.timeOut = 300000;
 function samples( test )
 {
   let context = this;
-  let ready = _.take( null );
+  let ready = __.take( null );
 
   let sampleDir = path.join( __dirname, '../sample' );
 
-  let appStartNonThrowing = _.process.starter
+  let appStartNonThrowing = __.process.starter
   ({
     currentPath : sampleDir,
     outputCollecting : 1,
@@ -235,7 +236,7 @@ function samples( test )
 
   for( let i = 0 ; i < found.length ; i++ )
   {
-    if( _.longHasAny( found[ i ].exts, [ 'browser', 'manual', 'experiment' ] ) )
+    if( __.longHasAny( found[ i ].exts, [ 'browser', 'manual', 'experiment' ] ) )
     continue;
 
     let startTime;
@@ -244,16 +245,16 @@ function samples( test )
     .then( () =>
     {
       test.case = found[ i ].relative;
-      startTime = _.time.now();
+      startTime = __.time.now();
       return null;
     })
 
-    if( _.longHas( found[ i ].exts, 'throwing' ) )
+    if( __.longHas( found[ i ].exts, 'throwing' ) )
     {
       appStartNonThrowing({ execPath : found[ i ].relative, outputPiping : 0 })
       .then( ( op ) =>
       {
-        console.log( _.time.spent( startTime ) );
+        console.log( __.time.spent( startTime ) );
         test.description = 'nonzero exit code';
         test.notIdentical( op.exitCode, 0 );
         return null;
@@ -264,14 +265,14 @@ function samples( test )
       appStartNonThrowing({ execPath : found[ i ].relative })
       .then( ( op ) =>
       {
-        console.log( _.time.spent( startTime ) );
+        console.log( __.time.spent( startTime ) );
         test.description = 'good exit code';
         test.identical( op.exitCode, 0 );
         if( op.exitCode )
         return null;
         test.description = 'have no uncaught errors';
-        test.identical( _.strCount( op.output, 'ncaught' ), 0 );
-        test.identical( _.strCount( op.output, 'uncaught error' ), 0 );
+        test.identical( __.strCount( op.output, 'ncaught' ), 0 );
+        test.identical( __.strCount( op.output, 'uncaught error' ), 0 );
         test.description = 'have some output';
         test.ge( op.output.split( '\n' ).length, 1 );
         test.ge( op.output.length, 3 );
@@ -296,9 +297,9 @@ function eslint( test )
   let eslint = process.platform === 'win32' ? 'node_modules/eslint/bin/eslint' : 'node_modules/.bin/eslint';
   eslint = path.join( rootPath, eslint );
   let sampleDir = path.join( rootPath, 'sample' );
-  let ready = _.take( null );
+  let ready = __.take( null );
 
-  if( _.process.insideTestContainer() )
+  if( __.process.insideTestContainer() )
   {
     let validPlatform = process.platform === 'linux';
     let validVersion = process.versions.node.split( '.' )[ 0 ] === '14';
@@ -309,7 +310,7 @@ function eslint( test )
     }
   }
 
-  let start = _.process.starter
+  let start = __.process.starter
   ({
     execPath : eslint,
     mode : 'fork',
@@ -330,7 +331,7 @@ function eslint( test )
       '--ignore-pattern', '*.xml',
       '--ignore-pattern', '*.css',
       '--ignore-pattern', '_asset',
-      '--ignore-pattern', '_*',
+      '--ignore-pattern', '__*',
       '--ignore-pattern', 'out',
       '--ignore-pattern', '*.tgs',
       '--ignore-pattern', '*.bat',
@@ -399,9 +400,9 @@ function build( test )
     return;
   }
 
-  let remotePath = _.git.remotePathFromLocal( a.abs( __dirname, '..' ) );
+  let remotePath = __.git.remotePathFromLocal( a.abs( __dirname, '..' ) );
 
-  let ready = _.git.repositoryClone
+  let ready = __.git.repositoryClone
   ({
     remotePath,
     localPath : a.routinePath,
@@ -409,7 +410,7 @@ function build( test )
     sync : 0
   })
 
-  _.process.start
+  __.process.start
   ({
     execPath : 'npm run build',
     currentPath : a.routinePath,

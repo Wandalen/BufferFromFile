@@ -17,6 +17,7 @@ if( typeof module !== 'undefined' )
 }
 
 const _ = _global_.wTools;
+const __ = _globals_.testing.wTools;
 
 // --
 //
@@ -843,9 +844,9 @@ function ipc( test )
   function program1()
   {
     require( _TestingPath_ );
-    let _ = _globals_.testing.wTools;
+    const __ = _globals_.testing.wTools;
     var BufferFromFile = require( _BufferFromFilePath_ );
-    var buffer = BufferFromFile( _.path.nativize( _.path.join( __dirname, 'File.txt' ) ) ).NodeBuffer();
+    var buffer = BufferFromFile( __.path.nativize( __.path.join( __dirname, 'File.txt' ) ) ).NodeBuffer();
 
     process.send( { ready : 1 } );
 
@@ -859,7 +860,7 @@ function ipc( test )
       process.exit( 0 )
     })
 
-    _.time.out( 10000, () =>
+    __.time.out( 10000, () =>
     {
       BufferFromFile.unmap( buffer );
       process.exit( -1 )
