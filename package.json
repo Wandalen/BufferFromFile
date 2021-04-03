@@ -1,6 +1,6 @@
 {
   "name" : "bufferfromfile",
-  "version" : "0.4.286",
+  "version" : "0.4.287",
   "engine" : "node >= 6.0.0",
   "enabled" : true,
   "license" : "MIT",
@@ -23,7 +23,7 @@
     "QuickTest.ss",
     "proto/node_modules"
   ],
-  "main" : "/pro/module/BufferFromFile/proto/node_modules/bufferfromfile",
+  "main" : "proto/node_modules/bufferfromfile",
   "scripts" :
   {
     "install" : "node step/Install.ss",
