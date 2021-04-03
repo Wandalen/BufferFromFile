@@ -23,7 +23,7 @@
     "QuickTest.ss",
     "proto/node_modules"
   ],
-  "main" : "js/Main.ss",
+  "main" : "/pro/module/BufferFromFile/proto/node_modules/bufferfromfile",
   "scripts" :
   {
     "install" : "node step/Install.ss",

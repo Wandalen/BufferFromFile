@@ -1,291 +1,276 @@
-
-submodule :
-
-  bufferfromfile :
-    path : hd://.
-    enabled : 0 # submodule
-    criterion :
-      development : 1
-  wTools :
-    path : npm:///wTools
-    enabled : 0 # submodule
-    criterion :
-      development : 1
-  wTesting :
-    path : npm:///wTesting
-    enabled : 0 # submodule
-    criterion :
-      development : 1
-  wProcess :
-    path : npm:///wprocess
-    enabled : 0 # submodule
-    criterion :
-      development : 1
-  willbe :
-    path : npm:///willbe
-    enabled : 0 # submodule
-    criterion :
-      development : 0
-  node-gyp :
-    path : npm:///node-gyp#7.1.2
-    enabled : 0 # submodule
-    criterion :
-      development : 0
-  node-pre-gyp :
-    path : npm:///node-pre-gyp#0.17.0
-    enabled : 0 # submodule
-    criterion :
-      development : 0
-  wbasenodejscpp :
-    path : npm:///wbasenodejscpp
-    enabled : 0 # submodule
-    criterion :
-      development : 0
-  node-pre-gyp-github :
-    path : npm:///node-pre-gyp-github#1.4.3
-    enabled : 0 # submodule
-    criterion :
-      development : 1
-  eslint :
-    path : npm:///eslint
-    enabled : 0 # submodule
-    criterion :
-      development : 1
-
-path :
-
-  in : '.'
-  out : 'out'
-  temp :
+submodule:
+  bufferfromfile:
+    path: 'hd://.'
+    enabled: 0
+    criterion:
+      development: 1
+  wTools:
+    path: 'npm:///wTools'
+    enabled: 0
+    criterion:
+      development: 1
+  wTesting:
+    path: 'npm:///wTesting'
+    enabled: 0
+    criterion:
+      development: 1
+  wProcess:
+    path: 'npm:///wprocess'
+    enabled: 0
+    criterion:
+      development: 1
+  willbe:
+    path: 'npm:///willbe'
+    enabled: 0
+    criterion:
+      development: 0
+  node-gyp:
+    path: 'npm:///node-gyp#7.1.2'
+    enabled: 0
+    criterion:
+      development: 0
+  node-pre-gyp:
+    path: 'npm:///node-pre-gyp#0.17.0'
+    enabled: 0
+    criterion:
+      development: 0
+  wbasenodejscpp:
+    path: 'npm:///wbasenodejscpp'
+    enabled: 0
+    criterion:
+      development: 0
+  node-pre-gyp-github:
+    path: 'npm:///node-pre-gyp-github#1.4.3'
+    enabled: 0
+    criterion:
+      development: 1
+  eslint:
+    path: 'npm:///eslint'
+    enabled: 0
+    criterion:
+      development: 1
+path:
+  in: .
+  out: out
+  temp:
     - '{path::out}/cpp'
     - '{path::build}'
-    - 'package-lock.json'
-    - 'node_modules'
-    - 'build'
-    - 'binding'
-  proto : './js'
-  export : '{path::proto}/**'
-  doc : './doc'
-  js : 'js'
-  cpp : 'cpp'
-  build : 'build'
-  binding : 'binding'
-
-  out.raw.debug :
-    path : '{path::out}/debug'
-    criterion :
-      debug : debug
-      raw : raw
-      content : prime
-  out.compiled.debug :
-    path : '{path::out}/compiled.debug'
-    criterion :
-      debug : debug
-      raw : compiled
-      content : prime
-  out.raw.release :
-    path : '{path::out}/raw.release'
-    criterion :
-      debug : release
-      raw : raw
-      content : prime
-  out.compiled.release :
-    path : '{path::out}/release'
-    criterion :
-      debug : release
-      raw : compiled
-      content : prime
-
-  entry.proto.no.tests :
-    path : js/Main.ss
-    criterion :
-      tests : 'no.tests'
-  entry.proto.only.tests :
-    path : proto/**/*.test.s
-    criterion :
-      tests : 'only.tests'
-
-  # npm.entry : proto/wtools/abase/Layer2.s
-  # npm.files : proto
-
-  entry.out.raw.debug :
-    path : '{path::out.*=1}/source/Main.ss'
-    criterion :
-      debug : [ debug, release ]
-      raw : raw
-      content : prime
-  entry.out.compiled.debug :
-    path : '{path::out.*=}/source/Index.s'
-    criterion :
-      debug : [ debug, release ]
-      raw : compiled
-      content : prime
-
-reflector :
-
-  reflect.proto :
-    inherit : predefined.*
-    criterion :
-      tests : 'no.tests'
-      debug : [ debug, release ]
-      raw : [ raw, compiled ]
-      content : prime
-    filePath :
-      path::proto : '{path::out.*=1}/source'
-
-  transpile.proto.raw :
-    inherit : predefined.*
-    step :
-      inherit : files.transpile
-      entry : path::entry.proto.no.tests
-    criterion :
-      raw : raw
-      debug : release
-      content : prime
-    filePath :
-      path::proto : '{path::out.raw.release}'
-
-  transpile.proto.no.tests.compiled :
-    inherit : predefined.*
-    step :
-      inherit : files.transpile
-      entry : path::entry.proto.*=1
-    criterion :
-      tests : 'no.tests'
-      raw : compiled
-      debug : [ debug, release ]
-      content : prime
-    filePath :
-      '**.test*' : 0
-      '**.test/**' : 0
-      path::proto : '{path::out.*=1}/Main.s'
-
-  transpile.proto.only.tests.compiled :
-    inherit : predefined.*
-    step :
-      inherit : files.transpile
-      entry : path::entry.proto.*=1
-      external.before : '{path::out.*=1}/Main.s'
-    criterion :
-      tests : 'only.tests'
-      raw : compiled
-      debug : [ debug, release ]
-      content : prime
-    filePath :
-      '**.test*' : 1
-      path::proto : '{path::out.*=1}/Tests.test.s'
-
-step :
-
-  npm.generate :
-    inherit : npm.generate
-    entryPath : path::entry.out.*=1
-    packagePath : '{path::out.*=1}/package.json'
-    filesPath : '{path::out.*=1}/source/**'
-    criterion :
-      debug : [ debug, release ]
-      raw : [ raw, compiled ]
-
-  clean.out.cpp :
-    inherit : files.delete
-    filePath : '{path::out}/cpp'
-
-  clean.out.npm :
-    inherit : files.delete
-    filePath : path::out.*=1
-    criterion :
-      debug : debug
-      raw : compiled
-      tests : no.tests
-      content : npm
-
-  clean.build.and.binding :
-    inherit : files.delete
-    filePath :
+    - package-lock.json
+    - node_modules
+    - build
+    - binding
+  proto: ./js
+  export: '{path::proto}/**'
+  doc: ./doc
+  js: js
+  cpp: cpp
+  build: build
+  binding: binding
+  out.raw.debug:
+    path: '{path::out}/debug'
+    criterion:
+      debug: debug
+      raw: raw
+      content: prime
+  out.compiled.debug:
+    path: '{path::out}/compiled.debug'
+    criterion:
+      debug: debug
+      raw: compiled
+      content: prime
+  out.raw.release:
+    path: '{path::out}/raw.release'
+    criterion:
+      debug: release
+      raw: raw
+      content: prime
+  out.compiled.release:
+    path: '{path::out}/release'
+    criterion:
+      debug: release
+      raw: compiled
+      content: prime
+  entry.proto.no.tests:
+    path: js/Main.ss
+    criterion:
+      tests: no.tests
+  entry.proto.only.tests:
+    path: proto/**/*.test.s
+    criterion:
+      tests: only.tests
+  entry.out.raw.debug:
+    path: '{path::out.*=1}/source/Main.ss'
+    criterion:
+      debug:
+        - debug
+        - release
+      raw: raw
+      content: prime
+  entry.out.compiled.debug:
+    path: '{path::out.*=}/source/Index.s'
+    criterion:
+      debug:
+        - debug
+        - release
+      raw: compiled
+      content: prime
+  npm.proto.entry:
+    - /pro/module/BufferFromFile/js/Main.ss
+    - /pro/module/BufferFromFile/proto/node_modules/bufferfromfile
+reflector:
+  reflect.proto:
+    inherit: predefined.*
+    criterion:
+      tests: no.tests
+      debug:
+        - debug
+        - release
+      raw:
+        - raw
+        - compiled
+      content: prime
+    filePath:
+      'path::proto': '{path::out.*=1}/source'
+  transpile.proto.raw:
+    inherit: predefined.*
+    step:
+      inherit: files.transpile
+      entry: 'path::entry.proto.no.tests'
+    criterion:
+      raw: raw
+      debug: release
+      content: prime
+    filePath:
+      'path::proto': '{path::out.raw.release}'
+  transpile.proto.no.tests.compiled:
+    inherit: predefined.*
+    step:
+      inherit: files.transpile
+      entry: 'path::entry.proto.*=1'
+    criterion:
+      tests: no.tests
+      raw: compiled
+      debug:
+        - debug
+        - release
+      content: prime
+    filePath:
+      '**.test*': 0
+      '**.test/**': 0
+      'path::proto': '{path::out.*=1}/Main.s'
+  transpile.proto.only.tests.compiled:
+    inherit: predefined.*
+    step:
+      inherit: files.transpile
+      entry: 'path::entry.proto.*=1'
+      external.before: '{path::out.*=1}/Main.s'
+    criterion:
+      tests: only.tests
+      raw: compiled
+      debug:
+        - debug
+        - release
+      content: prime
+    filePath:
+      '**.test*': 1
+      'path::proto': '{path::out.*=1}/Tests.test.s'
+step:
+  npm.generate:
+    inherit: npm.generate
+    entryPath: 'path::entry.out.*=1'
+    packagePath: '{path::out.*=1}/package.json'
+    filesPath: '{path::out.*=1}/source/**'
+    criterion:
+      debug:
+        - debug
+        - release
+      raw:
+        - raw
+        - compiled
+  clean.out.cpp:
+    inherit: files.delete
+    filePath: '{path::out}/cpp'
+  clean.out.npm:
+    inherit: files.delete
+    filePath: 'path::out.*=1'
+    criterion:
+      debug: debug
+      raw: compiled
+      tests: no.tests
+      content: npm
+  clean.build.and.binding:
+    inherit: files.delete
+    filePath:
       - '{path::build}'
       - '{path::binding}'
-
-  tst.proto :
-    shell : 'tst {path::proto}'
-    criterion :
-      content : proto
-
-  tst.debug :
-    shell : 'tst {path::out.*=1}'
-    criterion :
-      content : prime
-      debug : debug
-
-  tst.release :
-    shell : 'tst {path::out.*=1}'
-    criterion :
-      content : prime
-      debug : release
-
-  node-gyp.build :
-    currentPath : path::in
-    shell : "npm run-script node-pre-gyp-build"
-
-  node-gyp.install :
-    currentPath : path::in
-    shell : 'npm run-script node-pre-gyp-install'
-
-build :
-
-  debug :
-    criterion :
-      default : 1
-    steps :
+  tst.proto:
+    shell: 'tst {path::proto}'
+    criterion:
+      content: proto
+  tst.debug:
+    shell: 'tst {path::out.*=1}'
+    criterion:
+      content: prime
+      debug: debug
+  tst.release:
+    shell: 'tst {path::out.*=1}'
+    criterion:
+      content: prime
+      debug: release
+  node-gyp.build:
+    currentPath: 'path::in'
+    shell: npm run-script node-pre-gyp-build
+  node-gyp.install:
+    currentPath: 'path::in'
+    shell: npm run-script node-pre-gyp-install
+build:
+  debug:
+    criterion:
+      default: 1
+    steps:
       - clean.build.and.binding
       - node-gyp.build
-
-  install :
-    steps :
+  install:
+    steps:
       - submodules.update
       - node-gyp.install
-
-  compiled.debug :
-    criterion :
-      debug : debug
-      raw : compiled
-      content : prime
-    steps :
-      - step::clean.out*=2
+  compiled.debug:
+    criterion:
+      debug: debug
+      raw: compiled
+      content: prime
+    steps:
+      - 'step::clean.out*=2'
       - transpile.proto.no.tests*=1
       - transpile.proto.only.tests*=1
-
-  raw.release :
-    criterion :
-      debug : release
-      raw : raw
-      content : prime
-    steps :
-      - step::clean.out*=2
+  raw.release:
+    criterion:
+      debug: release
+      raw: raw
+      content: prime
+    steps:
+      - 'step::clean.out*=2'
       - transpile.proto.raw
-
-  release :
-    criterion :
-      debug : release
-      raw : compiled
-      content : prime
-    steps :
-      - step::clean.out*=2
+  release:
+    criterion:
+      debug: release
+      raw: compiled
+      content: prime
+    steps:
+      - 'step::clean.out*=2'
       - transpile.proto.no.tests*=1
       - transpile.proto.only.tests*=1
-
-  npm :
-    criterion :
-      debug : debug
-      raw : raw
-      content : npm
-    steps :
+  npm:
+    criterion:
+      debug: debug
+      raw: raw
+      content: npm
+    steps:
       - npm.generate.*=1
-      # - npm.generate
-
-  all :
-    steps :
-      - build::debug
-      - build::compiled.debug
-      - build::raw.release
-      - build::release
-      - build::npm
+  all:
+    steps:
+      - 'build::debug'
+      - 'build::compiled.debug'
+      - 'build::raw.release'
+      - 'build::release'
+      - 'build::npm'
