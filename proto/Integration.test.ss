@@ -406,7 +406,7 @@ function build( test )
   ({
     remotePath,
     localPath : a.routinePath,
-    verbosity : 2,
+    logger : 2,
     sync : 0
   })
 
