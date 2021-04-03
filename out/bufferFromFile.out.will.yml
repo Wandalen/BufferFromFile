@@ -6,8 +6,8 @@ consistency:
     hash: 7dcf019b80945df62990f4c82588b1b4
     size: 2105
   ../.im.will.yml: &ref_1
-    hash: a079a6b9ee430a70163840f35a3912a6
-    size: 6005
+    hash: f409e646a1a833aef0f33316a2d436a5
+    size: 5804
 module:
   bufferFromFile.out:
     about:
@@ -71,7 +71,7 @@ module:
       download:
         criterion:
           predefined: 1
-        path: ../
+        path: ..
       repository:
         path: 'git+https:///github.com/Wandalen/BufferFromFile.git'
       origins:
@@ -162,6 +162,10 @@ module:
           raw: compiled
           content: prime
         path: '{path::out.*=}/source/Index.s'
+      npm.proto.entry:
+        path:
+          - ../js/Main.ss
+          - ../proto/node_modules/bufferfromfile
       exported.dir.proto.export:
         criterion:
           generated: 1
@@ -740,7 +744,7 @@ module:
       download:
         criterion:
           predefined: 1
-        path: ./
+        path: .
       repository:
         path: 'git+https:///github.com/Wandalen/BufferFromFile.git'
       origins:
@@ -831,6 +835,10 @@ module:
           raw: compiled
           content: prime
         path: '{path::out.*=}/source/Index.s'
+      npm.proto.entry:
+        path:
+          - js/Main.ss
+          - proto/node_modules/bufferfromfile
     submodule:
       bufferfromfile:
         path: 'hd://.'
@@ -1288,5 +1296,5 @@ module:
         hash: 7dcf019b80945df62990f4c82588b1b4
         size: 2105
       ../.im.will.yml:
-        hash: a079a6b9ee430a70163840f35a3912a6
-        size: 6005
+        hash: f409e646a1a833aef0f33316a2d436a5
+        size: 5804

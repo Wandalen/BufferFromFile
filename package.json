@@ -1,22 +1,18 @@
 {
-  "name": "bufferfromfile",
-  "version": "0.4.285",
-  "engine": "node >= 6.0.0",
-  "enabled": true,
-  "license": "MIT",
-  "description": "The module in JavaScript provides convenient means for using files as standard ArrayBuffer making mmap behind the scene.",
-  "author": "Kostiantyn Wandalen <wanalen@01.school>",
-  "contributors": [
-    {
-      "name": "Kostiantyn Wandalen",
-      "email": "wanalen@01.school"
-    },
-    {
-      "name": "Volodymyr M.",
-      "email": "volodymyr.migdal@gmail.com"
-    }
+  "name" : "bufferfromfile",
+  "version" : "0.4.286",
+  "engine" : "node >= 6.0.0",
+  "enabled" : true,
+  "license" : "MIT",
+  "description" : "The module in JavaScript provides convenient means for using files as standard ArrayBuffer making mmap behind the scene.",
+  "author" : "Kostiantyn Wandalen <wanalen@01.school>",
+  "contributors" :
+  [
+    { "name" : "Kostiantyn Wandalen", "email" : "wanalen@01.school" },
+    { "name" : "Volodymyr M.", "email" : "volodymyr.migdal@gmail.com" }
   ],
-  "files": [
+  "files" :
+  [
     "cpp",
     "js",
     "binding.gyp",
@@ -27,44 +23,46 @@
     "QuickTest.ss",
     "proto/node_modules"
   ],
-  "main": "js/Main.ss",
-  "scripts": {
-    "install": "node step/Install.ss",
-    "node-pre-gyp-install": "node-pre-gyp install --update-binary --fallback-to-build",
-    "node-pre-gyp-build": "node-pre-gyp configure && node-pre-gyp rebuild",
-    "node-pre-gyp-package": "node-pre-gyp package",
-    "node-pre-gyp-github-release": "node-pre-gyp-github publish --release",
-    "test": "wtest .run proto rapidity:-3",
-    "make_doc": "./doc.sh",
-    "clean": "rm -rf build node_modules"
+  "main" : "/pro/module/BufferFromFile/proto/node_modules/bufferfromfile",
+  "scripts" :
+  {
+    "install" : "node step/Install.ss",
+    "node-pre-gyp-install" : "node-pre-gyp install --update-binary --fallback-to-build",
+    "node-pre-gyp-build" : "node-pre-gyp configure && node-pre-gyp rebuild",
+    "node-pre-gyp-package" : "node-pre-gyp package",
+    "node-pre-gyp-github-release" : "node-pre-gyp-github publish --release",
+    "test" : "wtest .run proto rapidity:-3",
+    "make_doc" : "./doc.sh",
+    "clean" : "rm -rf build node_modules"
   },
-  "binary": {
-    "module_name": "bufferfromfile",
-    "module_path": "./binding/",
-    "host": "https://github.com/Wandalen/BufferFromFile/releases/download/",
-    "remote_path": "{version}"
+  "binary" :
+  {
+    "module_name" : "bufferfromfile",
+    "module_path" : "./binding/",
+    "host" : "https://github.com/Wandalen/BufferFromFile/releases/download/",
+    "remote_path" : "{version}"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Wandalen/BufferFromFile.git"
+  "repository" :
+  {
+    "type" : "git",
+    "url" : "https://github.com/Wandalen/BufferFromFile.git"
   },
-  "bugs": {
-    "url": "https://github.com/Wandalen/BufferFromFile/issues"
+  "bugs" :
+  {
+    "url" : "https://github.com/Wandalen/BufferFromFile/issues"
   },
-  "dependencies": {
-    "node-gyp": "7.1.2",
-    "node-pre-gyp": "0.17.0",
-    "wbasenodejscpp": "alpha"
+  "dependencies" : { "node-gyp" : "7.1.2", "node-pre-gyp" : "0.17.0", "wbasenodejscpp" : "alpha" },
+  "devDependencies" :
+  {
+    "wTools" : "alpha",
+    "wTesting" : "alpha",
+    "wprocess" : "alpha",
+    "node-pre-gyp-github" : "1.4.3",
+    "eslint" : "7.1.0"
   },
-  "devDependencies": {
-    "eslint": "7.1.0",
-    "node-pre-gyp-github": "1.4.3",
-    "wTesting": "alpha",
-    "wTools": "alpha",
-    "wprocess": "alpha"
-  },
-  "gypfile": false,
-  "keywords": [
+  "gypfile" : false,
+  "keywords" :
+  [
     "wTools",
     "ArrayBuffer",
     "Buffer from file",
