@@ -115,8 +115,8 @@ path:
       raw: compiled
       content: prime
   npm.proto.entry:
-    - /pro/module/BufferFromFile/js/Main.ss
-    - /pro/module/BufferFromFile/proto/node_modules/bufferfromfile
+    - js/Main.ss
+    - proto/node_modules/bufferfromfile
 reflector:
   reflect.proto:
     inherit: predefined.*
