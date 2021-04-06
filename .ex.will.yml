@@ -25,7 +25,7 @@ about :
   - 'Kostiantyn Wandalen <wanalen@01.school>'
   - 'Volodymyr M. <volodymyr.migdal@gmail.com>'
   native : 1
-  npm.name : 'bufferfromfile'
+  npm.name : 'wbufferfromfile'
   npm.scripts :
     install : 'node-gyp configure && node-gyp rebuild --msvs_version=auto'
     test : 'wtest .run proto rapidity:-3'
@@ -36,7 +36,7 @@ path :
   repository : git+https:///github.com/Wandalen/BufferFromFile.git
   origins :
    - git+https:///github.com/Wandalen/bufferFromFile.git
-   - npm:///bufferfromfile
+   - npm:///wbufferfromfile
   bugtracker : https:///github.com/Wandalen/BufferFromFile/issues
 
 step :
