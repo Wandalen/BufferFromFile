@@ -33,7 +33,7 @@ jobs :
       PRIVATE_WTOOLS_BOT_TOKEN : ${{ secrets.PRIVATE_WTOOLS_BOT_TOKEN }}
       PRIVATE_WTOOLS_BOT_SSH_KEY : ${{ secrets.PRIVATE_WTOOLS_BOT_SSH_KEY }}
     steps :
-    - name : git config
+    - name : Setup git
       run : |
         git config --global core.autocrlf input
         git config --global user.email "testing@testing.com"
