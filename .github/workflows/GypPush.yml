@@ -40,8 +40,9 @@ jobs :
       if : "startsWith( steps.getnpmver.outputs.npmver, '6.' )"
       run : npm install -g npm@latest-6
     - run : npm -g i willbe@delta
-    - run : npm i --ignore-scripts
+    - run : npm i
     - run : npm list
+    - run : rm -rf binding
     - run : npm run node-pre-gyp-build
     - run : npm test
 
@@ -78,8 +79,9 @@ jobs :
       if : "startsWith( steps.getnpmver.outputs.npmver, '6.' )"
       run : npm install -g npm@latest-6
     - run : npm -g i willbe@delta
-    - run : npm i --ignore-scripts
+    - run : npm i
     - run : npm list
       continue-on-error : true
+    - run : rm -rf binding
     - run : npm run node-pre-gyp-build
     - run : npm test
