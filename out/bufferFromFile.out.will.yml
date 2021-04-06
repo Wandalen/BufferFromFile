@@ -1337,6 +1337,4 @@ module:
       ../.im.will.yml:
         hash: cda97701c71a6c023c300d0dc2ef4a36
         size: 5750
-      bufferFromFile.out.will.yml:
-        hash: 7cbbf559ff17decd13ec6a2c44a1fef8
-        size: 33308
+      bufferFromFile.out.will.yml: *ref_0
