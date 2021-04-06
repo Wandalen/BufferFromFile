@@ -1,5 +1,5 @@
 {
-  "name" : "bufferfromfile",
+  "name" : "wbufferfromfile",
   "version" : "0.4.291",
   "engine" : "node >= 6.0.0",
   "enabled" : true,
