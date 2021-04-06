@@ -7,7 +7,7 @@ let BufferFromFile;
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( 'wTools' );
+  const _ = require( 'wTools' );
 
   _.include( 'wTesting' );
   _.include( 'wFiles' );
