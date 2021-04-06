@@ -43,11 +43,9 @@ jobs :
       if : "startsWith( steps.getnpmver.outputs.npmver, '6.' )"
       run : npm install -g npm@latest-6
     - run : npm -g i willbe@delta
-    - run : npm i
+    - name: npm run clean
+    - run : will .npm.install
     - run : npm list
       continue-on-error : true
-    - name: Clean build and binding
-      run: rm -rf binding build
-      shell: bash
     - run : npm run node-pre-gyp-build
     - run : npm run node-pre-gyp-package && npm run node-pre-gyp-github-release

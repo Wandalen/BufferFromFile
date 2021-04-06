@@ -1,5 +1,5 @@
 {
-  "name" : "wbufferfromfile",
+  "name" : "bufferfromfile",
   "version" : "0.4.291",
   "engine" : "node >= 6.0.0",
   "enabled" : true,
@@ -33,7 +33,7 @@
     "node-pre-gyp-github-release" : "node-pre-gyp-github publish --release",
     "test" : "wtest .run proto rapidity:-3",
     "make_doc" : "./doc.sh",
-    "clean" : "rm -rf build node_modules"
+    "clean" : "rm -rf build node_modules binding"
   },
   "binary" :
   {
