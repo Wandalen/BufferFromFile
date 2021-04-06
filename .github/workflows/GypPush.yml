@@ -7,28 +7,20 @@ on :
 
 jobs :
 
-  Cancel:
-    if : "!startsWith( github.event.head_commit.message, 'version' )"
-    name : 'Cancel Previous Runs'
-    runs-on : ubuntu-latest
-    timeout-minutes : 1
-    steps :
-      - uses : styfle/cancel-workflow-action@0.4.0
-        with :
-          access_token : ${{ github.token }}
-          # workflow_id : ${{ github.workflow }}
-
-  Fast :
-    if : "!startsWith( github.event.head_commit.message, 'version' )"
-    runs-on : ${{ matrix.os }}
+  Full :
+    env :
+      PRIVATE_WTOOLS_BOT_TOKEN : ${{ secrets.PRIVATE_WTOOLS_BOT_TOKEN }}
+      PRIVATE_WTOOLS_BOT_SSH_KEY : ${{ secrets.PRIVATE_WTOOLS_BOT_SSH_KEY }}
+      PRIVATE_WTOOLS_BOT_NPM_PASS : ${{ secrets.PRIVATE_WTOOLS_BOT_NPM_PASS }}
+      PRIVATE_WTOOLS_BOT_EMAIL : ${{ secrets.PRIVATE_WTOOLS_BOT_EMAIL }}
+      NODE_PRE_GYP_GITHUB_TOKEN : ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
     strategy :
       fail-fast : false
       matrix :
         os : [ ubuntu-latest, windows-latest, macos-latest ]
-        node-version : [ 14.x ]
-    env :
-      PRIVATE_WTOOLS_BOT_TOKEN : ${{ secrets.PRIVATE_WTOOLS_BOT_TOKEN }}
-      PRIVATE_WTOOLS_BOT_SSH_KEY : ${{ secrets.PRIVATE_WTOOLS_BOT_SSH_KEY }}
+        node-version : [ 10.x, 12.x, 13.x, 14.x, 15.x ]
+    if : "startsWith( github.event.head_commit.message, 'version' )"
+    runs-on : ${{ matrix.os }}
     steps :
     - name : git config
       run : |
@@ -47,7 +39,47 @@ jobs :
     - name : Update npm if current version is 6
       if : "startsWith( steps.getnpmver.outputs.npmver, '6.' )"
       run : npm install -g npm@latest-6
-    - run : npm i
+    - run : npm -g i willbe@delta
+    - run : npm i --ignore-scripts
     - run : npm list
+    - run : npm run node-pre-gyp-build
+    - run : npm test
+
+  Fast :
+    env :
+      PRIVATE_WTOOLS_BOT_TOKEN : ${{ secrets.PRIVATE_WTOOLS_BOT_TOKEN }}
+      PRIVATE_WTOOLS_BOT_SSH_KEY : ${{ secrets.PRIVATE_WTOOLS_BOT_SSH_KEY }}
+      PRIVATE_WTOOLS_BOT_NPM_PASS : ${{ secrets.PRIVATE_WTOOLS_BOT_NPM_PASS }}
+      PRIVATE_WTOOLS_BOT_EMAIL : ${{ secrets.PRIVATE_WTOOLS_BOT_EMAIL }}
+      NODE_PRE_GYP_GITHUB_TOKEN : ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
+    strategy :
+      fail-fast : false
+      matrix :
+        os : [ ubuntu-latest, windows-latest, macos-latest ]
+        node-version : [ 14.x ]
+    if : "!startsWith( github.event.head_commit.message, 'version' )"
+    runs-on : ${{ matrix.os }}
+    steps :
+    - name : git config
+      run : |
+        git config --global core.autocrlf input
+        git config --global user.email "testing@testing.com"
+        git config --global user.name "Testing"
+    - uses : actions/checkout@v2
+    - name : ${{ matrix.node-version }}
+      uses : actions/setup-node@v1
+      with :
+        node-version : ${{ matrix.node-version }}
+    - name : Save npm version
+      id : getnpmver
+      run : |
+        echo "::set-output name=npmver::$(npm -v)"
+    - name : Update npm if current version is 6
+      if : "startsWith( steps.getnpmver.outputs.npmver, '6.' )"
+      run : npm install -g npm@latest-6
+    - run : npm -g i willbe@delta
+    - run : npm i --ignore-scripts
+    - run : npm list
+      continue-on-error : true
     - run : npm run node-pre-gyp-build
     - run : npm test
