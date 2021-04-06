@@ -40,7 +40,7 @@ jobs :
       if : "startsWith( steps.getnpmver.outputs.npmver, '6.' )"
       run : npm install -g npm@latest-6
     - run : npm -g i willbe@delta
-    - name: npm run clean
+    - run: npm run clean
     - run : will .npm.install
     - run : npm list
     - run : npm run node-pre-gyp-build
@@ -79,7 +79,7 @@ jobs :
       if : "startsWith( steps.getnpmver.outputs.npmver, '6.' )"
       run : npm install -g npm@latest-6
     - run : npm -g i willbe@delta
-    - name: npm run clean
+    - run: npm run clean
     - run : will .npm.install
     - run : npm list
       continue-on-error : true
