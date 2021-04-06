@@ -42,9 +42,9 @@ jobs :
     - run : npm -g i willbe@delta
     - run : npm i
     - run : npm list
-    - run : ls
-    - run : rm -rf binding
-    - run : ls
+    - name: Clean build and binding
+      run: rm -rf binding build
+      shell: bash
     - run : npm run node-pre-gyp-build
     - run : npm test
 
@@ -84,8 +84,8 @@ jobs :
     - run : npm i
     - run : npm list
       continue-on-error : true
-    - run : ls
-    - run : rm -rf binding
-    - run : ls
+    - name: Clean build and binding
+      run: rm -rf binding build
+      shell: bash
     - run : npm run node-pre-gyp-build
     - run : npm test
