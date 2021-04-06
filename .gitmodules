@@ -1,0 +1,4 @@
+[submodule ".module/NjsCppBasic"]
+	path = .module/NjsCppBasic
+	url =  https://github.com/Wandalen/wNjsCppBasic.git
+	branch = master
