@@ -13,7 +13,7 @@ if( typeof module !== 'undefined' )
   _.include( 'wFiles' );
   _.include( 'wProcess' );
 
-  BufferFromFile = require( '../js/Main.ss' );
+  BufferFromFile = require( '../bufferFromFile/Main.ss' );
 }
 
 const _ = _global_.wTools;
@@ -31,7 +31,7 @@ function onSuiteBegin()
   context.assetsOriginalSuitePath = _.path.join( __dirname, '_asset' );
   context.filePath = _.fileProvider.path.nativize( _.path.join( context.suiteTempPath, 'testFile.txt' ) );
   context.testData = '1 - is a random digit set from JS though mapped into memory file with help of BufferFromFile open source package.'
-  context.bufferFromFilePath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), '../js/Main.ss' ) );
+  context.bufferFromFilePath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), '../bufferFromFile/Main.ss' ) );
   context.toolsPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), '../proto/node_modules/Tools' ) );
   _.fileProvider.fieldPush( 'UsingBigIntForStat', 0 );
 }
@@ -714,9 +714,9 @@ function readOnlyBuffer( test )
 {
   let context = this;
   let a = test.assetFor( false );
-  let _BufferFromFilePath_ = a.path.nativize( require.resolve( '../js/Main.ss' ) );
-  let program1Path = a.program({ routine : program1, locals : { _BufferFromFilePath_, _FilePath_ : context.filePath } });
-  let program2Path = a.program({ routine : program2, locals : { _BufferFromFilePath_, _FilePath_ : context.filePath } });
+  let locals = { _BufferFromFilePath_ : context.bufferFromFilePath, _FilePath_ : context.filePath };
+  let program1Path = a.program({ routine : program1, locals : _.mapExtend( null, locals ) });
+  let program2Path = a.program({ routine : program2, locals : _.mapExtend( null, locals ) });
 
   _.fileProvider.fileWrite( context.filePath, context.testData );
 
@@ -779,9 +779,8 @@ function ipc( test )
 {
   let context = this;
   let a = context.assetFor( test, false );
-  let _BufferFromFilePath_ = a.path.nativize( require.resolve( '../js/Main.ss' ) );
   let _TestingPath_ = _.module.resolve( 'wTesting' );
-  let locals = { _BufferFromFilePath_, _TestingPath_, _FilePath_ : context.filePath };
+  let locals = { _BufferFromFilePath_ : context.bufferFromFilePath, _TestingPath_, _FilePath_ : context.filePath };
   let program1Path = a.program({ routine : program1, locals });
 
   // a.reflect(); /* qqq : why not used? */

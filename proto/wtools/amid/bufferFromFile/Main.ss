@@ -1,7 +1,7 @@
 ( function _BufferFromFile_js_()
 { //
 
-let _BufferFromFile = require( __dirname + '/../binding/bufferfromfile.node' );
+let _BufferFromFile = require( '../../../../binding/bufferfromfile.node' );
 let Self = BufferFromFile;
 function BufferFromFile()
 {
