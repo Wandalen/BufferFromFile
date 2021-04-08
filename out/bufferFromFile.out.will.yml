@@ -2,15 +2,12 @@ format: outwillfile-2.0
 root:
   - bufferFromFile.out
 consistency:
-  bufferFromFile.out.will.yml: &ref_0
-    hash: 7cbbf559ff17decd13ec6a2c44a1fef8
-    size: 33308
-  ../.ex.will.yml: &ref_1
+  ../.ex.will.yml: &ref_0
     hash: 7dcf019b80945df62990f4c82588b1b4
     size: 2105
-  ../.im.will.yml: &ref_2
-    hash: cda97701c71a6c023c300d0dc2ef4a36
-    size: 5750
+  ../.im.will.yml: &ref_1
+    hash: 63d7b680da7d0e4c2852b6cf9e2db798
+    size: 5789
 module:
   bufferFromFile.out:
     about:
@@ -21,11 +18,11 @@ module:
         standard ArrayBuffer making mmap behind the scene.
       enabled: 1
       version: 0.5.0
-      interpreters:
+      interpreters: &ref_2
         - njs >= 10.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords:
+      keywords: &ref_3
         - wTools
         - ArrayBuffer
         - Buffer from file
@@ -37,12 +34,12 @@ module:
         - zero copy
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
+      contributors: &ref_4
         - Kostiantyn Wandalen <wanalen@01.school>
         - Volodymyr M. <volodymyr.migdal@gmail.com>
       native: 1
       npm.name: bufferfromfile
-      npm.scripts:
+      npm.scripts: &ref_5
         install: node-gyp configure && node-gyp rebuild --msvs_version=auto
         test: 'wtest .run proto rapidity:-3'
         clean: rm -rf build node_modules
@@ -96,13 +93,13 @@ module:
           - ../build
           - ../binding
       proto:
-        path: ../js
+        path: ../proto
       export:
         path: '{path::proto}/**'
       doc:
         path: ../doc
       js:
-        path: ../js
+        path: ../proto
       cpp:
         path: ../cpp
       build:
@@ -136,7 +133,7 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: ../js/Main.ss
+        path: ../proto/Main.ss
       entry.proto.only.tests:
         criterion:
           tests: only.tests
@@ -167,22 +164,31 @@ module:
         path: '{path::out.*=}/source/Index.s'
       npm.proto.entry:
         path:
-          - ../js/Main.ss
+          - ../proto/wtools/amid/bufferFromFile/Main.ss
           - ../proto/node_modules/bufferfromfile
       exported.dir.proto.export:
         criterion:
           generated: 1
           content: proto
           export: 1
-        path: ../js
+        path: ../proto
       exported.files.proto.export:
         criterion:
           generated: 1
           content: proto
           export: 1
         path:
-          - ../js
-          - ../js/Main.ss
+          - ../proto
+          - ../proto/Integration.test.ss
+          - ../proto/node_modules
+          - ../proto/node_modules/bufferfromfile
+          - ../proto/wtools
+          - ../proto/wtools/amid
+          - ../proto/wtools/amid/bufferFromFile
+          - ../proto/wtools/amid/bufferFromFile/Main.ss
+          - ../proto/wtools/amid/bufferFromFile/QuickTest.ss
+          - ../proto/wtools/amid/bufferFromFile.test
+          - ../proto/wtools/amid/bufferFromFile.test/BufferFromFile.test.ss
     submodule:
       bufferfromfile:
         path: 'hd://..'
@@ -380,7 +386,7 @@ module:
         src:
           filePath:
             '**': ''
-          prefixPath: ../js
+          prefixPath: ../proto
         mandatory: 1
         dstRewritingOnlyPreserving: 1
         linking: hardLinkMaybe
@@ -611,24 +617,6 @@ module:
           content: prime
         inherit:
           - files.transpile
-      exported.proto.export:
-        opts:
-          filePath: 'reflector::exported.proto.export'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
-      exported.files.proto.export:
-        opts:
-          filePath: 'reflector::exported.files.proto.export'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
     build:
       proto.export:
         steps:
@@ -718,9 +706,8 @@ module:
           content: proto
           export: 1
     consistency:
-      bufferFromFile.out.will.yml: *ref_0
-      ../.ex.will.yml: *ref_1
-      ../.im.will.yml: *ref_2
+      ../.ex.will.yml: *ref_0
+      ../.im.will.yml: *ref_1
   ../:
     about:
       name: bufferFromFile
@@ -730,31 +717,14 @@ module:
         standard ArrayBuffer making mmap behind the scene.
       enabled: 1
       version: 0.5.0
-      interpreters:
-        - njs >= 10.0.0
-        - chrome >= 60.0.0
-        - firefox >= 60.0.0
-      keywords:
-        - wTools
-        - ArrayBuffer
-        - Buffer from file
-        - ArrayBuffer from file
-        - TypedBuffer from file
-        - Nodejs buffer from file
-        - mmap
-        - mmap file
-        - zero copy
+      interpreters: *ref_2
+      keywords: *ref_3
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
-        - Kostiantyn Wandalen <wanalen@01.school>
-        - Volodymyr M. <volodymyr.migdal@gmail.com>
+      contributors: *ref_4
       native: 1
       npm.name: bufferfromfile
-      npm.scripts:
-        install: node-gyp configure && node-gyp rebuild --msvs_version=auto
-        test: 'wtest .run proto rapidity:-3'
-        clean: rm -rf build node_modules
+      npm.scripts: *ref_5
     path:
       module.willfiles:
         criterion:
@@ -805,13 +775,13 @@ module:
           - build
           - binding
       proto:
-        path: js
+        path: proto
       export:
         path: '{path::proto}/**'
       doc:
         path: doc
       js:
-        path: js
+        path: proto
       cpp:
         path: cpp
       build:
@@ -845,7 +815,7 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: js/Main.ss
+        path: proto/Main.ss
       entry.proto.only.tests:
         criterion:
           tests: only.tests
@@ -876,7 +846,7 @@ module:
         path: '{path::out.*=}/source/Index.s'
       npm.proto.entry:
         path:
-          - js/Main.ss
+          - proto/wtools/amid/bufferFromFile/Main.ss
           - proto/node_modules/bufferfromfile
     submodule:
       bufferfromfile:
@@ -1335,6 +1305,5 @@ module:
         hash: 7dcf019b80945df62990f4c82588b1b4
         size: 2105
       ../.im.will.yml:
-        hash: cda97701c71a6c023c300d0dc2ef4a36
-        size: 5750
-      bufferFromFile.out.will.yml: *ref_0
+        hash: 63d7b680da7d0e4c2852b6cf9e2db798
+        size: 5789
