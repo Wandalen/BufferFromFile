@@ -105,6 +105,8 @@ function production( test )
   let data = a.fileProvider.fileRead({ filePath : a.abs( 'package.json' ) });
   console.log( data );
 
+  let moduleDir = __.path.join( a.routinePath, 'node_modules', mdl.name );
+
   /* */
 
   a.shell( `npm i --production` )
@@ -115,11 +117,13 @@ function production( test )
     test.identical( op.exitCode, 0 );
 
     test.case = 'no test files';
-    let moduleDir = __.path.join( a.routinePath, 'node_modules', mdl.name );
     let testFiles = a.fileProvider.filesFind({ filePath : __.path.join( moduleDir, '**.test*' ), outputFormat : 'relative' });
     test.identical( testFiles, [] );
     return null;
   });
+
+  if( isFork )
+  a.shell({ execPath : `will .npm.install`, currentPath : moduleDir })
 
   run( 'Sample.s' );
   run( 'Sample.ss' );
