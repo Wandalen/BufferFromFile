@@ -18,7 +18,6 @@ const __ = _globals_.testing.wTools;
 const fileProvider = __.fileProvider;
 const path = fileProvider.path;
 
-
 // --
 // context
 // --
