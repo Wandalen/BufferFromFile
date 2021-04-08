@@ -59,10 +59,10 @@ path:
     - node_modules
     - build
     - binding
-  proto: ./js
+  proto: ./proto
   export: '{path::proto}/**'
   doc: ./doc
-  js: js
+  js: proto
   cpp: cpp
   build: build
   binding: binding
@@ -91,7 +91,7 @@ path:
       raw: compiled
       content: prime
   entry.proto.no.tests:
-    path: js/Main.ss
+    path: proto/Main.ss
     criterion:
       tests: no.tests
   entry.proto.only.tests:
