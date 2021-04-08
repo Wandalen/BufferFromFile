@@ -115,7 +115,7 @@ path:
       raw: compiled
       content: prime
   npm.proto.entry:
-    - js/Main.ss
+    - proto/wtools/amid/bufferFromFile/Main.ss
     - proto/node_modules/bufferfromfile
 reflector:
   reflect.proto:

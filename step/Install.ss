@@ -1,26 +1,26 @@
 #!/usr/bin/env node
-( function _Install_() {
-  
+( function _Install_()
+{
+
   'use strict';
-  
-  let ChildProcess = require( 'child_process' );
-  let path = require( 'path' );
-  
-  let o = 
-  { 
-    stdio: 'inherit', 
-    cwd : path.join( __dirname, '..' ),
+
+  const ChildProcess = require( 'child_process' );
+  const Path = require( 'path' );
+
+  let o =
+  {
+    stdio: 'inherit',
+    cwd : Path.join( __dirname, '..' ),
   }
   let npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
-  
+
   install();
-  
+
   /* */
 
   function install()
   {
     let pnd = ChildProcess.spawn( npm, [ 'run', 'node-pre-gyp-install' ], o );
-    
     pnd.on( 'exit', ( exitCode ) =>
     {
       if( exitCode !== 0 )
@@ -28,13 +28,12 @@
       test();
     });
   }
-  
+
   /* */
-  
+
   function test()
   {
-    let pnd = ChildProcess.fork( path.join( __dirname, '../QuickTest.ss' ), [], o );
-    
+    let pnd = ChildProcess.fork( Path.join( __dirname, '../proto/wtools/amid/bufferFromFile/QuickTest.ss' ), [], o );
     pnd.on( 'exit', ( exitCode ) =>
     {
       if( exitCode !== 0 )
@@ -48,14 +47,13 @@
       }
     });
   }
-  
+
   /* */
-  
-  function build() 
+
+  function build()
   {
     let pnd = ChildProcess.spawn( npm, [ 'run', 'node-pre-gyp-build' ], o )
-    
-    pnd.on( 'exit', function( exitCode ) 
+    pnd.on( 'exit', function( exitCode )
     {
       if( exitCode === 0 )
       return;
@@ -63,4 +61,5 @@
       return process.exit( exitCode );
     });
   }
+
 })();

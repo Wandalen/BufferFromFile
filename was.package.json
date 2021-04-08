@@ -20,7 +20,7 @@
     ".im.will.yml",
     ".ex.will.yml",
     "step",
-    "QuickTest.ss",
+    "proto/wtools/amid/bufferFromFile",
     "proto/node_modules"
   ],
   "main" : "proto/node_modules/bufferfromfile",
