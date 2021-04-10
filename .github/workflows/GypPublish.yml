@@ -1,10 +1,10 @@
 
-name : prebuild
+name : publish
 on : [ push ]
 
 jobs :
 
-  Prebuild :
+  Full :
     env :
       PRIVATE_WTOOLS_BOT_TOKEN : ${{ secrets.PRIVATE_WTOOLS_BOT_TOKEN }}
       PRIVATE_WTOOLS_BOT_SSH_KEY : ${{ secrets.PRIVATE_WTOOLS_BOT_SSH_KEY }}
@@ -15,7 +15,7 @@ jobs :
       fail-fast : false
       matrix :
         os : [ ubuntu-latest, windows-latest, macos-latest ]
-        node-version : [ 10.x, 11.x, 12.9.1, 13.x, 14.x, 15.x ]
+        node-version : [ 10.x, 12.9.1, 13.x, 14.x, 15.x ]
     if : "startsWith( github.event.head_commit.message, 'version' )"
     runs-on : ${{ matrix.os }}
     steps :
@@ -29,9 +29,6 @@ jobs :
       uses : actions/setup-node@v1
       with :
         node-version : ${{ matrix.node-version }}
-      # workaround for node-gyp problem on windows with Microsoft Visual Studio 2019 and 11 version of node
-    # - if : "startsWith( matrix.os, 'windows' ) && startsWith( matrix.node-version, '11' )"
-    #   run : npm install -g npm@latest
     - name : Save npm version
       id : getnpmver
       run : |
@@ -40,9 +37,8 @@ jobs :
       if : "startsWith( steps.getnpmver.outputs.npmver, '6.' )"
       run : npm install -g npm@latest-6
     - run : npm -g i willbe@delta
-    - run : npm run clean
+    - run: npm run clean
     - run : will .npm.install
     - run : npm list
-      continue-on-error : true
     - run : npm run node-pre-gyp-build
-    - run : npm run node-pre-gyp-package && npm run node-pre-gyp-github-release
+    - run : npm test

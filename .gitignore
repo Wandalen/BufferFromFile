@@ -1,4 +1,8 @@
 
+!/.github
+!/.circleci
+!/.*
+
 /_*
 /build
 /builder

@@ -190,9 +190,7 @@ function production( test )
     if( isFork )
     return __.git.path.nativize( remotePath );
 
-    debugger;
     let devDependencies = __.npm.fileReadField({ localPath : __.npm.pathLocalFromInside( __dirname ), key : 'devDependencies' });
-    debugger;
     if( devDependencies && devDependencies.wTesting && isNaN( devDependencies.wTesting[ 0 ] ) )
     return devDependencies.wTesting;
 

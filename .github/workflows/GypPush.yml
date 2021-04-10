@@ -1,50 +1,8 @@
 
 name : push
-
-on :
-  push :
-    branches : [ master ]
+on : [ push ]
 
 jobs :
-
-  Full :
-    env :
-      PRIVATE_WTOOLS_BOT_TOKEN : ${{ secrets.PRIVATE_WTOOLS_BOT_TOKEN }}
-      PRIVATE_WTOOLS_BOT_SSH_KEY : ${{ secrets.PRIVATE_WTOOLS_BOT_SSH_KEY }}
-      PRIVATE_WTOOLS_BOT_NPM_PASS : ${{ secrets.PRIVATE_WTOOLS_BOT_NPM_PASS }}
-      PRIVATE_WTOOLS_BOT_EMAIL : ${{ secrets.PRIVATE_WTOOLS_BOT_EMAIL }}
-      NODE_PRE_GYP_GITHUB_TOKEN : ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
-    strategy :
-      fail-fast : false
-      matrix :
-        os : [ ubuntu-latest, windows-latest, macos-latest ]
-        node-version : [ 10.x, 12.9.1, 13.x, 14.x, 15.x ]
-    if : "startsWith( github.event.head_commit.message, 'version' )"
-    runs-on : ${{ matrix.os }}
-    steps :
-    - name : Setup git
-      run : |
-        git config --global core.autocrlf input
-        git config --global user.email "testing@testing.com"
-        git config --global user.name "Testing"
-    - uses : actions/checkout@v2
-    - name : ${{ matrix.node-version }}
-      uses : actions/setup-node@v1
-      with :
-        node-version : ${{ matrix.node-version }}
-    - name : Save npm version
-      id : getnpmver
-      run : |
-        echo "::set-output name=npmver::$(npm -v)"
-    - name : Update npm if current version is 6
-      if : "startsWith( steps.getnpmver.outputs.npmver, '6.' )"
-      run : npm install -g npm@latest-6
-    - run : npm -g i willbe@delta
-    - run: npm run clean
-    - run : will .npm.install
-    - run : npm list
-    - run : npm run node-pre-gyp-build
-    - run : npm test
 
   Fast :
     env :
@@ -58,7 +16,7 @@ jobs :
       matrix :
         os : [ ubuntu-latest, windows-latest, macos-latest ]
         node-version : [ 14.x ]
-    if : "!startsWith( github.event.head_commit.message, 'version' )"
+    if : "!startsWith( github.event.head_commit.message, 'version' ) && !startsWith( github.event.head_commit.message, '.' )"
     runs-on : ${{ matrix.os }}
     steps :
     - name : Setup git

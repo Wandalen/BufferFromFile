@@ -11,9 +11,11 @@ jobs :
       - run : git config --global user.email "testing@testing.com"
       - run : git config --global user.name "Testing"
       - run : node -v
-      - node/install-packages :
-          with-cache : false
-          override-ci-command : npm install
+      - run : npm install --prefix=$HOME/.local --global willbe@delta
+      # - node/install-packages :
+      #     with-cache : false
+      #     override-ci-command : npm install
+      - run : will .npm.install
       - run : npm test
 workflows :
   test :
