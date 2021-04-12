@@ -116,7 +116,6 @@ path:
       content: prime
   npm.proto.entry:
     - proto/wtools/amid/bufferFromFile/Main.ss
-    - proto/node_modules/bufferfromfile
 reflector:
   reflect.proto:
     inherit: predefined.*
