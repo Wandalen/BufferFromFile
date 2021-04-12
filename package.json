@@ -1,6 +1,6 @@
 {
   "name" : "bufferfromfile",
-  "version" : "0.4.306",
+  "version" : "0.4.307",
   "engine" : "node >= 6.0.0",
   "enabled" : true,
   "license" : "MIT",
@@ -23,7 +23,7 @@
     "proto/wtools/amid/bufferFromFile",
     "proto/node_modules"
   ],
-  "main" : "proto/node_modules/bufferfromfile",
+  "main" : "proto/wtools/amid/bufferFromFile/Main.ss",
   "scripts" :
   {
     "install" : "node step/Install.ss",
