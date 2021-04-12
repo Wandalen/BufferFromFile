@@ -33,7 +33,7 @@
 
   function test()
   {
-    let pnd = ChildProcess.fork( Path.join( __dirname, '../proto/wtools/amid/bufferFromFile/QuickTest.ss' ), [], o );
+    let pnd = ChildProcess.fork( Path.join( __dirname, '../proto/wtools/amid/deasync/QuickTest.ss' ), [], o );
     pnd.on( 'exit', ( exitCode ) =>
     {
       if( exitCode !== 0 )
