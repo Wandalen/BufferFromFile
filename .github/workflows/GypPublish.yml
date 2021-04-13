@@ -40,5 +40,6 @@ jobs :
     - run: npm run clean
     - run : will .npm.install
     - run : npm list
+      continue-on-error : true
     - run : npm run node-pre-gyp-build
     - run : npm test
