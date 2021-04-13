@@ -779,7 +779,7 @@ function ipc( test )
 {
   let context = this;
   let a = context.assetFor( test, false );
-  let _TestingPath_ = _.module.resolve( 'wTesting' );
+  let _TestingPath_ = a.path.nativize( _.module.resolve( 'wTesting' ) );
   let locals = { _BufferFromFilePath_ : context.bufferFromFilePath, _TestingPath_, _FilePath_ : context.filePath };
   let program1Path = a.program({ routine : program1, locals });
 
