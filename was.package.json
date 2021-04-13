@@ -33,7 +33,8 @@
     "node-pre-gyp-github-release" : "node-pre-gyp-github publish --release",
     "test" : "wtest .run proto rapidity:-3",
     "make_doc" : "./doc.sh",
-    "clean" : "rm -rf build node_modules binding"
+    "clean" : "rm -rf build node_modules binding",
+    "quick-test" : "node proto/wtools/amid/bufferFromFile/QuickTest.ss"
   },
   "binary" :
   {
