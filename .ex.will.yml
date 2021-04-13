@@ -30,6 +30,8 @@ about :
     install : 'node-gyp configure && node-gyp rebuild --msvs_version=auto'
     test : 'wtest .run proto rapidity:-3'
     clean : 'rm -rf build node_modules'
+    quick-test : 'node proto/wtools/amid/bufferFromFile/QuickTest.ss'
+
 
 path :
 
