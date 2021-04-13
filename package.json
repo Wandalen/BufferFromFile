@@ -33,8 +33,7 @@
     "node-pre-gyp-github-release" : "node-pre-gyp-github publish --release",
     "test" : "wtest .run proto rapidity:-3",
     "make_doc" : "./doc.sh",
-    "clean" : "rm -rf build node_modules binding",
-    "quick-test" : "node proto/wtools/amid/bufferFromFile/QuickTest.ss"
+    "clean" : "rm -rf build node_modules binding"
   },
   "binary" :
   {
@@ -52,14 +51,14 @@
   {
     "url" : "https://github.com/Wandalen/BufferFromFile/issues"
   },
-  "dependencies" : { "node-gyp" : "7.1.2", "node-pre-gyp" : "0.17.0", "wbasenodejscpp" : "" },
+  "dependencies" : { "node-gyp" : "7.1.2", "node-pre-gyp" : "0.17.0", "wbasenodejscpp" : "delta" },
   "devDependencies" :
   {
-    "wTools" : "",
-    "wTesting" : "",
-    "wprocess" : "",
     "node-pre-gyp-github" : "1.4.3",
-    "eslint" : "7.1.0"
+    "eslint" : "7.1.0",
+    "wTools" : "delta",
+    "wTesting" : "delta",
+    "wprocess" : "delta"
   },
   "gypfile" : false,
   "keywords" :
