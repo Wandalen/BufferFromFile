@@ -84,7 +84,7 @@ function assetFor( test, asset )
 }
 
 // --
-// routines
+// implementation
 // --
 
 function buffersFromRaw( test )
@@ -542,7 +542,7 @@ function advise( test )
 {
   let context = this;
 
-  var advises = _.mapOnlyOwnKeys( BufferFromFile.Advise );
+  var advises = _.props.onlyOwnKeys( BufferFromFile.Advise );
   _.fileProvider.fileWrite( context.filePath, context.testData );
 
   var buffer = BufferFromFile( context.filePath ).ArrayBuffer();
@@ -715,8 +715,8 @@ function readOnlyBuffer( test )
   let context = this;
   let a = test.assetFor( false );
   let locals = { _BufferFromFilePath_ : context.bufferFromFilePath, _FilePath_ : context.filePath };
-  let program1Path = a.program({ routine : program1, locals : _.mapExtend( null, locals ) });
-  let program2Path = a.program({ routine : program2, locals : _.mapExtend( null, locals ) });
+  let program1Path = a.program({ routine : program1, locals : _.props.extend( null, locals ) });
+  let program2Path = a.program({ routine : program2, locals : _.props.extend( null, locals ) });
 
   _.fileProvider.fileWrite( context.filePath, context.testData );
 
