@@ -2,10 +2,13 @@ format: outwillfile-2.0
 root:
   - bufferFromFile.out
 consistency:
-  ../.ex.will.yml: &ref_0
+  bufferFromFile.out.will.yml: &ref_0
+    hash: f101a6f35a50e4289c496b9bee4b79d2
+    size: 33775
+  ../.ex.will.yml: &ref_1
     hash: 325db1e8908288101f9dfc15896728a6
     size: 2176
-  ../.im.will.yml: &ref_1
+  ../.im.will.yml: &ref_2
     hash: 4617aada2cfcd65bb103405ca8ad4b88
     size: 5749
 module:
@@ -18,11 +21,11 @@ module:
         standard ArrayBuffer making mmap behind the scene.
       enabled: 1
       version: 0.5.0
-      interpreters: &ref_2
+      interpreters:
         - njs >= 10.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords: &ref_3
+      keywords:
         - wTools
         - ArrayBuffer
         - Buffer from file
@@ -34,12 +37,12 @@ module:
         - zero copy
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: &ref_4
+      contributors:
         - Kostiantyn Wandalen <wanalen@01.school>
         - Volodymyr M. <volodymyr.migdal@gmail.com>
       native: 1
       npm.name: bufferfromfile
-      npm.scripts: &ref_5
+      npm.scripts:
         install: node-gyp configure && node-gyp rebuild --msvs_version=auto
         test: 'wtest .run proto rapidity:-3'
         clean: rm -rf build node_modules
@@ -616,6 +619,24 @@ module:
           content: prime
         inherit:
           - files.transpile
+      exported.proto.export:
+        opts:
+          filePath: 'reflector::exported.proto.export'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
+      exported.files.proto.export:
+        opts:
+          filePath: 'reflector::exported.files.proto.export'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
     build:
       proto.export:
         steps:
@@ -705,8 +726,9 @@ module:
           content: proto
           export: 1
     consistency:
-      ../.ex.will.yml: *ref_0
-      ../.im.will.yml: *ref_1
+      bufferFromFile.out.will.yml: *ref_0
+      ../.ex.will.yml: *ref_1
+      ../.im.will.yml: *ref_2
   ../:
     about:
       name: bufferFromFile
@@ -716,14 +738,32 @@ module:
         standard ArrayBuffer making mmap behind the scene.
       enabled: 1
       version: 0.5.0
-      interpreters: *ref_2
-      keywords: *ref_3
+      interpreters:
+        - njs >= 10.0.0
+        - chrome >= 60.0.0
+        - firefox >= 60.0.0
+      keywords:
+        - wTools
+        - ArrayBuffer
+        - Buffer from file
+        - ArrayBuffer from file
+        - TypedBuffer from file
+        - Nodejs buffer from file
+        - mmap
+        - mmap file
+        - zero copy
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: *ref_4
+      contributors:
+        - Kostiantyn Wandalen <wanalen@01.school>
+        - Volodymyr M. <volodymyr.migdal@gmail.com>
       native: 1
       npm.name: bufferfromfile
-      npm.scripts: *ref_5
+      npm.scripts:
+        install: node-gyp configure && node-gyp rebuild --msvs_version=auto
+        test: 'wtest .run proto rapidity:-3'
+        clean: rm -rf build node_modules
+        quick-test: node proto/wtools/amid/bufferFromFile/QuickTest.ss
     path:
       module.willfiles:
         criterion:
@@ -1305,3 +1345,6 @@ module:
       ../.im.will.yml:
         hash: 4617aada2cfcd65bb103405ca8ad4b88
         size: 5749
+      bufferFromFile.out.will.yml:
+        hash: f101a6f35a50e4289c496b9bee4b79d2
+        size: 33775
