@@ -172,7 +172,7 @@ function bufferFromFile( test )
   _.fileProvider.fileWrite( context.filePath, context.testData );
 
   var descriptor = BufferFromFile( context.filePath );
-  test.true( _.objectIs( descriptor ) );
+  test.true( _.object.isBasic( descriptor ) );
   test.true( _.bufferRawIs( descriptor.ArrayBuffer() ) );
   var nodeBuffer = descriptor.NodeBuffer();
   test.true( _.bufferNodeIs( nodeBuffer ) );
