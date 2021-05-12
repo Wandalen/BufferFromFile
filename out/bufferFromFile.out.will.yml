@@ -2,12 +2,9 @@ format: outwillfile-2.0
 root:
   - bufferFromFile.out
 consistency:
-  ../.ex.will.yml: &ref_0
-    hash: 325db1e8908288101f9dfc15896728a6
-    size: 2176
-  ../.im.will.yml: &ref_1
-    hash: 4617aada2cfcd65bb103405ca8ad4b88
-    size: 5749
+  ../will.yml: &ref_0
+    hash: 433ec6dbc38d17c2bd4e80de1052edf4
+    size: 7699
 module:
   bufferFromFile.out:
     about:
@@ -18,11 +15,11 @@ module:
         standard ArrayBuffer making mmap behind the scene.
       enabled: 1
       version: 0.5.0
-      interpreters: &ref_2
-        - njs >= 10.0.0
-        - chrome >= 60.0.0
-        - firefox >= 60.0.0
-      keywords: &ref_3
+      license: MIT
+      native: 1
+      npm.name: bufferfromfile
+      author: Kostiantyn Wandalen <wanalen@01.school>
+      keywords: &ref_1
         - wTools
         - ArrayBuffer
         - Buffer from file
@@ -32,14 +29,14 @@ module:
         - mmap
         - mmap file
         - zero copy
-      license: MIT
-      author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: &ref_4
+      contributors: &ref_2
         - Kostiantyn Wandalen <wanalen@01.school>
         - Volodymyr M. <volodymyr.migdal@gmail.com>
-      native: 1
-      npm.name: bufferfromfile
-      npm.scripts: &ref_5
+      interpreters: &ref_3
+        - njs >= 10.0.0
+        - chrome >= 60.0.0
+        - firefox >= 60.0.0
+      npm.scripts: &ref_4
         install: node-gyp configure && node-gyp rebuild --msvs_version=auto
         test: 'wtest .run proto rapidity:-3'
         clean: rm -rf build node_modules
@@ -56,15 +53,11 @@ module:
       module.original.willfiles:
         criterion:
           predefined: 1
-        path:
-          - ../.ex.will.yml
-          - ../.im.will.yml
+        path: ../will.yml
       module.peer.willfiles:
         criterion:
           predefined: 1
-        path:
-          - ../.ex.will.yml
-          - ../.im.will.yml
+        path: ../will.yml
       module.peer.in:
         criterion:
           predefined: 1
@@ -207,7 +200,7 @@ module:
         enabled: 0
         criterion:
           development: 1
-      wProcess:
+      wprocess:
         path: 'npm:///wprocess'
         autoExporting: 0
         enabled: 0
@@ -705,8 +698,7 @@ module:
           content: proto
           export: 1
     consistency:
-      ../.ex.will.yml: *ref_0
-      ../.im.will.yml: *ref_1
+      ../will.yml: *ref_0
   ../:
     about:
       name: bufferFromFile
@@ -716,27 +708,23 @@ module:
         standard ArrayBuffer making mmap behind the scene.
       enabled: 1
       version: 0.5.0
-      interpreters: *ref_2
-      keywords: *ref_3
       license: MIT
-      author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: *ref_4
       native: 1
       npm.name: bufferfromfile
-      npm.scripts: *ref_5
+      author: Kostiantyn Wandalen <wanalen@01.school>
+      keywords: *ref_1
+      contributors: *ref_2
+      interpreters: *ref_3
+      npm.scripts: *ref_4
     path:
       module.willfiles:
         criterion:
           predefined: 1
-        path:
-          - .ex.will.yml
-          - .im.will.yml
+        path: will.yml
       module.original.willfiles:
         criterion:
           predefined: 1
-        path:
-          - .ex.will.yml
-          - .im.will.yml
+        path: will.yml
       module.peer.willfiles:
         criterion:
           predefined: 1
@@ -865,7 +853,7 @@ module:
         enabled: 0
         criterion:
           development: 1
-      wProcess:
+      wprocess:
         path: 'npm:///wprocess'
         autoExporting: 0
         enabled: 0
@@ -1299,9 +1287,6 @@ module:
           - 'build::release'
           - 'build::npm'
     consistency:
-      ../.ex.will.yml:
-        hash: 325db1e8908288101f9dfc15896728a6
-        size: 2176
-      ../.im.will.yml:
-        hash: 4617aada2cfcd65bb103405ca8ad4b88
-        size: 5749
+      ../will.yml:
+        hash: 433ec6dbc38d17c2bd4e80de1052edf4
+        size: 7699
