@@ -1,55 +1,117 @@
-submodule:
-  bufferfromfile:
-    path: 'hd://.'
-    enabled: 0
+about:
+  name: bufferFromFile
+  description: >-
+    The module in JavaScript provides convenient means for using files as
+    standard ArrayBuffer making mmap behind the scene.
+  version: 0.5.0
+  enabled: 1
+  license: MIT
+  native: 1
+  npm.name: bufferfromfile
+  author: Kostiantyn Wandalen <wanalen@01.school>
+  keywords:
+    - wTools
+    - ArrayBuffer
+    - Buffer from file
+    - ArrayBuffer from file
+    - TypedBuffer from file
+    - Nodejs buffer from file
+    - mmap
+    - mmap file
+    - zero copy
+  contributors:
+    - Kostiantyn Wandalen <wanalen@01.school>
+    - Volodymyr M. <volodymyr.migdal@gmail.com>
+  interpreters:
+    - njs >= 10.0.0
+    - chrome >= 60.0.0
+    - firefox >= 60.0.0
+  npm.scripts:
+    install: node-gyp configure && node-gyp rebuild --msvs_version=auto
+    test: 'wtest .run proto rapidity:-3'
+    clean: rm -rf build node_modules
+    quick-test: node proto/wtools/amid/bufferFromFile/QuickTest.ss
+build:
+  proto.export:
     criterion:
-      development: 1
-  wTools:
-    path: 'npm:///wTools'
-    enabled: 0
+      content: proto
+      export: 1
+    steps:
+      - 'step::proto.export'
+  doc.export:
     criterion:
-      development: 1
-  wTesting:
-    path: 'npm:///wTesting'
-    enabled: 0
+      content: doc
+      export: 1
+    steps:
+      - 'step::doc.export'
+  npm.export:
     criterion:
-      development: 1
-  wProcess:
-    path: 'npm:///wprocess'
-    enabled: 0
+      content: npm
+      export: 1
+    steps:
+      - 'step::npm.publish'
+  export:
     criterion:
-      development: 1
-  willbe:
-    path: 'npm:///willbe'
-    enabled: 0
+      default: 1
+      export: 1
+    steps:
+      - 'build::proto.export'
+  debug:
     criterion:
-      development: 0
-  node-gyp:
-    path: 'npm:///node-gyp#7.1.2'
-    enabled: 0
+      default: 1
+    steps:
+      - clean.build.and.binding
+      - node-gyp.build
+  install:
+    steps:
+      - submodules.update
+      - node-gyp.install
+  compiled.debug:
     criterion:
-      development: 0
-  node-pre-gyp:
-    path: 'npm:///node-pre-gyp#0.17.0'
-    enabled: 0
+      debug: debug
+      raw: compiled
+      content: prime
+    steps:
+      - 'step::clean.out*=2'
+      - transpile.proto.no.tests*=1
+      - transpile.proto.only.tests*=1
+  raw.release:
     criterion:
-      development: 0
-  wbasenodejscpp:
-    path: 'npm:///wbasenodejscpp'
-    enabled: 0
+      debug: release
+      raw: raw
+      content: prime
+    steps:
+      - 'step::clean.out*=2'
+      - transpile.proto.raw
+  release:
     criterion:
-      development: 0
-  node-pre-gyp-github:
-    path: 'npm:///node-pre-gyp-github#1.4.3'
-    enabled: 0
+      debug: release
+      raw: compiled
+      content: prime
+    steps:
+      - 'step::clean.out*=2'
+      - transpile.proto.no.tests*=1
+      - transpile.proto.only.tests*=1
+  npm:
     criterion:
-      development: 1
-  eslint:
-    path: 'npm:///eslint'
-    enabled: 0
-    criterion:
-      development: 1
+      debug: debug
+      raw: raw
+      content: npm
+    steps:
+      - npm.generate.*=1
+  all:
+    steps:
+      - 'build::debug'
+      - 'build::compiled.debug'
+      - 'build::raw.release'
+      - 'build::release'
+      - 'build::npm'
 path:
+  repository: 'git+https:///github.com/Wandalen/BufferFromFile.git'
+  origins:
+    - 'git+https:///github.com/Wandalen/bufferFromFile.git'
+    - 'npm:///bufferfromfile'
+  bugtracker: 'https:///github.com/Wandalen/BufferFromFile/issues'
   in: .
   out: out
   temp:
@@ -174,6 +236,26 @@ reflector:
       '**.test*': 1
       'path::proto': '{path::out.*=1}/Tests.test.s'
 step:
+  proto.export:
+    inherit: module.export
+    export: 'path::export'
+    tar: 0
+    criterion:
+      content: proto
+  doc.export:
+    inherit: module.export
+    export: 'path::doc'
+    tar: 0
+    criterion:
+      content: doc
+  npm.export:
+    inherit: module.export
+    export: out.npm
+    tar: 0
+    criterion:
+      content: npm
+  npm.publish:
+    shell: npm publish
   npm.generate:
     inherit: npm.generate
     entryPath: 'path::entry.out.*=1'
@@ -222,54 +304,54 @@ step:
   node-gyp.install:
     currentPath: 'path::in'
     shell: npm run-script node-pre-gyp-install
-build:
-  debug:
+submodule:
+  bufferfromfile:
+    path: 'hd://.'
+    enabled: 0
     criterion:
-      default: 1
-    steps:
-      - clean.build.and.binding
-      - node-gyp.build
-  install:
-    steps:
-      - submodules.update
-      - node-gyp.install
-  compiled.debug:
+      development: 1
+  wTools:
+    path: 'npm:///wTools'
+    enabled: 0
     criterion:
-      debug: debug
-      raw: compiled
-      content: prime
-    steps:
-      - 'step::clean.out*=2'
-      - transpile.proto.no.tests*=1
-      - transpile.proto.only.tests*=1
-  raw.release:
+      development: 1
+  wTesting:
+    path: 'npm:///wTesting'
+    enabled: 0
     criterion:
-      debug: release
-      raw: raw
-      content: prime
-    steps:
-      - 'step::clean.out*=2'
-      - transpile.proto.raw
-  release:
+      development: 1
+  wprocess:
+    path: 'npm:///wprocess'
+    enabled: 0
     criterion:
-      debug: release
-      raw: compiled
-      content: prime
-    steps:
-      - 'step::clean.out*=2'
-      - transpile.proto.no.tests*=1
-      - transpile.proto.only.tests*=1
-  npm:
+      development: 1
+  willbe:
+    path: 'npm:///willbe'
+    enabled: 0
     criterion:
-      debug: debug
-      raw: raw
-      content: npm
-    steps:
-      - npm.generate.*=1
-  all:
-    steps:
-      - 'build::debug'
-      - 'build::compiled.debug'
-      - 'build::raw.release'
-      - 'build::release'
-      - 'build::npm'
+      development: 0
+  node-gyp:
+    path: 'npm:///node-gyp#7.1.2'
+    enabled: 0
+    criterion:
+      development: 0
+  node-pre-gyp:
+    path: 'npm:///node-pre-gyp#0.17.0'
+    enabled: 0
+    criterion:
+      development: 0
+  wbasenodejscpp:
+    path: 'npm:///wbasenodejscpp'
+    enabled: 0
+    criterion:
+      development: 0
+  node-pre-gyp-github:
+    path: 'npm:///node-pre-gyp-github#1.4.3'
+    enabled: 0
+    criterion:
+      development: 1
+  eslint:
+    path: 'npm:///eslint'
+    enabled: 0
+    criterion:
+      development: 1
