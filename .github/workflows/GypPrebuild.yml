@@ -11,6 +11,9 @@ jobs :
       PRIVATE_WTOOLS_BOT_NPM_PASS : ${{ secrets.PRIVATE_WTOOLS_BOT_NPM_PASS }}
       PRIVATE_WTOOLS_BOT_EMAIL : ${{ secrets.PRIVATE_WTOOLS_BOT_EMAIL }}
       NODE_PRE_GYP_GITHUB_TOKEN : ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
+      HDF5_HOME_LINUX : /tmp/hdf5/hdf5-1.10.5-linux-centos7-x86_64-shared
+      HDF5_HOME_WIN : C:/Program Files/HDF_Group/HDF5/1.10.5
+      HDF5_HOME_MAC : /tmp/hdf5/hdf5-1.10.7-macOS-10.14-x86_64-clang10.0.1
     strategy :
       fail-fast : false
       matrix :
@@ -41,40 +44,8 @@ jobs :
       run : npm install -g npm@latest-6
     - run : npm -g i willbe@stable
     - run : npm run clean
-    # - run : will .npm.install
-    # - run : npm list
-    #   continue-on-error : true
-    # - run : npm run node-pre-gyp-build
-    # - run : npm run node-pre-gyp-package && npm run node-pre-gyp-github-release
-
-    - name : "Linux"
-      if : matrix.os == 'ubuntu-latest'
-      run : |
-        wget -q https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.5/bin/hdf5-1.10.5-linux-centos7-x86_64-shared.tar.gz -O /tmp/hdf5-1.10.5.tar.gz
-        mkdir -p /tmp/hdf5
-        tar -zxf /tmp/hdf5-1.10.5.tar.gz -C /tmp/hdf5
-        export PATH=/tmp/hdf5/hdf5-1.10.5-linux-centos7-x86_64-shared/bin:$PATH
-        export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/tmp/hdf5/hdf5-1.10.5-linux-centos7-x86_64-shared/lib
-        npm install --longlong_type=LONGLONG53BITS
-        npm list || true
-        npm test
-
-    - name : "Windows"
-      if : matrix.os == 'windows-latest'
-      run : |
-        C:\\Miniconda\\condabin\\conda.bat install -y -c cctbx202105 hdf5
-        $env:Path += ";C:\\Miniconda\\Library\\bin;C:\\Miniconda\\Library\\include;C:\\Miniconda\\Library\\lib;C:\\Miniconda\\Library\\share"
-        npm install --longlong_type=LONGLONG53BITS
-        Invoke-Expression "npm list"
-        npm test
-      shell : powershell
-
-    - name : "Mac"
-      if : matrix.os == 'macos-latest'
-      run : |
-        brew install hdf5@1.10
-        export PATH=/usr/local/opt/hdf5@1.10/bin:$PATH
-        export DYLD_LIBRARY_PATH=/usr/local/opt/hdf5@1.10/lib:$DYLD_LIBRARY_PATH
-        npm install --longlong_type=LONGLONG53BITS
-        npm list || true
-        npm test
+    - run : will .npm.install
+    - run : npm list
+      continue-on-error : true
+    - run : npm run node-pre-gyp-build
+    - run : npm run node-pre-gyp-package && npm run node-pre-gyp-github-release
