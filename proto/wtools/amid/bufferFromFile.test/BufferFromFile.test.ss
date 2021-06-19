@@ -715,8 +715,8 @@ function readOnlyBuffer( test )
   let context = this;
   let a = test.assetFor( false );
   let locals = { _BufferFromFilePath_ : context.bufferFromFilePath, _FilePath_ : context.filePath };
-  let program1Path = a.program({ routine : program1, locals : _.props.extend( null, locals ) }).programPath;
-  let program2Path = a.program({ routine : program2, locals : _.props.extend( null, locals ) }).programPath;
+  let program1Path = a.program({ entry : program1, locals : _.props.extend( null, locals ) }).programPath;
+  let program2Path = a.program({ entry : program2, locals : _.props.extend( null, locals ) }).programPath;
 
   _.fileProvider.fileWrite( context.filePath, context.testData );
 
@@ -781,7 +781,7 @@ function ipc( test )
   let a = context.assetFor( test, false );
   let _TestingPath_ = a.path.nativize( _.module.resolve( 'wTesting' ) );
   let locals = { _BufferFromFilePath_ : context.bufferFromFilePath, _TestingPath_, _FilePath_ : context.filePath };
-  let program1Path = a.program({ routine : program1, locals }).programPath;
+  let program1Path = a.program({ entry : program1, locals }).programPath;
 
   // a.reflect(); /* qqq : why not used? */
   _.fileProvider.fileWrite( _.path.join( a.routinePath, 'File.txt' ), 'ab' );
