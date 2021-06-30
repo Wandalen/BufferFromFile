@@ -52,7 +52,8 @@ function production( test )
 
   let mdlPath = a.abs( __dirname, '../package.json' );
   let mdl = a.fileProvider.fileRead({ filePath : mdlPath, encoding : 'json' });
-  let trigger = __.test.workflowTriggerGet( a.abs( __dirname, '..' ) );
+  let moduleLocalPath = a.abs( __dirname, '..' );
+  let trigger = __.test.workflowTriggerGet( moduleLocalPath );
 
   if( mdl.private || trigger === 'pull_request' )
   {
@@ -84,8 +85,8 @@ function production( test )
   a.fileProvider.filesReflect({ reflectMap : { [ sampleDir ] : a.abs( 'sample/trivial' ) } });
 
   let remotePath = null;
-  if( __.git.insideRepository( a.abs( __dirname, '..' ) ) )
-  remotePath = __.git.remotePathFromLocal( a.abs( __dirname, '..' ) );
+  if( __.git.insideRepository( moduleLocalPath ) )
+  remotePath = __.git.remotePathFromLocal( moduleLocalPath );
 
   let isFork = false;
   let mdlRepoParsed, remotePathParsed;
@@ -172,7 +173,7 @@ function production( test )
       test.case = 'fork is up to date with origin'
       return __.git.isUpToDate
       ({
-        localPath : a.abs( __dirname, '..' ),
+        localPath : moduleLocalPath,
         remotePath : __.git.path.normalize( mdl.repository.url )
       })
       .then( ( isUpToDate ) =>
@@ -190,7 +191,11 @@ function production( test )
     if( isFork )
     return __.git.path.nativize( remotePath );
 
-    let devDependencies = __.npm.fileReadField({ localPath : __.npm.pathLocalFromInside( __dirname ), key : 'devDependencies' });
+    let devDependencies = __.npm.fileReadField
+    ({
+      localPath : __.npm.pathLocalFromInside( __dirname ),
+      key : 'devDependencies'
+    });
     if( devDependencies && devDependencies.wTesting && isNaN( devDependencies.wTesting[ 0 ] ) )
     return devDependencies.wTesting;
 
