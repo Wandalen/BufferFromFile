@@ -24,7 +24,6 @@ node sample/trivial/Sample.s
 npm add bufferfromfile@alpha
 ```
 
-
 ### Sample
 
 ```javascript
