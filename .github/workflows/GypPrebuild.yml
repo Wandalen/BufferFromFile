@@ -15,7 +15,7 @@ jobs :
       fail-fast : false
       matrix :
         os : [ ubuntu-latest, windows-latest, macos-latest ]
-        node-version : [ 10.x, 11.x, 12.9.1, 13.x, 14.x, 15.x ]
+        node-version : [ 10.x, 11.x, 12.9.1, 13.x, 14.x, 15.x, 16.x ]
     if : "startsWith( github.event.head_commit.message, 'version' ) && startsWith( github.ref, 'refs/tags/v' )"
     runs-on : ${{ matrix.os }}
     steps :
@@ -39,7 +39,7 @@ jobs :
     - name : Update npm if current version is 6
       if : "startsWith( steps.getnpmver.outputs.npmver, '6.' )"
       run : npm install -g npm@latest-6
-    - run : npm -g i willbe@stable
+    - run : npm -g i willbe@delta
     - run : npm run clean
     - run : will .npm.install
     - run : npm list
