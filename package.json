@@ -1,6 +1,6 @@
 {
   "name": "bufferfromfile",
-  "version": "0.4.340",
+  "version": "0.4.341",
   "engine": "node >= 6.0.0",
   "enabled": true,
   "license": "MIT",
@@ -61,8 +61,8 @@
     "wTools": "delta",
     "wTesting": "delta",
     "wprocess": "delta",
-    "node-pre-gyp-github": "1.4.3",
-    "eslint": "7.1.0"
+    "eslint": "7.1.0",
+    "@mathquis/node-pre-gyp-github": "1.0.1"
   },
   "gypfile": false,
   "keywords": [
