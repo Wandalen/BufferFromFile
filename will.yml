@@ -346,7 +346,7 @@ submodule:
     criterion:
       development: 0
   node-pre-gyp-github:
-    path: 'npm:///node-pre-gyp-github#1.4.3'
+    path: 'npm:///@mathquis/node-pre-gyp-github#1.0.1'
     enabled: 0
     criterion:
       development: 1
