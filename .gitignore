@@ -11,12 +11,16 @@
 /node_modules
 /.module
 /package-lock.json
+/Cargo.lock
+/.vscode
 
 -*
 .module
+Cargo.lock
 .warchive*
 *.log
 *.db
 *.tmp
 *.build
-
+.DS_Store
+.idea
