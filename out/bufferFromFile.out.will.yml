@@ -3,8 +3,8 @@ root:
   - bufferFromFile.out
 consistency:
   ../will.yml: &ref_0
-    hash: b46a7c0df76f4466167fcc60a734af34
-    size: 7709
+    hash: 0482f6527f10af28bbe051d6b4c713bd
+    size: 7568
 module:
   bufferFromFile.out:
     about:
@@ -423,9 +423,6 @@ module:
           content: npm
         inherit:
           - module.export
-      npm.publish:
-        opts:
-          shell: npm publish
       npm.generate.debug.raw:
         opts:
           entryPath: 'path::entry.out.*=1'
@@ -621,12 +618,6 @@ module:
           - 'step::doc.export'
         criterion:
           content: doc
-          export: 1
-      npm.export:
-        steps:
-          - 'step::npm.publish'
-        criterion:
-          content: npm
           export: 1
       export:
         steps:
@@ -1025,9 +1016,6 @@ module:
           content: npm
         inherit:
           - module.export
-      npm.publish:
-        opts:
-          shell: npm publish
       npm.generate.debug.raw:
         opts:
           entryPath: 'path::entry.out.*=1'
@@ -1224,12 +1212,6 @@ module:
         criterion:
           content: doc
           export: 1
-      npm.export:
-        steps:
-          - 'step::npm.publish'
-        criterion:
-          content: npm
-          export: 1
       export:
         steps:
           - 'build::proto.export'
@@ -1288,5 +1270,5 @@ module:
           - 'build::npm'
     consistency:
       ../will.yml:
-        hash: b46a7c0df76f4466167fcc60a734af34
-        size: 7709
+        hash: 0482f6527f10af28bbe051d6b4c713bd
+        size: 7568
