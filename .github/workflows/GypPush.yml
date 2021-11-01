@@ -24,11 +24,17 @@ jobs :
         git config --global core.autocrlf input
         git config --global user.email "testing@testing.com"
         git config --global user.name "Testing"
+        git config --global pull.rebase false
+        git config --global init.defaultBranch master
     - uses : actions/checkout@v2
     - name : ${{ matrix.node-version }}
-      uses : actions/setup-node@v1
+      uses : Wandalen/wretry.action@v1.0.11
       with :
-        node-version : ${{ matrix.node-version }}
+        action : actions/setup-node@v1
+        with : |
+          node-version : ${{ matrix.node-version }}
+        attempt_limit : 3
+        attempt_delay: 1000
     - name : Save npm version
       id : getnpmver
       run : |
