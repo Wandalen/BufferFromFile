@@ -3,8 +3,8 @@ root:
   - bufferFromFile.out
 consistency:
   ../will.yml: &ref_0
-    hash: 0482f6527f10af28bbe051d6b4c713bd
-    size: 7568
+    hash: 2dd54f3ff3b74003f6d43830967bed0a
+    size: 7576
 module:
   bufferFromFile.out:
     about:
@@ -1270,5 +1270,5 @@ module:
           - 'build::npm'
     consistency:
       ../will.yml:
-        hash: 0482f6527f10af28bbe051d6b4c713bd
-        size: 7568
+        hash: 2dd54f3ff3b74003f6d43830967bed0a
+        size: 7576
