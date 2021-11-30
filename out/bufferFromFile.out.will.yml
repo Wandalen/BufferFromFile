@@ -18,7 +18,7 @@ module:
       license: MIT
       native: 1
       npm.name: bufferfromfile
-      author: Kostiantyn Wandalen <wanalen@01.school>
+      author: Kostiantyn Wandalen <wandalen@obox.systems>
       keywords: &ref_1
         - wTools
         - ArrayBuffer
@@ -30,7 +30,7 @@ module:
         - mmap file
         - zero copy
       contributors: &ref_2
-        - Kostiantyn Wandalen <wanalen@01.school>
+        - Kostiantyn Wandalen <wandalen@obox.systems>
         - Volodymyr M. <volodymyr.migdal@gmail.com>
       interpreters: &ref_3
         - njs >= 10.0.0
@@ -702,7 +702,7 @@ module:
       license: MIT
       native: 1
       npm.name: bufferfromfile
-      author: Kostiantyn Wandalen <wanalen@01.school>
+      author: Kostiantyn Wandalen <wandalen@obox.systems>
       keywords: *ref_1
       contributors: *ref_2
       interpreters: *ref_3

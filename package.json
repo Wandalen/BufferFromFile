@@ -5,11 +5,11 @@
   "enabled": true,
   "license": "MIT",
   "description": "The module in JavaScript provides convenient means for using files as standard ArrayBuffer making mmap behind the scene.",
-  "author": "Kostiantyn Wandalen <wanalen@01.school>",
+  "author": "Kostiantyn Wandalen <wandalen@obox.systems>",
   "contributors": [
     {
       "name": "Kostiantyn Wandalen",
-      "email": "wanalen@01.school"
+      "email": "wandalen@obox.systems"
     },
     {
       "name": "Volodymyr M.",
