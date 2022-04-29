@@ -173,7 +173,6 @@ module:
         path:
           - ../proto
           - ../proto/Integration.test.ss
-          - ../proto/node_modules
           - ../proto/wtools
           - ../proto/wtools/amid
           - ../proto/wtools/amid/bufferFromFile
