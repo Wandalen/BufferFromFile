@@ -306,7 +306,7 @@ function samples( test )
       .then( ( op ) =>
       {
         console.log( __.time.spent( startTime ) );
-        test.case = 'nonzero exit code';
+        test.description = 'nonzero exit code';
         test.notIdentical( op.exitCode, 0 );
         return null;
       })
@@ -317,14 +317,14 @@ function samples( test )
       .then( ( op ) =>
       {
         console.log( __.time.spent( startTime ) );
-        test.case = 'good exit code';
+        test.description = 'good exit code';
         test.identical( op.exitCode, 0 );
         if( op.exitCode )
         return null;
-        test.case = 'have no uncaught errors';
+        test.description = 'have no uncaught errors';
         test.identical( __.strCount( op.output, 'ncaught' ), 0 );
         test.identical( __.strCount( op.output, 'uncaught error' ), 0 );
-        test.case = 'have some output';
+        test.description = 'have some output';
         test.ge( op.output.split( '\n' ).length, 1 );
         test.ge( op.output.length, 3 );
         return null;
