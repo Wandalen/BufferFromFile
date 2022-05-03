@@ -3,8 +3,8 @@ root:
   - bufferFromFile.out
 consistency:
   ../will.yml: &ref_0
-    hash: 2dd54f3ff3b74003f6d43830967bed0a
-    size: 7576
+    hash: eec08716d6b3158cac8f4120a63c7c85
+    size: 7307
 module:
   bufferFromFile.out:
     about:
@@ -181,12 +181,18 @@ module:
           - ../proto/wtools/amid/bufferFromFile.test
           - ../proto/wtools/amid/bufferFromFile.test/BufferFromFile.test.ss
     submodule:
-      bufferfromfile:
-        path: 'hd://..'
+      node-gyp:
+        path: 'npm:///node-gyp!9.0.0'
         autoExporting: 0
         enabled: 0
-        criterion:
-          development: 1
+      wbasenodejscpp:
+        path: 'npm:///wbasenodejscpp'
+        autoExporting: 0
+        enabled: 0
+      node-pre-gyp:
+        path: 'npm:///@mapbox/node-pre-gyp!1.0.9'
+        autoExporting: 0
+        enabled: 0
       wTools:
         path: 'npm:///wTools'
         autoExporting: 0
@@ -205,38 +211,14 @@ module:
         enabled: 0
         criterion:
           development: 1
-      willbe:
-        path: 'npm:///willbe'
-        autoExporting: 0
-        enabled: 0
-        criterion:
-          development: 0
-      node-gyp:
-        path: 'npm:///node-gyp#7.1.2'
-        autoExporting: 0
-        enabled: 0
-        criterion:
-          development: 0
-      node-pre-gyp:
-        path: 'npm:///node-pre-gyp#0.17.0'
-        autoExporting: 0
-        enabled: 0
-        criterion:
-          development: 0
-      wbasenodejscpp:
-        path: 'npm:///wbasenodejscpp'
-        autoExporting: 0
-        enabled: 0
-        criterion:
-          development: 0
-      node-pre-gyp-github:
-        path: 'npm:///@mathquis/node-pre-gyp-github#1.0.1'
+      eslint:
+        path: 'npm:///eslint!7.32.0'
         autoExporting: 0
         enabled: 0
         criterion:
           development: 1
-      eslint:
-        path: 'npm:///eslint'
+      node-pre-gyp-github:
+        path: 'npm:///@mathquis/node-pre-gyp-github!1.0.1'
         autoExporting: 0
         enabled: 0
         criterion:
@@ -825,12 +807,18 @@ module:
         path:
           - proto/wtools/amid/bufferFromFile/Main.ss
     submodule:
-      bufferfromfile:
-        path: 'hd://.'
+      node-gyp:
+        path: 'npm:///node-gyp!9.0.0'
         autoExporting: 0
         enabled: 0
-        criterion:
-          development: 1
+      wbasenodejscpp:
+        path: 'npm:///wbasenodejscpp'
+        autoExporting: 0
+        enabled: 0
+      node-pre-gyp:
+        path: 'npm:///@mapbox/node-pre-gyp!1.0.9'
+        autoExporting: 0
+        enabled: 0
       wTools:
         path: 'npm:///wTools'
         autoExporting: 0
@@ -849,38 +837,14 @@ module:
         enabled: 0
         criterion:
           development: 1
-      willbe:
-        path: 'npm:///willbe'
-        autoExporting: 0
-        enabled: 0
-        criterion:
-          development: 0
-      node-gyp:
-        path: 'npm:///node-gyp#7.1.2'
-        autoExporting: 0
-        enabled: 0
-        criterion:
-          development: 0
-      node-pre-gyp:
-        path: 'npm:///node-pre-gyp#0.17.0'
-        autoExporting: 0
-        enabled: 0
-        criterion:
-          development: 0
-      wbasenodejscpp:
-        path: 'npm:///wbasenodejscpp'
-        autoExporting: 0
-        enabled: 0
-        criterion:
-          development: 0
-      node-pre-gyp-github:
-        path: 'npm:///@mathquis/node-pre-gyp-github#1.0.1'
+      eslint:
+        path: 'npm:///eslint!7.32.0'
         autoExporting: 0
         enabled: 0
         criterion:
           development: 1
-      eslint:
-        path: 'npm:///eslint'
+      node-pre-gyp-github:
+        path: 'npm:///@mathquis/node-pre-gyp-github!1.0.1'
         autoExporting: 0
         enabled: 0
         criterion:
@@ -1269,5 +1233,5 @@ module:
           - 'build::npm'
     consistency:
       ../will.yml:
-        hash: 2dd54f3ff3b74003f6d43830967bed0a
-        size: 7576
+        hash: eec08716d6b3158cac8f4120a63c7c85
+        size: 7307

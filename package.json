@@ -1,6 +1,6 @@
 {
   "name": "bufferfromfile",
-  "version": "0.4.363",
+  "version": "0.4.364",
   "engine": "node >= 6.0.0",
   "enabled": true,
   "license": "MIT",
@@ -54,8 +54,8 @@
   },
   "dependencies": {
     "wbasenodejscpp": "alpha",
-    "node-gyp": "8.1.0",
-    "@mapbox/node-pre-gyp": "1.0.5"
+    "node-gyp": "9.0.0",
+    "@mapbox/node-pre-gyp": "1.0.9"
   },
   "devDependencies": {
     "wTools": "alpha",
