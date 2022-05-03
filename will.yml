@@ -297,11 +297,15 @@ step:
     currentPath: 'path::in'
     shell: npm run-script node-pre-gyp-install
 submodule:
-  bufferfromfile:
-    path: 'hd://.'
+  node-gyp:
+    path: 'npm:///node-gyp!9.0.0'
     enabled: 0
-    criterion:
-      development: 1
+  wbasenodejscpp:
+    path: 'npm:///wbasenodejscpp'
+    enabled: 0
+  node-pre-gyp:
+    path: 'npm:///@mapbox/node-pre-gyp!1.0.9'
+    enabled: 0
   wTools:
     path: 'npm:///wTools'
     enabled: 0
@@ -317,33 +321,13 @@ submodule:
     enabled: 0
     criterion:
       development: 1
-  willbe:
-    path: 'npm:///willbe'
-    enabled: 0
-    criterion:
-      development: 0
-  node-gyp:
-    path: 'npm:///node-gyp#7.1.2'
-    enabled: 0
-    criterion:
-      development: 0
-  node-pre-gyp:
-    path: 'npm:///node-pre-gyp#0.17.0'
-    enabled: 0
-    criterion:
-      development: 0
-  wbasenodejscpp:
-    path: 'npm:///wbasenodejscpp'
-    enabled: 0
-    criterion:
-      development: 0
-  node-pre-gyp-github:
-    path: 'npm:///@mathquis/node-pre-gyp-github#1.0.1'
+  eslint:
+    path: 'npm:///eslint!7.32.0'
     enabled: 0
     criterion:
       development: 1
-  eslint:
-    path: 'npm:///eslint'
+  node-pre-gyp-github:
+    path: 'npm:///@mathquis/node-pre-gyp-github!1.0.1'
     enabled: 0
     criterion:
       development: 1
