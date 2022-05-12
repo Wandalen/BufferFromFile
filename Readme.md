@@ -1,3 +1,4 @@
+[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://stand-with-ukraine.pp.ua)
 
 # module::BufferFromFile [![status](https://img.shields.io/github/workflow/status/Wandalen/BufferFromFile/GypPublish?label=publish%3A)](https://github.com/Wandalen/BufferFromFile/actions/workflows/GypPublish.yml) [![stable](https://img.shields.io/badge/stability-stable-brightgreen.svg)](https://github.com/emersion/stability-badges#stable)
 
