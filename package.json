@@ -61,8 +61,8 @@
     "wTools": "latest",
     "wTesting": "latest",
     "wprocess": "latest",
-    "eslint": "7.32.0",
-    "@mathquis/node-pre-gyp-github": "1.0.1"
+    "node-pre-gyp-github": "1.4.4",
+    "eslint": "7.32.0"
   },
   "gypfile": false,
   "keywords": [

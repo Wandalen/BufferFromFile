@@ -3,8 +3,8 @@ root:
   - bufferFromFile.out
 consistency:
   ../will.yml: &ref_0
-    hash: eec08716d6b3158cac8f4120a63c7c85
-    size: 7307
+    hash: c2daa80c4f3d6d0540d865dece3c9ae5
+    size: 7297
 module:
   bufferFromFile.out:
     about:
@@ -218,7 +218,7 @@ module:
         criterion:
           development: 1
       node-pre-gyp-github:
-        path: 'npm:///@mathquis/node-pre-gyp-github!1.0.1'
+        path: 'npm:///node-pre-gyp-github!1.4.4'
         autoExporting: 0
         enabled: 0
         criterion:
@@ -844,7 +844,7 @@ module:
         criterion:
           development: 1
       node-pre-gyp-github:
-        path: 'npm:///@mathquis/node-pre-gyp-github!1.0.1'
+        path: 'npm:///node-pre-gyp-github!1.4.4'
         autoExporting: 0
         enabled: 0
         criterion:
@@ -1233,5 +1233,5 @@ module:
           - 'build::npm'
     consistency:
       ../will.yml:
-        hash: eec08716d6b3158cac8f4120a63c7c85
-        size: 7307
+        hash: c2daa80c4f3d6d0540d865dece3c9ae5
+        size: 7297

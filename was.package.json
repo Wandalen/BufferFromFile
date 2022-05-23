@@ -1,6 +1,6 @@
 {
   "name": "bufferfromfile",
-  "version": "0.4.369",
+  "version": "0.4.370",
   "engine": "node >= 6.0.0",
   "enabled": true,
   "license": "MIT",
@@ -61,8 +61,8 @@
     "wTools": "",
     "wTesting": "",
     "wprocess": "",
-    "eslint": "7.32.0",
-    "node-pre-gyp-github": "1.4.4"
+    "node-pre-gyp-github": "1.4.4",
+    "eslint": "7.32.0"
   },
   "gypfile": false,
   "keywords": [
