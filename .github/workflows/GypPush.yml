@@ -2,6 +2,7 @@
 name : push
 on : [ push ]
 
+
 jobs :
 
   Fast :
@@ -58,4 +59,3 @@ jobs :
         attempt_limit : 3
         attempt_delay: 1000
     - run : npm test
-
